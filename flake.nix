@@ -24,20 +24,9 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      # nur = {                                                             # NUR Packages
-      #   url = "github:nix-community/NUR";
-      # };
-
       emacs-overlay = {                                                   # Emacs Overlays
         url = "github:nix-community/emacs-overlay";
-        flake = false;
       };
-
-      # tlux-emacs = {                                                    # My tlux-emacs nix configuration
-      #   url = "github:nix-community/nix-doom-emacs";
-      #   inputs.nixpkgs.follows = "nixpkgs";
-      #   inputs.emacs-overlay.follows = "emacs-overlay";
-      # };
 
       hyprland = {                                                        # Official Hyprland flake
         url = "github:hyprwm/Hyprland";
@@ -47,10 +36,6 @@
       agenix = {                                                          # Secret management in Nix Store
         url =  "github:ryantm/agenix";
         inputs.nixpkgs.follows = "nixpkgs";
-      };
-
-      nixos-hardware = {
-        url = "github:nixos/nixos-hardware";
       };
     };
 

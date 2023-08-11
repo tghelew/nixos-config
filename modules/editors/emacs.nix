@@ -20,7 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.emacs-overlay ];
+    nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
 
     user.packages = with pkgs; [
       ## Emacs itself
