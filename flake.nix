@@ -60,7 +60,7 @@
     ,emacs-overlay
     ,hyprland
     ,agenix
-    ,nixos-harware
+    ,nixos-hardware
     ,... }:
 
     let
