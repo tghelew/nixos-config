@@ -85,7 +85,8 @@
       nixosConfigurations =
         mapHosts ./hosts {};
 
-      devShell."${system}" =
-        import ./shell.nix { inherit pkgs; };
+      devShells."${system}" = {
+        default = import ./shell.nix { inherit pkgs; };
+      };
     };
 }
