@@ -54,7 +54,14 @@
       };
     };
 
-  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable,... }:
+  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable
+    ,home-manager
+    ,macos
+    ,emacs-overlay
+    ,hyprland
+    ,agenix
+    ,nixos-hardware
+    ,... }:
 
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
@@ -66,7 +73,7 @@
         config.allowUnfree = true;  # forgive me Stallman senpai
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
-      pkgs  = mkPkgs nixpkgs "${system}"[ self.overlay ];
+      pkgs  = mkPkgs nixpkgs "${system}" [ self.overlay ];
       pkgs' = mkPkgs nixpkgs-unstable "${system}" [];
 
       lib = nixpkgs.lib.extend
