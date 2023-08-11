@@ -1,5 +1,5 @@
 final: prev:
 {
 
-      waybar = prev.input.hyprland.packages.${prev.pkgs.system}.waybar-hyprland;
+      waybar = prev.inputs.hyprland.packages.${prev.pkgs.system}.waybar-hyprland;
 }
