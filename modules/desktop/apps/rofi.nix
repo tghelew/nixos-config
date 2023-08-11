@@ -26,32 +26,32 @@ in {
         name = "rofi-browsermenu";
         desktopName = "Open Bookmark in Browser";
         icon = "bookmark-new-symbolic";
-        exec = "${config.dotfiles.binDir}/rofi/browsermenu";
+        exec = "${config.nixos-config.binDir}/rofi/browsermenu";
       })
       (makeDesktopItem {
         name = "rofi-browsermenu-history";
         desktopName = "Open Browser History";
         icon = "accessories-clock";
-        exec = "${config.dotfiles.binDir}/rofi/browsermenu history";
+        exec = "${config.nixos-config.binDir}/rofi/browsermenu history";
       })
       (makeDesktopItem {
         name = "rofi-filemenu";
         desktopName = "Open Directory in Terminal";
         icon = "folder";
-        exec = "${config.dotfiles.binDir}/rofi/filemenu";
+        exec = "${config.nixos-config.binDir}/rofi/filemenu";
       })
       (makeDesktopItem {
         name = "rofi-filemenu-scratch";
         desktopName = "Open Directory in Scratch Terminal";
         icon = "folder";
-        exec = "${config.dotfiles.binDir}/rofi/filemenu -x";
+        exec = "${config.nixos-config.binDir}/rofi/filemenu -x";
       })
 
       (makeDesktopItem {
         name = "lock-display";
         desktopName = "Lock screen";
         icon = "system-lock-screen";
-        exec = "${config.dotfiles.binDir}/zzz";
+        exec = "${config.nixos-config.binDir}/zzz";
       })
     ];
   };
