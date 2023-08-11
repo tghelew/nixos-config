@@ -35,6 +35,7 @@ with lib.my;
       };
     };
   system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
+  system.copySystemConfiguration = mkDefault true;
   system.stateVersion = "23.05";
 
   ## Some reasonable, global defaults
