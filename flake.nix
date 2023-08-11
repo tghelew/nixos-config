@@ -73,7 +73,7 @@
         config.allowUnfree = true;  # forgive me Stallman senpai
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
-      pkgs  = mkPkgs nixpkgs "${system}" [ self.overlay ];
+      pkgs  = mkPkgs nixpkgs "${system}" [ self.overlays.default ];
       pkgs' = mkPkgs nixpkgs-unstable "${system}" [];
 
       lib = nixpkgs.lib.extend
