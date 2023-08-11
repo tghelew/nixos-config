@@ -1,6 +1,4 @@
-# Emacs is my main driver. I'm the author of Doom Emacs
-# https://github.com/hlissner/doom-emacs. This module sets it up to meet my
-# particular Doomy needs.
+# Emacs is my main driver.
 
 { config, lib, pkgs, inputs, ... }:
 
@@ -14,8 +12,8 @@ in {
     tlux = rec {
       enable = mkBoolOpt false;
       forgeUrl = mkOpt types.str "https://github.com";
-      repoUrl = mkOpt types.str "${forgeUrl}/tghelew/emacs.d";
-      configRepoUrl = mkOpt types.str "${forgeUrl}/tghelew/linux-emacs-private";
+      repoUrl = mkOpt types.str "${toString forgeUrl}/tghelew/emacs.d";
+      configRepoUrl = mkOpt types.str "${toString forgeUrl}/tghelew/linux-emacs-private";
     };
   };
 
@@ -26,7 +24,7 @@ in {
       ## Emacs itself
       binutils       # native-comp needs 'as', provided by this
       # 28.2 + native-comp
-      ((emacsPackagesFor emacsNativeComp).emacsWithPackages
+      ((emacsPackagesFor emacs-unstable).emacsWithPackages
         (epkgs: [ epkgs.vterm ]))
 
       ## Doom dependencies
