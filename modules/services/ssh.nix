@@ -19,9 +19,11 @@ in {
   config = mkIf cfg.enable {
     services.openssh = {
       enable = true;
-      kbdInteractiveAuthentication = false;
       ports = cfg.ports;
-      passwordAuthentication = cfg.passwordAuthentication;
+      settings = {
+        KdbInteractiveAuthentication = false;
+        PasswordAuthentication = cfg.passwordAuthentication;
+      };
     };
 
     user.openssh.authorizedKeys.keys =
