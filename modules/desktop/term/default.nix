@@ -11,7 +11,7 @@ in {
   config = {
     #TODO: theme
     user.packages = with pkgs; [
-      alcritty
+      alacritty
     ];
     env.TERMINAL = cfg.default;
   };
