@@ -54,14 +54,7 @@
       };
     };
 
-  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable
-    ,home-manager
-    ,macos
-    ,emacs-overlay
-    ,hyprland
-    ,agenix
-    ,nixos-hardware
-    ,... }:
+  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable,... }:
 
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
@@ -83,14 +76,20 @@
     {
       lib = lib.my;
 
-      overlay =
-        final: prev: {
+      # overlays.default =
+      #   final: prev: {
+      #     unstable = pkgs';
+      #     my = self.packages."${system}";
+      #   };
+
+      overlays = {
+        default = final: prev: {
           unstable = pkgs';
           my = self.packages."${system}";
-        };
+          }
+        (mapModules ./overlays import);
+      };
 
-      overlays =
-        mapModules ./overlays import;
 
       packages."${system}" =
         mapModules ./packages (p: pkgs.callPackage p {});
