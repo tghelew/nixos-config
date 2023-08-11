@@ -11,9 +11,8 @@ in {
     enable = mkBoolOpt false;
     tlux = rec {
       enable = mkBoolOpt false;
-      forgeUrl = mkOpt types.str "https://github.com";
-      repoUrl = mkOpt types.str "${toString forgeUrl}/tghelew/emacs.d";
-      configRepoUrl = mkOpt types.str "${toString forgeUrl}/tghelew/linux-emacs-private";
+      repoUrl = mkOpt types.str "https://github.com/tghelew/emacs.d";
+      configRepoUrl = mkOpt types.str "https://github.com/tghelew/linux-emacs-private";
     };
   };
 
