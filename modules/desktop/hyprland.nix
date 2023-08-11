@@ -59,16 +59,15 @@ in {
     '';
     };
 
-    programs.hyperland = {
-      hyprland = {
+    programs.hyprland= {
+      enable = true;
+      xwayland = {
         enable = true;
-        xwayland = {
-          enable = true;
-          hidpi = true;
-        };
-        package = hyprland.packages.${pkgs.system}.hyprland;
+        hidpi = true;
       };
+      package = hyprland.packages.${pkgs.system}.hyprland;
     };
+  };
 
     xdg.portal = {
       enable = true;
