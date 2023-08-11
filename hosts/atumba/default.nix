@@ -56,7 +56,7 @@
       # teamviewer.enable = true;
     };
     # TODO: theme.active = "nord";
-  }
+  };
 
   ## Local config
   networking.networkmanager.enable = true;
