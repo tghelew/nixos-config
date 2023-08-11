@@ -53,7 +53,7 @@ def get_bookmarks browser
   bookmarks = []
   case browser
   when :firefox
-    # In my nixos dotfiles I hardcode the default profile to $USER.profile,
+    # In my nixos nixos-config I hardcode the default profile to $USER.profile,
     # which makes this lookup easier, but means this script won't work on any
     # other system.
     user = ENV['USER']
@@ -82,7 +82,7 @@ end
 def get_history browser
   case browser
   when :firefox
-    # In my nixos dotfiles I hardcode the default profile to $USER.profile,
+    # In my nixos nixos-config I hardcode the default profile to $USER.profile,
     # which makes this lookup easier, but means this script won't work on any
     # other system.
     user = ENV['USER']

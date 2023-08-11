@@ -78,10 +78,10 @@ module Hey
 
   #
   defcmd :repl do
-    desc "Open a nix-repl with nixpkgs and dotfiles preloaded"
+    desc "Open a nix-repl with nixpkgs and nixos-config preloaded"
     lambda do |args|
-      tempfile = '/tmp/dotfiles-repl.nix'
-      File.write('/tmp/dotfiles-repl.nix', "(builtins.getFlake \"#{@@opts[:flake]}\")")
+      tempfile = '/tmp/nixos-config-repl.nix'
+      File.write('/tmp/nixos-config-repl.nix', "(builtins.getFlake \"#{@@opts[:flake]}\")")
       begin
         sh ["nix", "repl", "<nixpkgs>", tempfile, *args]
       ensure
@@ -91,7 +91,7 @@ module Hey
   end
 
   defcmd [:check, :ch] do
-    desc "Run 'nix flake check' on your dotfiles"
+    desc "Run 'nix flake check' on your nixos-config"
     lambda do |args|
       sh ["nix", "flake", "check", @@opts[:flake]]
     end
@@ -112,7 +112,7 @@ module Hey
   end
 
   defcmd :show do
-    desc "[ARGS...]", "Run 'nix flake show' on your dotfiles"
+    desc "[ARGS...]", "Run 'nix flake show' on your nixos-config"
     lambda do |args|
       sh ["nix", "flake", "show", @@opts[:flake]]
     end
@@ -194,7 +194,7 @@ module Hey
 
   defcmd :swap do
     desc "Recursively swap nix-store symlinks with copies (or back).",
-         "The purpose is so you can have copies of your dotfiles that can be modified in",
+         "The purpose is so you can have copies of your nixos-config that can be modified in",
          "place (so you can iterate on them quickly instead of 'hey re'ing between",
          "changes). Run again to restore the old link(s).\n",
          "Warning: backup your copies, or they will be destroyed when restored!"
@@ -264,7 +264,7 @@ module Hey
          "access (via your existing ssh key) to the remote -- which is immediately removed",
          "upon completion.",
          "",
-         "If COMMAND is anything else, it merely runs 'nix run github:hlissner/dotfiles",
+         "If COMMAND is anything else, it merely runs 'nix run github:tghelew/nixos-config",
          "-- COMMAND' on the rmeote."
     args "HOST", "[COMMAND]"
     opts '--host HOST', "The nixos config to build and deploy to HOST"
@@ -289,7 +289,7 @@ module Hey
           end
         end
       else
-        command = "nix run github:hlissner/dotfiles -- #{command}"
+        command = "nix run github:tghelew/nixos-config -- #{command}"
         puts "Running '#{command}' on #{target}"
         sh ["ssh", "-t", target, command]
       end
