@@ -6,10 +6,10 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.term.wez;
+  cfg = config.modules.desktop.term.wezterm;
   configDir = config.nixos-config.configDir;
 in {
-  options.modules.desktop.term.wez = {
+  options.modules.desktop.term.wezterm = {
     enable = mkBoolOpt false;
 
   };
