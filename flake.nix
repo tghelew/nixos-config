@@ -90,10 +90,12 @@
       #   };
 
       overlays = {
-        default = final: prev: {
-          unstable = pkgs';
-          my = self.packages."${system}";
+        default = (
+          final: prev: {
+            unstable = pkgs';
+            my = self.packages."${system}";
           }
+        )
         (mapModules ./overlays import);
       };
 
