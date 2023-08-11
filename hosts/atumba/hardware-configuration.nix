@@ -5,7 +5,7 @@
 
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
-    initrd.kernelModules = [ "dm-snapshot" ];
+    initrd.kernelModules = [ "dm-snapshot" "i915" ];
     initrd.luks.devices = {
       crypted = {
         device = "/dev/disk/by-partuuid/926e4930-3291-4b98-bd51-82917bb5a6cb";
@@ -14,7 +14,7 @@
         preLVM = true;
       };
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "tpm-rng" ];
     extraModulePackages = [];
     kernelParams = [
       # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
@@ -22,11 +22,28 @@
       #      mission critical or server/headless builds exposed to the world.
       "mitigations=off"
     ];
+    extraModprobeConfig = ''
+      options bbswitch use_acpi_to_detect_card_state=1
+      options thinkpad_acpi force_load=1 fan_control=1
+    '';
 
     # Refuse ICMP echo requests on my desktop/laptop;
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
   };
 
+  # GPU
+  environment.variables = {
+    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
+  };
+
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      (if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then vaapiIntel else intel-vaapi-driver)
+      libvdpau-va-gl
+      intel-media-driver
+    ];
+  };
   # Modules
   modules.hardware = {
     audio.enable = true;
