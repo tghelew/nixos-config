@@ -6,13 +6,22 @@ let cfg = config.modules.services.ssh;
 in {
   options.modules.services.ssh = {
     enable = mkBoolOpt false;
+    passwordAuthentication = mkBoolOpt false;
+    ports = mkOption {
+      type = types.listOf port;
+      default = [ 2203 ];
+      defaultText = literalExpression "[ 2203 ]";
+      example = literalExpression "[ 2203 ]";
+      description = lib.mdDoc "Openssh ports to use";
+    };
   };
 
   config = mkIf cfg.enable {
     services.openssh = {
       enable = true;
       kbdInteractiveAuthentication = false;
-      passwordAuthentication = false;
+      ports = cfg.ports;
+      passwordAuthentication = cfg.passwordAuthentication;
     };
 
     user.openssh.authorizedKeys.keys =

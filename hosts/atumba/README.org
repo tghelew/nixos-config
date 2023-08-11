@@ -1,0 +1,21 @@
+#+TITLE: Atumba
+#+DATE:  August 11, 2023
+
+* Overview
+My Linux laptop (Lenovo T540P) in order to do linux stuff...
+
+* Specs
+/Lenovo T540P/
+
+* Installation
+** TBD - Full Disk encryption with detached header
+#+BEGIN_SRC sh
+#+END_SRC
+
+** TBD - Partition
+#+BEGIN_SRC sh
+#+END_SRC
+
+** TBD -  Mount drives
+#+BEGIN_SRC sh
+#+END_SRC
