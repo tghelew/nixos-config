@@ -67,7 +67,6 @@ in {
       };
       package = hyprland.packages.${pkgs.system}.hyprland;
     };
-  };
 
     xdg.portal = {
       enable = true;
