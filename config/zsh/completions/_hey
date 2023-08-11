@@ -1,6 +1,6 @@
-#compdef nx
+#compdef hey
 
-_nx_dispatch () {
+_hey_dispatch () {
     local cmd="$@"
     local offset=$#
     CURRENT=$((CURRENT-$offset))
@@ -8,11 +8,11 @@ _nx_dispatch () {
     _$cmd
 }
 
-_nx_command_list () {
+_hey_command_list () {
     hey | sed '1,/Available commands:/d' | awk '{ print $1 }'
 }
 
-_nx () {
+_hey () {
     local -a commands
     IFS=$'\n' commands=($(_hey_command_list))
 
@@ -33,4 +33,4 @@ _nx () {
     return ret
 }
 
-_nx
+_hey
