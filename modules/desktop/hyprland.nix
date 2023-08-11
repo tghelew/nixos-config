@@ -1,4 +1,4 @@
-{ options, config, lib, pkgs, hyprland, ... }:
+{ options, config, lib, pkgs, inputs, ... }:
 
 with lib;
 with lib.my;
@@ -26,7 +26,7 @@ in {
       loginShellInit = ''
       # Will automatically open Hyprland when logged into tty1
       if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-        ${exec}
+        exec ${hypr-exec}
       fi
     '';
 
@@ -59,13 +59,13 @@ in {
     '';
     };
 
-    programs.hyprland= {
+    programs.hyprland = {
       enable = true;
       xwayland = {
         enable = true;
         hidpi = true;
       };
-      package = hyprland.packages.${pkgs.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
 
     xdg.portal = {

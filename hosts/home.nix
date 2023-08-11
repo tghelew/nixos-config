@@ -9,10 +9,10 @@ in {
 
     # Hosts
     # Block garbage
-    ${optionalString config.services.xserver.enable
+    ${optionalString (config.services.xserver.enable
       # Make sure to add additional WM DM
-      || config.program.wayland.enable
-      || config.program.sway.enable
+      || config.programs.hyprland.enable
+      || config.programs.sway.enable)
         (readFile blocklist)}
   '';
 
