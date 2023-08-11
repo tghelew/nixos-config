@@ -7,8 +7,8 @@ in {
   options.modules.services.ssh = {
     enable = mkBoolOpt false;
     passwordAuthentication = mkBoolOpt false;
-    ports = mkOption {
-      type = types.listOf port;
+    ports = with types; mkOption {
+      type = listOf port;
       default = [ 2203 ];
       defaultText = literalExpression "[ 2203 ]";
       example = literalExpression "[ 2203 ]";
