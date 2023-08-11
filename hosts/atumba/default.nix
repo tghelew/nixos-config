@@ -40,6 +40,7 @@
     editors = {
       default = "emacs";
       emacs.enable = true;
+      emacs.tlux.enable = true;
       vim.enable = true;
     };
     shell = {

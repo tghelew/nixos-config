@@ -20,7 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
+    nixpkgs.overlays = [ inputs.emacs-overlay ];
 
     user.packages = with pkgs; [
       ## Emacs itself
@@ -75,6 +75,11 @@ in {
         fi
 
       '';
+    };
+
+    nix.settings = {
+      substituters = ["https://app.cachix.org"];	# Install cached version so rebuild should not be required
+      trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
     };
   };
 }

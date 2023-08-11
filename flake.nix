@@ -73,7 +73,7 @@
         config.allowUnfree = true;  # forgive me Stallman senpai
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
-      pkgs  = mkPkgs nixpkgs "${system}" [ self.overlays.default ];
+      pkgs  = mkPkgs nixpkgs "${system}" [ self.overlay ];
       pkgs' = mkPkgs nixpkgs-unstable "${system}" [];
 
       lib = nixpkgs.lib.extend
@@ -83,20 +83,13 @@
     {
       lib = lib.my;
 
-      # overlays.default =
-      #   final: prev: {
-      #     unstable = pkgs';
-      #     my = self.packages."${system}";
-      #   };
+      overlay =
+        final: prev: {
+          unstable = pkgs';
+          my = self.packages."${system}";
+        };
 
-      overlays = {
-        default = {
-            unstable = pkgs';
-            my = self.packages."${system}";
-          }
-        (mapModules ./overlays import);
-      };
-
+      overlays = (mapModules ./overlays import);
 
       packages."${system}" =
         mapModules ./packages (p: pkgs.callPackage p {});
