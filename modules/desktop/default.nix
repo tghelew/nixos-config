@@ -3,18 +3,17 @@
 with lib;
 with lib.my;
 let cfg = config.modules.desktop;
+    withXserver = config.services.xserver.enable;
+    withWayland = programs.hyperland.enable || programs.sway.enale;
 in {
-  config = mkIf config.services.xserver.enable {
+  config = mkIf (withXserver || withWayland) {
     assertions = [
       {
         assertion = (countAttrs (n: v: n == "enable" && value) cfg) < 2;
         message = "Can't have more than one desktop environment enabled at a time";
       }
       {
-        assertion =
-          let srv = config.services;
-          in srv.xserver.enable ||
-             srv.sway.enable ||
+        assertion = withXserver || withWayland ||
              !(anyAttrs
                (n: v: isAttrs v &&
                       anyAttrs (n: v: isAttrs v && v.enable))
@@ -24,10 +23,6 @@ in {
     ];
 
     user.packages = with pkgs; [
-      feh       # image viewer
-      xclip
-      xdotool
-      xorg.xwininfo
       libqalculate  # calculator cli w/ currency conversion
       (makeDesktopItem {
         name = "scratch-calc";
@@ -38,6 +33,18 @@ in {
       })
       qgnomeplatform        # QPlatformTheme for a better Qt application inclusion in GNOME
       libsForQt5.qtstyleplugin-kvantum # SVG-based Qt5 theme engine plus a config tool and extra theme
+    ] ++ optional withXserver [
+      feh       # image viewer
+      xclip
+      xdotool
+      xorg.xwininfo
+    ]
+    ++ optional withWayland [
+        wl-clipboard
+        wlr-randr
+        wev
+        swappy
+        libsForQt5.polkit-kde-agent
     ];
 
     fonts = {
@@ -47,13 +54,21 @@ in {
         ubuntu_font_family
         dejavu_fonts
         symbola
+        meslo-lgs-nf
       ];
     };
 
     ## Apps/Services
-    services.xserver.displayManager.lightdm.greeters.mini.user = config.user.name;
+    services.xserver.displayManager.lightdm = {
+      enable = true;
+        greeters.mini = {
+          enable = true;
+          user = config.user.name;
+          #TODO: setup themes;
+        };
+      };
 
-    services.picom = {
+    services.picom = mkIf config.services.xserver.enable {
       backend = "glx";
       vSync = true;
       opacityRules = [
@@ -105,9 +120,8 @@ in {
     # Try really hard to get QT to respect my GTK theme.
     env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
     env.QT_QPA_PLATFORMTHEME = "gnome";
-    env.QT_STYLE_OVERRIDE = "kvantum";
 
-    services.xserver.displayManager.sessionCommands = ''
+    services.xserver.displayManager.sessionCommands = mkIf config.services.xserver.enable ''
       # GTK2_RC_FILES must be available to the display manager.
       export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
     '';

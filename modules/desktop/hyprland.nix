@@ -5,7 +5,7 @@ with lib.my;
 let
   #TODO: Setup waybar modules, themes for all apps
   cfg = config.modules.desktop.hypr;
-  configDir = config.nix0s-config.configDir;
+  configDir = config.nixos-config.configDir;
   hypr-exec =  "exec dbus-launch Hyprland";
 
 in {
@@ -15,12 +15,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-
-    # environment.systemPackages = with pkgs; [
-    #   waybar
-    #   dunst
-    #   gammastep
-    # ];
 
     environment = {
       loginShellInit = ''
@@ -46,17 +40,15 @@ in {
       };
       systemPackages = with pkgs; [
         swaylock
-        wl-clipboard
-        wlr-randr
-        swappy
-        slurp
+        dunst
+        swww
+        #NOTE: Check ./default.nix
       ];
     };
 
+    #TODO: Check if needed
     security.pam.services.swaylock = {
-      text = ''
-     auth include login
-    '';
+      text = ''auth include login '';
     };
 
     programs.hyprland = {
@@ -67,6 +59,7 @@ in {
       };
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
+
 
     xdg.portal = {
       enable = true;
@@ -84,5 +77,16 @@ in {
       substituters = ["https://hyprland.cachix.org"];	# Install cached version so rebuild should not be required
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
+
+    systemd.user.services."dunst" = {
+      enable = true;
+      description = "";
+      wantedBy = [ "default.target" ];
+      serviceConfig.Restart = "always";
+      serviceConfig.RestartSec = 2;
+      serviceConfig.ExecStart = "${pkgs.dunst}/bin/dunst";
+    };
+
+
   };
 }

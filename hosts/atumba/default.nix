@@ -11,7 +11,6 @@
       hypr.enable = true;
       apps = {
         rofi.enable = true;
-        # godot.enable = true;
       };
       browsers = {
         default = "qutebrowser";
@@ -53,8 +52,6 @@
     services = {
       ssh.enable = false;
       docker.enable = true;
-      # Needed occasionally to help the parental units with PC problems
-      # teamviewer.enable = true;
     };
     # TODO: theme.active = "nord";
   };
