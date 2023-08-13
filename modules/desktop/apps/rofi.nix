@@ -2,7 +2,12 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.desktop.apps.rofi;
+let
+  cfg = config.modules.desktop.apps.rofi;
+  pkgRofi = if config.services.xserver.enable
+             then pgks.rofi
+             else pkgs.rofi-wayland;
+
 in {
   options.modules.desktop.apps.rofi = {
     enable = mkBoolOpt false;
@@ -18,7 +23,7 @@ in {
     user.packages = with pkgs; [
       (writeScriptBin "rofi" ''
         #!${stdenv.shell}
-        exec ${pkgs.rofi}/bin/rofi -terminal xst -m -1 "$@"
+        exec ${pkgRofi}/bin/rofi -terminal "${config.module.term.default}" -m -1 "$@"
       '')
 
       # Fake rofi dmenu entries

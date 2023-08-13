@@ -6,6 +6,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop.media.graphics;
     configDir = config.nixos-config.configDir;
+    withWayland = programs.hyperland.enable || programs.sway.enale;
 in {
   options.modules.desktop.media.graphics = {
     enable         = mkBoolOpt false;
@@ -20,7 +21,8 @@ in {
       (if cfg.tools.enable then [
         font-manager   # so many damned fonts...
         imagemagick    # for image manipulation from the shell
-      ] else []) ++
+      ] ++ (if withWayland then [ swayimg ] else [])
+       else []) ++
 
       # replaces illustrator & indesign
       (if cfg.illustrator.enable then [
@@ -39,8 +41,11 @@ in {
         blender
       ] else []);
 
-    home.configFile = mkIf cfg.photoshop.enable {
-      "GIMP/2.10" = { source = "${configDir}/gimp"; recursive = true; };
+    home.configFile = {
+      "GIMP/2.10" = mkIf cfg.photoshop.enable { source = "${configDir}/gimp"; recursive = true; };
+      "swayimg"   = mkIf (cfg.config.tools.enable && withWayland) { source = "${configDir}/swayimg"; };
     };
+
+
   };
 }
