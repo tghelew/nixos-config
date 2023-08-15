@@ -23,7 +23,21 @@ in {
 
     userChrome  = mkOpt' lines "" "CSS Styles for Firefox's interface";
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
+    chromePath = mkOpt' (nullOr path) null "Path to the chrome folder";
   };
+
+  assertions = [
+    {
+      assertion = cfg.userChrome != "" && cfg.chromePath != null;
+      message = "module.desktop.browsers.firefox: Either 'userChrome' is set or 'chromePath''";
+
+    }
+    {
+      assertion = cfg.userContent != "" && cfg.chromePath != null;
+      message = "module.desktop.browsers.firefox: Either 'userContent' is set or 'chromePath''";
+
+    }
+  ];
 
   config = mkIf cfg.enable (mkMerge [
     {
@@ -222,13 +236,19 @@ in {
           };
 
         "${cfgPath}/${cfg.profileName}.default/chrome/userChrome.css" =
-          mkIf (cfg.userChrome != "") {
+          mkIf (cfg.userChrome != "" && cfg.chromePath == null) {
             text = cfg.userChrome;
           };
 
         "${cfgPath}/${cfg.profileName}.default/chrome/userContent.css" =
-          mkIf (cfg.userContent != "") {
+          mkIf (cfg.userContent != "" && cfg.chromePath == null ) {
             text = cfg.userContent;
+          };
+
+        "${cfgPath}/${cfg.profileName}.default/chrome" =
+          mkIf (cfg.chromePath != null) {
+            source = cfg.chromePath;
+            recursive = true;
           };
       };
     }

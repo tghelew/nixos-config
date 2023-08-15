@@ -4,7 +4,7 @@ alias ....='cd ../../..'
 alias -- -='cd -'
 
 alias q=exit
-alias clr=clear
+alias c=clear
 alias _='sudo '
 alias rm='rm -i'
 alias cp='cp -i'
@@ -41,9 +41,6 @@ rcp() {
 alias rcpd='rcp --delete --delete-after'
 alias rcpu='rcp --chmod=go='
 alias rcpdu='rcpd --chmod=go='
-
-alias y='xclip -selection clipboard -in'
-alias p='xclip -selection clipboard -out'
 
 alias jc='journalctl -xe'
 alias sc=systemctl
