@@ -32,6 +32,13 @@ with lib.my;
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         ];
         auto-optimise-store = true;
+       #  automatic garbage collection
+        gc = {
+          automatic = true;
+          dates = "weekly";
+          persitent = true;
+          randomizedDelaySec = "10min";
+        };
       };
     };
   system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;

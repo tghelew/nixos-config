@@ -64,7 +64,6 @@ in {
         greeters.mini = {
           enable = true;
           user = config.user.name;
-          #TODO: setup themes;
         };
       };
 

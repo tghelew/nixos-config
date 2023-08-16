@@ -21,7 +21,9 @@ in {
           };
           fonts = {
             sans.name = "Fira Sans";
+            sans.size = 10;
             mono.name = "Fira Code";
+            mono.size = 12;
           };
           colors = {
             black         = "#3b4252";
@@ -117,7 +119,6 @@ in {
         window-color = "${cfg.colors.types.border}"
         border-color = "${cfg.colors.types.border}"
       '';
-
       # Other dotfiles
       home.configFile = with config.modules; mkMerge [
         (mkif withXserver {
@@ -133,6 +134,8 @@ in {
         (mkIf (desktop.hyprland.enable){
           "waybar" = {source = ./config/waybar; recursive = true;};
           "dunst/dunstrc".text = import ./config/dunstrc cfg;
+          "hypr/rc.d/theme.conf" = import ./config/hypr/theme.conf cfg;
+
         })
         (mkIf desktop.media.graphics.vector.enable {
           "inkscape/templates/default.svg".source = ./config/inkscape/default-template.svg;

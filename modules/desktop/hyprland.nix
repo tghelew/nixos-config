@@ -39,17 +39,20 @@ in {
 
       };
       systemPackages = with pkgs; [
+        #NOTE: Check ./default.nix
         swaylock
         dunst
         swww
-        #NOTE: Check ./default.nix
+        waybar
+        libnotify
       ];
     };
 
     #TODO: Check if needed
-    security.pam.services.swaylock = {
-      text = ''auth include login '';
-    };
+    # security.pam.services.swaylock = {
+    #   text = ''auth include login '';
+    # };
+
 
     programs.hyprland = {
       enable = true;
@@ -60,6 +63,7 @@ in {
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
 
+    config.modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
 
     xdg.portal = {
       enable = true;
@@ -87,6 +91,11 @@ in {
       serviceConfig.ExecStart = "${pkgs.dunst}/bin/dunst";
     };
 
-
+    home.configFile = {
+      "hypr/hyperland.conf" = {
+        text = import configDir.hyprland/hyperland.conf config pkgs;
+      };
+      "hypr/hyperland/rc.d" = {source = "${configDir}/hyprland/rc.d"; recursive = true;};
+    };
   };
 }
