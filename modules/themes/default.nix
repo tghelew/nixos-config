@@ -7,7 +7,7 @@ with lib.my;
 let
   cfg = config.modules.theme;
   withXserver = config.services.xserver.enable;
-  withWayland = programs.hyperland.enable || programs.sway.enale;
+  withWayland = programs.hyperland.enable || programs.sway.enable;
 in {
   options.modules.theme = with types; {
     active = mkOption {
@@ -64,6 +64,7 @@ in {
       brightblue    = mkOpt str "#0088FF"; # 12
       brightmagenta = mkOpt str "#FF88FF"; # 13
       brightcyan    = mkOpt str "#88FFFF"; # 14
+
       brightwhite   = mkOpt str "#FFFFFF"; # 15
       white         = mkOpt str "#FFFFFF"; # 16
       #-----------------------------------------
@@ -80,7 +81,7 @@ in {
       types = {
         bg        = mkOpt str cfg.colors.black;
         fg        = mkOpt str cfg.colors.white;
-        dim_fg    = mkOPt str cfg.colors.silver;
+        dimfg     = mkOPt str cfg.colors.silver;
         panelbg   = mkOpt str cfg.colors.types.bg;
         panelfg   = mkOpt str cfg.colors.types.fg;
         border    = mkOpt str cfg.colors.types.bg;
