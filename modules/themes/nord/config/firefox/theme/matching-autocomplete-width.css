@@ -16,7 +16,7 @@
 	border: 1px solid !important;
 	border-color: var(--nordic-popover-border-color) !important;
 	border-radius: 9px;
-	box-shadow: var(--nordic-popover-shadow) !important; /* BUG: Not showing any shadow at all */
+	box-shadow: var(--nordic-popover-shadow) !important;
 	color: var(--nordic-toolbar-color) !important;
 	padding: 8px;
 }
@@ -91,33 +91,6 @@
 	filter: var(--nordic-convert-icon-to-symbolic-hack-filter);
 }
 
-/* Firefox 67 */
-/* TODO: Remove when FF =< 67 is deprecated or merge 69+ code. */
-#PopupAutoCompleteRichResult {
-	margin-left: 0 !important;
-	margin-top: -7px;
-}
-#PopupAutoCompleteRichResult {
-  background: var(--nordic-popover-background) !important;
-	border: 1px solid !important;
-	border-color: var(--nordic-popover-border-color) !important;
-	border-radius: 9px;
-	box-shadow: var(--nordic-popover-shadow) !important; /* BUG: Not showing any shadow at all */
-	color: var(--nordic-toolbar-color) !important;
-	padding: 8px !important;
-}
-#PopupAutoCompleteRichResult .autocomplete-richlistbox {
-	--box-width: calc(100vw - var(--item-padding-start) - var(--item-padding-end) - 42px);
-	max-width: var(--box-width);
-}
-#PopupAutoCompleteRichResult .autocomplete-richlistitem {
-	padding-left: 0 !important;
-	padding-right: 5px !important;
-	border-inline-end-width: 0 !important;
-	max-width: calc(var(--box-width) - 5px);
-	display: flex;
-	align-items: center;
-}
 /* Search panel  */
 #PopupAutoCompleteRichResult .search-panel-one-offs-header, #PopupAutoCompleteRichResult .search-panel-one-offs {
 	background: transparent !important;

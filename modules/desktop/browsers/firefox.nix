@@ -25,22 +25,21 @@ in {
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
     chromePath = mkOpt' (nullOr path) null "Path to the chrome folder";
   };
-
-  assertions = [
-    {
-      assertion = cfg.userChrome != "" && cfg.chromePath != null;
-      message = "module.desktop.browsers.firefox: Either 'userChrome' is set or 'chromePath''";
-
-    }
-    {
-      assertion = cfg.userContent != "" && cfg.chromePath != null;
-      message = "module.desktop.browsers.firefox: Either 'userContent' is set or 'chromePath''";
-
-    }
-  ];
-
   config = mkIf cfg.enable (mkMerge [
     {
+      assertions = [
+        {
+          assertion = cfg.userChrome != "" && cfg.chromePath != null;
+          message = "module.desktop.browsers.firefox: Either 'userChrome' is set or 'chromePath''";
+
+        }
+        {
+          assertion = cfg.userContent != "" && cfg.chromePath != null;
+          message = "module.desktop.browsers.firefox: Either 'userContent' is set or 'chromePath''";
+
+        }
+      ];
+
       user.packages = with pkgs; [
         unstable.firefox-bin
         (makeDesktopItem {
