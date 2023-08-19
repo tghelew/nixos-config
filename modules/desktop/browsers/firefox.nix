@@ -27,14 +27,15 @@ in {
   };
   config = mkIf cfg.enable (mkMerge [
     {
+
       assertions = [
         {
-          assertion = cfg.userChrome != "" && cfg.chromePath != null;
+          assertion = xor cfg.userChrome cfg.chromePath;
           message = "module.desktop.browsers.firefox: Either 'userChrome' is set or 'chromePath''";
 
         }
         {
-          assertion = cfg.userContent != "" && cfg.chromePath != null;
+          assertion = xor cfg.userContent cfg.chromePath;
           message = "module.desktop.browsers.firefox: Either 'userContent' is set or 'chromePath''";
 
         }
