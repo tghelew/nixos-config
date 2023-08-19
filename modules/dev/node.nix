@@ -12,7 +12,7 @@ let devCfg = config.modules.dev;
 in {
   options.modules.dev.node = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
+    modules.xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
   config = mkMerge [
@@ -32,7 +32,7 @@ in {
       env.PATH = [ "$(${pkgs.yarn}/bin/yarn global bin)" ];
     })
 
-    (mkIf cfg.xdg.enable {
+    (mkIf cfg.enable {
       env.NPM_CONFIG_USERCONFIG = "$XDG_CONFIG_HOME/npm/config";
       env.NPM_CONFIG_CACHE      = "$XDG_CACHE_HOME/npm";
       env.NPM_CONFIG_TMP        = "$XDG_RUNTIME_DIR/npm";

@@ -25,8 +25,8 @@
         recording.enable = true;
       };
       term = {
-        default = "wezterm";
-        wezterm.enable = true;
+        default = "alacritty";
+        wezterm.enable = false;
       };
       vm = {
         qemu.enable = true;
@@ -53,12 +53,13 @@
       ssh.enable = false;
       docker.enable = true;
     };
-    # TODO: theme.active = "nord";
+    theme.active = "nord";
   };
 
   ## Local config
   networking.networkmanager.enable = true;
-
+  hardware.opengl.enable = true;
+  time.timeZone = "Europe/Zurich";
 
   ## Personal backups
   #TODO: Backups

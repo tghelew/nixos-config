@@ -24,4 +24,7 @@ in {
     latitude = 47.37;
     longitude = 8.55;
   } else {});
+
+  #TODO: Setup gnupg home config
+  #TODO: Setup .ssh home config
 }

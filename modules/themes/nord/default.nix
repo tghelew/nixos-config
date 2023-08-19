@@ -6,14 +6,14 @@ with lib;
 with lib.my;
 let cfg = config.modules.theme;
     withXserver = config.services.xserver.enable;
-    withWayland = programs.hyperland.enable || programs.sway.enale;
+    withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
 in {
   config = mkIf (cfg.active == "nord") (mkMerge [
     # Desktop-agnostic configuration
     {
       modules = {
         theme = {
-          wallpaper = mkDefault .config/wallpapers;
+          wallpapers = mkDefault ./config/wallpaper;
           gtk = {
             theme = "Nordic";
             iconTheme = "Paper";
@@ -57,7 +57,7 @@ in {
 
             types.bg        = "#2e3440";
             types.fg        = "#d8dee9";
-            types.dim_fg    = cfg.colors.silver;
+            types.dimfg    = cfg.colors.silver;
             types.panelbg   = cfg.colors.types.bg;
             types.panelfg   = cfg.colors.types.fg;
             types.border    = cfg.colors.types.bg;
@@ -68,7 +68,7 @@ in {
         };
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
-        shell.tmux.rcFiles = [ ./config/tmux.conf ];
+        shell.tmux.rcFiles = [ ./config/tmux/tmux.conf ];
         desktop.browsers = {
           firefox.chromePath = ./config/firefox;
         };
@@ -121,7 +121,7 @@ in {
       '';
       # Other dotfiles
       home.configFile = with config.modules; mkMerge [
-        (mkif withXserver {
+        (mkIf withXserver {
           # Sourced from sessionCommands in modules/themes/default.nix
           "xtheme/90-theme" = mkIf withXserver {
             source = ./config/Xresources;
@@ -131,13 +131,13 @@ in {
           "rofi/theme" = { source = ./config/rofi; recursive = true; };
         })
 
-        (mkIf (desktop.hyprland.enable){
+        (mkIf (desktop.hypr.enable){
           "waybar" = {source = ./config/waybar; recursive = true;};
           "dunst/dunstrc".text = import ./config/dunstrc cfg;
-          "hypr/rc.d/theme.conf" = import ./config/hypr/theme.conf cfg;
+          "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf cfg;
 
         })
-        (mkIf desktop.media.graphics.vector.enable {
+        (mkIf desktop.media.graphics.illustrator.enable {
           "inkscape/templates/default.svg".source = ./config/inkscape/default-template.svg;
         })
         (mkIf desktop.browsers.qutebrowser.enable {

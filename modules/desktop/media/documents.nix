@@ -16,7 +16,7 @@ in {
     user.packages = with pkgs; [
       (mkIf cfg.ebook.enable calibre)
       (mkIf cfg.pdf.enable   evince)
-      # zathura
+      (mkIf cfg.pdf.enable   zathura)
     ];
 
     # TODO calibre/evince/zathura config and theme
