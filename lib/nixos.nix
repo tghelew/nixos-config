@@ -5,9 +5,9 @@ with lib.my;
 let sys = "x86_64-linux";
 in {
   mkHost = path: attrs @ { system ? sys, ... }:
-    nixosSystem {
+    lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit lib inputs system; };
+      specialArgs = {inherit lib system inputs;};
       modules = [
         {
           nixpkgs.pkgs = pkgs;
@@ -15,7 +15,7 @@ in {
         }
         (filterAttrs (n: v: !elem n [ "system" ]) attrs)
         ../.   # /default.nix
-        (import path)
+        (import path )
       ];
     };
 

@@ -7,7 +7,7 @@ with lib.my;
 let
   cfg = config.modules.theme;
   withXserver = config.services.xserver.enable;
-  withWayland = programs.hyperland.enable || programs.sway.enable;
+  withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
 in {
   options.modules.theme = with types; {
     active = mkOption {
@@ -81,7 +81,7 @@ in {
       types = {
         bg        = mkOpt str cfg.colors.black;
         fg        = mkOpt str cfg.colors.white;
-        dimfg     = mkOPt str cfg.colors.silver;
+        dimfg     = mkOpt str cfg.colors.silver;
         panelbg   = mkOpt str cfg.colors.types.bg;
         panelfg   = mkOpt str cfg.colors.types.fg;
         border    = mkOpt str cfg.colors.types.bg;
@@ -95,7 +95,7 @@ in {
   config = mkIf (cfg.active != null) (mkMerge [
     # Read xresources files in ~/.config/xtheme/* to allow modular configuration
     # of Xresources.
-    mkIf withXserver (
+    (mkIf withXserver (
       let xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${pkgs.xorg.xrdb}/bin/xrdb -load'';
       in {
         home.configFile."xtheme.init" = {
@@ -103,14 +103,8 @@ in {
           executable = true;
         };
         modules.theme.onReload.xtheme = xrdb;
-      })
+      }))
 
-    (mkIf (config.modules.desktop.bspwm.enable && withXserver) {
-      home.configFile."bspwm/rc.d/05-init" = {
-        text = "$XDG_CONFIG_HOME/xtheme.init";
-        executable = true;
-      };
-    })
 
     ( mkIf withXserver {
       home.configFile."xtheme/00-init".text = with cfg.colors; ''
@@ -153,7 +147,8 @@ in {
           *.color14: bcyn
           *.color15: bwht
         '';
-      "xtheme/05-fonts".text = with cfg.fonts.mono; ''
+      home.configFile."xtheme/05-fonts".text = with cfg.fonts.mono;
+        ''
           *.font: xft:${name}:pixelsize=${toString(size)}
           Emacs.font: ${name}:pixelsize=${toString(size)}
         '';})
@@ -217,7 +212,7 @@ in {
              fi
            '';
        in {
-         modules.theme.onReload.wallpaper = commandW;
+         modules.theme.onReload.wallpaper = if withXserver then commandX else commandW;
 
          systemd.user.services."swww" = {
            enable = true;

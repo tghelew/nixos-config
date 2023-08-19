@@ -60,10 +60,10 @@ in {
         enable = true;
         hidpi = true;
       };
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = pkgs.hyprland;
     };
 
-    config.modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
+    modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
 
     xdg.portal = {
       enable = true;
@@ -92,10 +92,8 @@ in {
     };
 
     home.configFile = {
-      "hypr/hyperland.conf" = {
-        text = import configDir.hyprland/hyperland.conf config pkgs;
-      };
-      "hypr/hyperland/rc.d" = {source = "${configDir}/hyprland/rc.d"; recursive = true;};
+      "hypr/hyprland.conf".text = import "${configDir}/hypr/hyprland.conf" { inherit config pkgs; };
+      "hypr/rc.d" = {source = "${configDir}/hypr/rc.d"; recursive = true;};
     };
   };
 }

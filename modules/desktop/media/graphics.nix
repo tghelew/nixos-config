@@ -6,7 +6,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop.media.graphics;
     configDir = config.nixos-config.configDir;
-    withWayland = programs.hyperland.enable || programs.sway.enale;
+    withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
 in {
   options.modules.desktop.media.graphics = {
     enable         = mkBoolOpt false;
@@ -43,7 +43,7 @@ in {
 
     home.configFile = {
       "GIMP/2.10" = mkIf cfg.photoshop.enable { source = "${configDir}/gimp"; recursive = true; };
-      "swayimg"   = mkIf (cfg.config.tools.enable && withWayland) { source = "${configDir}/swayimg"; };
+      "swayimg"   = mkIf (cfg.tools.enable && withWayland) { source = "${configDir}/swayimg"; };
     };
 
 

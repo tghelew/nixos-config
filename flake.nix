@@ -28,25 +28,13 @@
         url = "github:nix-community/emacs-overlay";
       };
 
-      hyprland = {                                                        # Official Hyprland flake
-        url = "github:hyprwm/Hyprland";
-        inputs.nixpkgs.follows = "nixpkgs-unstable";
-      };
-
       agenix = {                                                          # Secret management in Nix Store
         url =  "github:ryantm/agenix";
         inputs.nixpkgs.follows = "nixpkgs";
       };
     };
 
-  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable
-    ,home-manager
-    ,macos
-    ,emacs-overlay
-    ,hyprland
-    ,agenix
-    ,nixos-hardware
-    ,... }:
+  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable,... }:
 
     let
       inherit (lib.my) mapModules mapModulesRec mapHosts;
@@ -58,7 +46,7 @@
         config.allowUnfree = true;  # forgive me Stallman senpai
         overlays = extraOverlays ++ (lib.attrValues self.overlays);
       };
-      pkgs  = mkPkgs nixpkgs "${system}" [ self.overlay ];
+      pkgs  = mkPkgs nixpkgs "${system}" [ self.overlays.default ];
       pkgs' = mkPkgs nixpkgs-unstable "${system}" [];
 
       lib = nixpkgs.lib.extend
@@ -68,13 +56,13 @@
     {
       lib = lib.my;
 
-      overlay =
-        final: prev: {
-          unstable = pkgs';
-          my = self.packages."${system}";
-        };
-
-      overlays = (mapModules ./overlays import);
+      overlays = {
+        default =
+          final: prev: {
+            unstable = pkgs';
+            my = self.packages."${system}";
+          };
+      } // (mapModules ./overlays import);
 
       packages."${system}" =
         mapModules ./packages (p: pkgs.callPackage p {});
@@ -87,6 +75,19 @@
 
       devShells."${system}" = {
         default = import ./shell.nix { inherit pkgs; };
+      };
+
+      templates = {
+        default = self.templates.full;
+        full = {
+          path = ./.;
+          description = "A grossly incandescent nixos config";
+        };
+      } // import ./templates;
+
+      apps."${system}".default = {
+        type = "app";
+        program = ./bin/hey;
       };
     };
 }

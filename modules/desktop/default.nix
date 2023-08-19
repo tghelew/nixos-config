@@ -4,7 +4,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop;
     withXserver = config.services.xserver.enable;
-    withWayland = programs.hyperland.enable || programs.sway.enale;
+    withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
 in {
   config = mkIf (withXserver || withWayland) {
     assertions = [
@@ -58,9 +58,10 @@ in {
       ];
     };
 
+
     ## Apps/Services
     services.xserver.displayManager.lightdm = {
-      enable = true;
+      enable = false;
         greeters.mini = {
           enable = true;
           user = config.user.name;

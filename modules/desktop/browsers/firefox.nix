@@ -30,13 +30,13 @@ in {
 
       assertions = [
         {
-          assertion = xor cfg.userChrome cfg.chromePath;
-          message = "module.desktop.browsers.firefox: Either 'userChrome' is set or 'chromePath''";
+          assertion = xor (cfg.userChrome != "") (cfg.chromePath != null);
+          message = "module.desktop.browsers.firefox: Either attribute 'userChrome' xor 'chromePath' must be set";
 
         }
         {
-          assertion = xor cfg.userContent cfg.chromePath;
-          message = "module.desktop.browsers.firefox: Either 'userContent' is set or 'chromePath''";
+          assertion = xor (cfg.userContent != "") (cfg.chromePath != null);
+          message = "module.desktop.browsers.firefox: Either attribute 'userContent' xor 'chromePath' nust be set";
 
         }
       ];

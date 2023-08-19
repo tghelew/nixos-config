@@ -7,7 +7,7 @@ let cfg = config.modules.desktop.term;
 in {
   options.modules.desktop.term = {
     default = mkOpt types.str "alacritty";
-    theme = mkOpt types.nullOr types.path "null";
+    theme = mkOpt (types.nullOr types.path) null;
   };
 
   config = {
@@ -17,7 +17,7 @@ in {
     env.TERMINAL = cfg.default;
 
     home.configFile."alacritty/alacritty.yml" = {source = "${configDir}/alacritty/alacritty.yml";};
-    home.configFile."alacritty/extra.yml" = mkIf (modules.desktop.term.theme != null) {
+    home.configFile."alacritty/extra.yml" = mkIf (cfg.theme != null) {
       text = import cfg.theme config.modules.theme;
     };
   };
