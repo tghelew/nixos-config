@@ -37,7 +37,7 @@ with lib.my;
       gc = {
         automatic = true;
         dates = "weekly";
-        persitent = true;
+        persistent = true;
         randomizedDelaySec = "10min";
       };
     };
