@@ -23,7 +23,7 @@ in {
     user.packages = with pkgs; [
       (writeScriptBin "rofi" ''
         #!${stdenv.shell}
-        exec ${pkgRofi}/bin/rofi -terminal "${config.module.term.default}" -m -1 "$@"
+        exec ${pkgRofi}/bin/rofi -terminal "${config.modules.desktop.term.default}" -m -1 "$@"
       '')
 
       # Fake rofi dmenu entries
