@@ -68,7 +68,7 @@ in {
         };
 
         desktop.term.theme =
-          if  modules.desktop.term.default == "alacritty "
+          if  config.modules.desktop.term.default == "alacritty "
           then ./config/alacritty.yaml
           else "";
 
