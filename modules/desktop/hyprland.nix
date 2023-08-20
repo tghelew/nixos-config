@@ -60,7 +60,7 @@ in {
         enable = true;
         hidpi = true;
       };
-      package = pkgs.hyprland;
+      package = pkgs.unstable.hyprland;
     };
 
     programs.waybar = {
