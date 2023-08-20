@@ -16,7 +16,7 @@ in {
     ];
     env.TERMINAL = cfg.default;
 
-    home.configFile."alacritty/alacritty.yml" = {source = "${configDir}/alacritty/alacritty.yml";};
+    home.configFile."alacritty/alacritty.yml".text = import "${configDir}/alacritty/alacritty.yml" config;
     home.configFile."alacritty/extra.yml" = mkIf (cfg.theme != null) {
       text = import cfg.theme config.modules.theme;
     };

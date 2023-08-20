@@ -39,7 +39,7 @@ in {
     fonts = {
       mono = {
         name = mkOpt str "Monospace";
-        size = mkOpt int 12;
+        size = mkOpt int 10;
       };
       sans = {
         name = mkOpt str "Sans";
@@ -208,7 +208,7 @@ in {
            commandW = ''
              if [ -d "$XDG_DATA_HOME/wallpapers" ]; then
                img=$(find $XDG_DATA_HOME/wallpapers -type f | sort -R | tail -1)
-               ${pkgs.swww}/bin/swww img  -t fade $img
+               ${pkgs.swww}/bin/swww img  -t random $img
              fi
            '';
        in {
