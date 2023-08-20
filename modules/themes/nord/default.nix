@@ -70,7 +70,7 @@ in {
         desktop.term.theme =
           if  config.modules.desktop.term.default == "alacritty "
           then ./config/alacritty.yaml
-          else "";
+          else null;
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
         shell.tmux.rcFiles = [ ./config/tmux/tmux.conf ];
