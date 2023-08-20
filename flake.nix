@@ -28,6 +28,11 @@
         url = "github:nix-community/emacs-overlay";
       };
 
+      hyprland = {                                                        # Official Hyprland flake
+        url = "github:hyprwm/Hyprland";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
       agenix = {                                                          # Secret management in Nix Store
         url =  "github:ryantm/agenix";
         inputs.nixpkgs.follows = "nixpkgs";
