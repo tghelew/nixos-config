@@ -67,6 +67,11 @@ in {
           };
         };
 
+        desktop.term.theme =
+          if  desktop.term.default == "alacritty "
+          then ./config/alacritty.yaml
+          else "";
+
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
         shell.tmux.rcFiles = [ ./config/tmux/tmux.conf ];
         desktop.browsers = {
