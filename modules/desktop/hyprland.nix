@@ -63,6 +63,11 @@ in {
       package = pkgs.hyprland;
     };
 
+    programs.waybar = {
+      enable = true;
+      package = inputs.hyprland.packages."${pkgs.system}".waybar-hyprland;
+    };
+
     modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
 
     xdg.portal = {
