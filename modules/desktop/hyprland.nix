@@ -49,9 +49,16 @@ in {
     };
 
     #TODO: Check if needed
-    # security.pam.services.swaylock = {
-    #   text = ''auth include login '';
-    # };
+    security.pam.services.swaylock = {
+      text = ''auth include login '';
+    };
+
+    # Sudo: I hate entering my password
+    security.sudo = {
+     enable = true;
+     execWheelOnly = true;
+     wheelNeedsPassword = false;
+    };
 
 
     programs.hyprland = {
