@@ -215,7 +215,7 @@ in {
          modules.theme.onReload.wallpaper = if withXserver then commandX else commandW;
 
          systemd.user.services."swww" = {
-           enable = true;
+           enable = false;
            description = "Initialize the swww deamon";
            wantedBy = [ "default.target" ];
            serviceConfig.Restart = "always";
