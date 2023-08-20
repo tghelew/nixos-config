@@ -60,6 +60,7 @@ in {
 
 
     ## Apps/Services
+    ## TODO: find a login manager (greetd?)
     services.xserver.displayManager.lightdm = {
       enable = false;
         greeters.mini = {
