@@ -60,16 +60,17 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
-    system.userActivationScripts = mkIf cfg.tlux.enable {
-      installTluxEmacs = ''
-        if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-           git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
-           git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
-           echo -n "Tlux Configuration file installed! Do not forget to run: temacs install"
-        fi
+    # TODO: setup agenix
+    # system.userActivationScripts = mkIf cfg.tlux.enable {
+    #   installTluxEmacs = ''
+    #     if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
+    #        git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
+    #        git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
+    #        echo -n "Tlux Configuration file installed! Do not forget to run: temacs install"
+    #     fi
 
-      '';
-    };
+    #   '';
+    # };
 
     nix.settings = {
       substituters = ["https://nix-community.cachix.org"];	# Install cached version so rebuild should not be required
