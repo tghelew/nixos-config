@@ -210,7 +210,7 @@ in {
                img=$(${pkgs.findutils}/bin/find $XDG_DATA_HOME/wallpapers -type f -o -type l \
                | ${pkgs.coreutils-full}/bin/sort -R \
                | ${pkgs.coreutils-full}/bin/tail -1)
-               export XDG_WALLPAPER_CURRENT=$img
+               ${pkgs.coreutils-full}/bin/ln -sf $img $XDG_DATA_HOME/wallpapers/current
              fi
            '';
        in {
