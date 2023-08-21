@@ -55,7 +55,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 5
+  size: 7
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -100,7 +100,7 @@ colors:
       foreground: CellBackground
       background: ${colors.cyan}
     bar:
-      background: "#434c5e"
+      background: #434c5e
       foreground: ${colors.types.fg}
   hints:
       foreground: CellBackground
