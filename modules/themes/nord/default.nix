@@ -5,6 +5,7 @@
 with lib;
 with lib.my;
 let cfg = config.modules.theme;
+    themesDir = config.nixos-config.themesDir;
     withXserver = config.services.xserver.enable;
     withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
 in {
@@ -68,8 +69,8 @@ in {
         };
 
         desktop.term.theme =
-          if  config.modules.desktop.term.default == "alacritty "
-          then ./config/alacritty.yaml
+          if  config.modules.desktop.term.default == "alacritty"
+          then "${themesDir}/${cfg.active}/config/alacritty.yaml"
           else null;
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
