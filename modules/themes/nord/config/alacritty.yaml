@@ -84,14 +84,14 @@ draw_bold_text_with_bright_colors: true
 colors:
   primary:
     background     : ${colors.types.bg}
-    foreground     : ${colors.type.fg}
+    foreground     : ${colors.types.fg}
     dim_foreground : ${colors.types.dimfg}
   cursor:
     text   : ${colors.types.bg}
     cursor : ${colors.type.fg}
   vi_mode_cursor:
     text: ${colors.types.bg}
-    cursor: ${colors.type.fg}
+    cursor: ${colors.types.fg}
   selection:
     text: CellForeground
     background: ${colors.brightblack}
@@ -101,7 +101,7 @@ colors:
       background: ${colors.cyan}
     bar:
       background: "#434c5e"
-      foreground: ${colors.type.fg}
+      foreground: ${colors.types.fg}
   hints:
       foreground: CellBackground
       background: ${colors.cyan}
