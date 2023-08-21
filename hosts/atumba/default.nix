@@ -46,7 +46,7 @@
       direnv.enable = true;
       git.enable    = true;
       gnupg.enable  = true;
-      tmux.enable   = true;
+      tmux.enable   = false;
       zsh.enable    = true;
     };
     services = {
