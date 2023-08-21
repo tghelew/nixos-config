@@ -207,7 +207,9 @@ in {
           '';
            commandW = ''
              if [ -d "$XDG_DATA_HOME/wallpapers" ]; then
-               img=$(find $XDG_DATA_HOME/wallpapers -type f -o -type l | sort -R | tail -1)
+               img=$(find $XDG_DATA_HOME/wallpapers -type f -o -type l \
+               | ${pkgs.coreutils-full}/bin/sort -R \
+               | ${pkgs.coreutils-full}/bin/tail -1)
                ${pkgs.swww}/bin/swww img  -t random $img
              fi
            '';
