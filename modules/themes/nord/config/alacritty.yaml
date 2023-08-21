@@ -88,7 +88,7 @@ colors:
     dim_foreground : ${colors.types.dimfg}
   cursor:
     text   : ${colors.types.bg}
-    cursor : ${colors.type.fg}
+    cursor : ${colors.types.fg}
   vi_mode_cursor:
     text: ${colors.types.bg}
     cursor: ${colors.types.fg}
