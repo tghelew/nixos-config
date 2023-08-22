@@ -99,8 +99,8 @@ colors:
     matches:
       foreground: CellBackground
       background: '${colors.cyan}'
-    bar:
-      background: #434c5e
+    footer_bar:
+      background: '#434c5e'
       foreground: '${colors.types.fg}'
   hints:
       foreground: CellBackground
