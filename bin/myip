@@ -1,4 +1,5 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p dig coreutils-full nettools gawk
 # Echos your local or WAN IP
 
 if [[ $1 == -w ]]; then

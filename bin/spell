@@ -13,7 +13,7 @@ if [[ "$result" == '*' ]]; then
   echo "$@"
 else
   words=$(echo "$result" | sed $'s/[:,] /\\\n/g' | tail -n +2)
-  if (( $(wc -l <<< "$words") > 1 )) && command -v sk >/dev/null; then
+  if (( $(wc -l <<< "$words") > 1 ));  then
     fzf <<< "$words"
   else
     echo "$words"
