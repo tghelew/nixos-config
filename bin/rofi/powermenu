@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 rofi_command="rofi -theme theme/powermenu.rasi"
+logout_command="hyprctl dispatch exit"
 
 ### Options ###
 power_off="\tShutdown"
@@ -22,10 +23,9 @@ case "$(echo -e "$options" | $rofi_command -dmenu -selected-row 2)" in
         zzz
         ;;
     $suspend)
-        dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause
         systemctl suspend
         ;;
     $log_out)
-        bspc quit
+        $logout_commad
         ;;
 esac

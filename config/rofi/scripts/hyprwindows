@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+# List actives windows in all workspaces in order to focus them using rofi
+
+_required_list=(jq hyprctl)
+_clients=$(hyprctl -j clients)
+_clients_parsed=$(hyprctl -j clients | jq -cr '.[] | "\(.address)|\(.initialTitle)"')
+
+for cmd in $_required_list; do
+	if ! command -v $cmd >/dev/null; then
+		exit 2
+	fi
+done
+
+if [ $# -eq 0 ]; then
+	while IFS='|' read -r address title; do
+		if [[ "$title"  == "null" ]]; then 
+			continue
+		fi
+		echo -en "${title}\n"
+	done <<<$_clients_parsed
+fi
+
+if [ $# -eq 1 ]; then
+	selected=$1
+	window=$(echo ${_clients} | jq ".[] | select(.initialTitle == \"${selected}\")")
+	if [[ $window == "" ]]; then
+		exit 1
+	fi
+	address=$(echo ${window} | jq -j ".address")
+	
+	if [[ $address == "" ]]; then
+		exit 1
+	fi
+	coproc zsh -c "hyprctl dispatch focuswindow  address:$address"
+fi
+

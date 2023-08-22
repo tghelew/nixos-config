@@ -3,6 +3,7 @@
 
 # A script that takes a screenshot (prompts you for what region/window to
 # capture) and stores it in the clipboard.
+# TODO: Fix me
 
 tmp=$(mktemp)
 trap "rm -f '$tmp'" EXIT

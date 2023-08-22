@@ -45,6 +45,7 @@ in {
         swww
         waybar
         libnotify
+        wtype
       ];
     };
 

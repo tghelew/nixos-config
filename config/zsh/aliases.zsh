@@ -51,8 +51,9 @@ if (( $+commands[exa] )); then
   alias l="exa -blF";
   alias ll="exa -abghilmu";
   alias llm='ll --sort=modified'
-  alias la="LC_COLLATE=C exa -ablF";
+  alias la="LC_COLLATE=C exa -abhlF";
   alias tree='exa --tree'
+  alias ls=exa
 fi
 
 if (( $+commands[fasd] )); then
@@ -79,3 +80,8 @@ function r {
   local time=$1; shift
   sched "$time" "notify-send --urgency=critical 'Reminder' '$@'; ding";
 }; compdef r=sched
+
+
+function alval {
+  alias | grep -i $1 | fzf -i
+}
