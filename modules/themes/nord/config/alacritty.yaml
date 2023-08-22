@@ -83,55 +83,55 @@ draw_bold_text_with_bright_colors: true
 
 colors:
   primary:
-    background     : ${colors.types.bg}
-    foreground     : ${colors.types.fg}
-    dim_foreground : ${colors.types.dimfg}
+    background     : '${colors.types.bg}'
+    foreground     : '${colors.types.fg}'
+    dim_foreground : '${colors.types.dimfg}'
   cursor:
-    text   : ${colors.types.bg}
-    cursor : ${colors.types.fg}
+    text   : '${colors.types.bg}'
+    cursor : '${colors.types.fg}'
   vi_mode_cursor:
-    text: ${colors.types.bg}
-    cursor: ${colors.types.fg}
+    text: '${colors.types.bg}'
+    cursor: '${colors.types.fg}'
   selection:
     text: CellForeground
-    background: ${colors.brightblack}
+    background: '${colors.brightblack}'
   search:
     matches:
       foreground: CellBackground
-      background: ${colors.cyan}
+      background: '${colors.cyan}'
     bar:
       background: #434c5e
-      foreground: ${colors.types.fg}
+      foreground: '${colors.types.fg}'
   hints:
       foreground: CellBackground
-      background: ${colors.cyan}
+      background: '${colors.cyan}'
   normal:
-    black   : ${colors.black}
-    red     : ${colors.red}
-    green   : ${colors.green}
-    yellow  : ${colors.yellow}
-    blue    : ${colors.blue}
-    magenta : ${colors.magenta}
-    cyan    : ${colors.cyan}
-    white   : ${colors.white}
+    black   : '${colors.black}'
+    red     : '${colors.red}'
+    green   : '${colors.green}'
+    yellow  : '${colors.yellow}'
+    blue    : '${colors.blue}'
+    magenta : '${colors.magenta}'
+    cyan    : '${colors.cyan}'
+    white   : '${colors.white}'
   bright:
-    black   : ${colors.brightblack}
-    red     : ${colors.brightred}
-    green   : ${colors.brightgreen}
-    yellow  : ${colors.brightyellow}
-    blue    : ${colors.brightblue}
-    magenta : ${colors.brightmagenta}
-    cyan    : ${colors.brightcyan}
-    white   : ${colors.brightwhite}
+    black   : '${colors.brightblack}'
+    red     : '${colors.brightred}'
+    green   : '${colors.brightgreen}'
+    yellow  : '${colors.brightyellow}'
+    blue    : '${colors.brightblue}'
+    magenta : '${colors.brightmagenta}'
+    cyan    : '${colors.brightcyan}'
+    white   : '${colors.brightwhite}'
   dim:
-    black   : ${colors.dimblack}
-    red     : ${colors.dimred}
-    green   : ${colors.dimgreen}
-    yellow  : ${colors.dimyellow}
-    blue    : ${colors.dimblue}
-    magenta : ${colors.dimmagenta}
-    cyan    : ${colors.dimcyan}
-    white   : ${colors.dimwhite}
+    black   : '${colors.dimblack}'
+    red     : '${colors.dimred}'
+    green   : '${colors.dimgreen}'
+    yellow  : '${colors.dimyellow}'
+    blue    : '${colors.dimblue}'
+    magenta : '${colors.dimmagenta}'
+    cyan    : '${colors.dimcyan}'
+    white   : '${colors.dimwhite}'
 
 cursor:
   # Cursor style
