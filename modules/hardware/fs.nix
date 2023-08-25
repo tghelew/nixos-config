@@ -8,7 +8,7 @@ in {
     enable = mkBoolOpt false;
     zfs.enable = mkBoolOpt false;
     ssd.enable = mkBoolOpt false;
-    automout.enable = mkBoolOpt false;
+    automount.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -41,7 +41,7 @@ in {
         services.fstrim.enable = false;
         services.zfs.trim.enable = true;
       })
-      (mkIf mkIf cfg.automount.enable {
+      (mkIf cfg.automount.enable {
         environment.systemPackages = with pkgs; [
           udiskie
         ];
