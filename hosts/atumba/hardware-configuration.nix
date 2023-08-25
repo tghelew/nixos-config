@@ -50,6 +50,7 @@
     fs = {
       enable = true;
       ssd.enable = true;
+      automount.enable = true;
     };
     sensors.enable = true;
   };
@@ -66,7 +67,12 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5C96-3A4A";
+    { device = "/dev/disk/by-label/BOOT";
+      fsType = "vfat";
+    };
+
+  fileSystems."${config.user.home}/data" =
+    { device = "/dev/disk/by-label/DATA";
       fsType = "vfat";
     };
 
