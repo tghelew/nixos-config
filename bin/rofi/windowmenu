@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 rofi -show fb \
+     -modes "fb:hyprwindows"\
      -show-icons \
-     -mode "fb:hyprwindow"
      -theme theme/windowmenu.rasi
