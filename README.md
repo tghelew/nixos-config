@@ -20,4 +20,5 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * Update MacOS configuration (_yabi_)
  * Setup a scratch terminal with tmux
  * Setup a Calc scratch terminal
+ * Setup kitty as the default terminal
 
