@@ -30,7 +30,7 @@ in {
 
     ];
     home.configFile = {
-      "rofi/scripts" = {source ="${configDir}/rofi/scripts"; recursive = "true"; };
+      "rofi/scripts" = {source ="${configDir}/rofi/scripts"; recursive = true; };
     };
   };
 }

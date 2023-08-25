@@ -8,7 +8,7 @@ in {
     enable = mkBoolOpt false;
     zfs.enable = mkBoolOpt false;
     ssd.enable = mkBoolOpt false;
-    # TODO automount.enable = mkBoolOpt false;
+    automout.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -40,6 +40,19 @@ in {
         # Will only TRIM SSDs; skips over HDDs
         services.fstrim.enable = false;
         services.zfs.trim.enable = true;
+      })
+      (mkIf mkIf cfg.automount.enable {
+        environment.systemPackages = with pkgs; [
+          udiskie
+        ];
+
+        systemd.user.services."udiskie" = {
+          enable = true;
+          description = "Handle automounting of usb devices";
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig.ExecStart = "${pkgs.udiskie}/bin/udiskie";
+        };
+
       })
     ]))
   ]);
