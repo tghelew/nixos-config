@@ -15,10 +15,6 @@ in {
       alsa.support32Bit = true;
       pulse.enable = true;
     };
-
-    sound.enable = true;
-    hardware.pulseaudio.enable = true;
-
     security.rtkit.enable = true;
 
     environment.systemPackages = with pkgs; [
