@@ -125,7 +125,7 @@ textbox-icon {
   font: @icon-font;
 }
 entry {
-  font: @text-font-mono;
+  font: @text-mono-font;
   background-color: @bg-light;
   text-color: @silver;
 }
