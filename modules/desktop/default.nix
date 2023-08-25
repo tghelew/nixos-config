@@ -55,6 +55,10 @@ in {
         dejavu_fonts
         symbola
         meslo-lgs-nf
+        mononoki
+        nerdfonts
+        fira-mono
+        fira-code
       ];
     };
 
