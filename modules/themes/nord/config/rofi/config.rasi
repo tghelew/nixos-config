@@ -33,7 +33,7 @@ configuration {
   icon-font:      "FontAwesome 20";
 
   background-color: transparent;
-  text-color: @black;
+  text-color: @fg-list;
   font: @text-font;
   border-color: @bg-dark;
 }
@@ -109,7 +109,7 @@ listview, inputbar {
   background-color: @bg-dark;
 }
 textbox-icon, prompt, entry {
-  text-color: @accent;
+  text-color: @black;
 }
 prompt, entry {
   background-color: @bg-focus;
