@@ -18,4 +18,6 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * Setup _pass_
  * Configure Waybar with _nord_ theme
  * Update MacOS configuration (_yabi_)
+ * Setup a scratch terminal with tmux
+ * Setup a Calc scratch terminal
 
