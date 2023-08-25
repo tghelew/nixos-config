@@ -13,18 +13,18 @@ configuration {
 }
 
 * {
-  accent:   #bd93f9;
-  bg:       #1E2029FA;
-  bg-light: #1c1c1c;
-  bg-focus: #282a36;
-  bg-dark:  #181a23;
-  fg:       #bbc2cf;
-  fg-list:  #bbc2cf;
-  on:       #8BD49C;
-  off:      #cc6666;
+  accent:   #68809a;
+  bg:       #2e3440;
+  bg-light: #2e3440;
+  bg-focus: #d8dee9;
+  bg-dark:  #2e3440;
+  fg:       #d8dee9;
+  fg-list:  #d8dee9;
+  on:       #a3be8c;
+  off:      #e5e9f0;
 
-  magenta: #bd93f9;
-  blue:    #61bfff;
+  magenta: #b48ead;
+  blue:    #81a1c1;
 
   text-font:      "Fira Sans 15";
   text-mono-font: "Fira Code 13";
@@ -114,7 +114,7 @@ prompt, entry {
   background-color: @bg-focus;
 }
 textbox-icon, prompt {
-  background-color: #2f313d;
+  background-color: #373e4d;
 }
 prompt {
   background-color: @bg-focus;

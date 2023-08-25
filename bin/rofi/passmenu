@@ -2,6 +2,7 @@
 
 # rofi-pass
 # (c) 2015 Rasmus Steinke <rasi@xssn.at>
+# TODO: Add config
 basecommand="$0"
 
 # set default settings
