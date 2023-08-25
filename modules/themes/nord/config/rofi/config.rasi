@@ -96,6 +96,7 @@ entry, element {
 textbox {
   padding: 24px;
   margin: 20px;
+  text-color: @black;
 }
 
 
