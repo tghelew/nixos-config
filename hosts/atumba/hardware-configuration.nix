@@ -74,6 +74,11 @@
   fileSystems."${config.user.home}/data" =
     { device = "/dev/disk/by-label/DATA";
       fsType = "vfat";
+      options = [
+        "defaults"
+        "uid=${config.user.name}"
+        "gid=users"
+      ];
     };
 
   swapDevices =
