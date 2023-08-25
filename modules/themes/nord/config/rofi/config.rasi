@@ -26,6 +26,7 @@ configuration {
   magenta: #b48ead;
   blue:    #81a1c1;
   black:   #3b4252;
+  silver:  #e5e9f0;
 
   text-font:      "Fira Sans 15";
   text-mono-font: "Fira Code 13";
@@ -96,7 +97,6 @@ entry, element {
 textbox {
   padding: 24px;
   margin: 20px;
-  text-color: @black;
 }
 
 
@@ -110,13 +110,13 @@ listview, inputbar {
   background-color: @bg-dark;
 }
 textbox-icon, prompt, entry {
-  text-color: @black;
+  text-color: @accent;
 }
 prompt, entry {
   background-color: @bg-focus;
 }
 textbox-icon, prompt {
-  background-color: #373e4d;
+  background-color: @bg-light;
 }
 prompt {
   background-color: @bg-focus;
@@ -126,7 +126,8 @@ textbox-icon {
 }
 entry {
   font: @text-font-mono;
-  text-color: @fg;
+  background-color: @bg-light;
+  text-color: @silver;
 }
 
 element {
