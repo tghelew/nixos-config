@@ -39,7 +39,7 @@ in {
       };
       systemPackages = with pkgs; [
         #NOTE: Check ./default.nix
-        swaylock
+        swaylock-effects
         swayidle
         dunst
         unstable.swww
@@ -54,7 +54,7 @@ in {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --sessions Hyprland --cmd dbus-launch Hyprland " ;
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'dbus-launch Hyprland' " ;
           user = "${config.user.name}";
         };
       };
