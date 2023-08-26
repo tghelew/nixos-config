@@ -42,7 +42,7 @@ in {
         #NOTE: Check ./default.nix
         swaylock
         dunst
-        swww
+        unstable.swww
         waybar
         libnotify
         wtype
