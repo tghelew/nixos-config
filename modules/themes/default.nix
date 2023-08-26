@@ -217,16 +217,6 @@ in {
            '';
        in {
          modules.theme.onReload.wallpaper = if withXserver then commandX else commandW;
-
-         systemd.user.services."swww" = {
-           enable = true;
-           description = "Initialize the swww deamon";
-           wantedBy = [ "graphical.target" ];
-           serviceConfig.Restart = "always";
-           serviceConfig.RestartSec = 2;
-           serviceConfig.ExecStart = "${pkgs.unstable.swww}/bin/swww init ";
-         };
-
        }))
 
     # (mkIf (cfg.loginWallpaper != null) {
