@@ -207,6 +207,8 @@ in {
           '';
            commandW = ''
              if [ -d "$XDG_DATA_HOME/wallpapers" ]; then
+               [ -f "$XDG_DATA_HOME/wallpapers/current" ] && \
+                  ${pkgs.coreutils-full}/bin/rm -f "$XDG_DATA_HOME/wallpapers/current"
                img=$(${pkgs.findutils}/bin/find $XDG_DATA_HOME/wallpapers -type f -o -type l \
                | ${pkgs.coreutils-full}/bin/sort -R \
                | ${pkgs.coreutils-full}/bin/tail -1)
@@ -217,19 +219,19 @@ in {
          modules.theme.onReload.wallpaper = if withXserver then commandX else commandW;
 
          systemd.user.services."swww" = {
-           enable = false;
+           enable = true;
            description = "Initialize the swww deamon";
-           wantedBy = [ "default.target" ];
+           wantedBy = [ "graphical.target" ];
            serviceConfig.Restart = "always";
            serviceConfig.RestartSec = 2;
-           serviceConfig.ExecStart = "${pkgs.swww}/bin/swww init";
+           serviceConfig.ExecStart = "${pkgs.swww}/bin/swww-daemon ";
          };
 
        }))
 
-    (mkIf (cfg.loginWallpaper != null) {
-      services.xserver.displayManager.lightdm.background = cfg.loginWallpaper;
-    })
+    # (mkIf (cfg.loginWallpaper != null) {
+    #   services.xserver.displayManager.lightdm.background = cfg.loginWallpaper;
+    # })
 
     (mkIf (cfg.wallpapers != null) {
       home.dataFile = {

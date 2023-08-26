@@ -118,13 +118,6 @@ in {
         };
       };
 
-      # Login screen theme
-      services.xserver.displayManager.lightdm.greeters.mini.extraConfig = ''
-        text-color = "${cfg.colors.magenta}"
-        password-background-color = "${cfg.colors.black}"
-        window-color = "${cfg.colors.types.border}"
-        border-color = "${cfg.colors.types.border}"
-      '';
       # Other dotfiles
       home.configFile = with config.modules; mkMerge [
         (mkIf withXserver {
