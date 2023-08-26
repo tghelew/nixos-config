@@ -148,7 +148,7 @@ in {
             indicator-radius  = 100
             indicator-thickness  = 7
             font = ${fonts.mono.name}
-            font-size = ${fonts.mono.size}
+            font-size = ${toString fonts.mono.size}
             color = ${colors.types.bg}
             ring-color =  ${colors.grey}
             key-hl-color  = ${colors.green}
