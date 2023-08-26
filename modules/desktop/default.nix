@@ -64,17 +64,6 @@ in {
 
 
     ## Apps/Services
-    ##login manager (greetd)
-    services.greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --sessions Hyprland " ;
-          user = "${config.user.name}";
-        };
-      };
-    };
-
     services.picom = mkIf config.services.xserver.enable {
       backend = "glx";
       vSync = true;
