@@ -17,12 +17,12 @@ in {
   config = mkIf cfg.enable {
 
     environment = {
-      loginShellInit = ''
-      # Will automatically open Hyprland when logged into tty1
-      if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-        exec ${hypr-exec}
-      fi
-    '';
+    #   loginShellInit = ''
+    #   # Will automatically open Hyprland when logged into tty1
+    #   if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+    #     exec ${hypr-exec}
+    #   fi
+    # '';
 
       variables = {
         XDG_CURRENT_DESKTOP="Hyprland";
