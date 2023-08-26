@@ -63,17 +63,6 @@ listview {
   margin: -2px 0 0;
 }
 
-/*
-  TODO Not supported in stable branch of rofi
-  @media only (max-height: 1080px) {
-    window {
-      y-offset: -30%;
-    }
-    listview {
-      lines: 14;
-    }
-  }
-*/
 
 scrollbar {
   handle-width: 1px;

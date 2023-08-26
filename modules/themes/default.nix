@@ -224,7 +224,7 @@ in {
            wantedBy = [ "graphical.target" ];
            serviceConfig.Restart = "always";
            serviceConfig.RestartSec = 2;
-           serviceConfig.ExecStart = "${pkgs.swww}/bin/swww-daemon ";
+           serviceConfig.ExecStart = "${pkgs.unstable.swww}/bin/swww init ";
          };
 
        }))

@@ -2,6 +2,7 @@
 ''
 [global]
 alignment = left
+layer = top
 browser = firefox -new-tab
 corner_radius = 2
 dmenu = rofi -dmenu -p dunst:
@@ -11,12 +12,10 @@ format = "<b>%s</b>\n%b"
 frame_color = "${colors.types.border}"
 frame_width = 1
 origin = top-right
-width = 440
-height = 15
-offset = -26, +26
 history_length = 20
 horizontal_padding = 16
 icon_position = right
+icon_theme = "Paper"
 idle_threshold = 120
 ignore_newline = no
 indicate_hidden = yes
@@ -41,12 +40,12 @@ foreground = "${colors.types.fg}"
 timeout = 8
 
 [urgency_normal]
-background = "${colors.types.panelbg}"
+background = "${colors.types.bg}"
 foreground = "${colors.types.fg}"
-timeout = 14
+timeout = 16
 
 [urgency_critical]
-background = "#cc6666"
+background = "${colors.red}"
 foreground = "${colors.types.bg}"
-timeout = 0
+timeout = 32
 ''

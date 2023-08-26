@@ -296,7 +296,6 @@ module Hey
     end
   end
 
-  # TODO Generalize this to nix profiles
   defcmd [:generations, :gen] do
     desc "Explore, manage, diff across generations"
     opts       '--diff FROM TO',   "Diff profiles FROM with TO (numbers)"

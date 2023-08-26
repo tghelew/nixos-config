@@ -1,0 +1,4 @@
+timeout 180 'swaylock'
+timeout 300 '[ $XDG_CURRENT_SESSION == "Hyprland" ] && hyprctl dispactch dpms off'
+        resume  '[ $XDG_CURRENT_SESSION == "Hyprland" ] && hyprctl dispactch dpms on'
+before-sleep 'swaylock'
