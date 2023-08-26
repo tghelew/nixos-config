@@ -6,7 +6,6 @@ let
   #TODO: Setup waybar modules, themes for all apps
   cfg = config.modules.desktop.hypr;
   configDir = config.nixos-config.configDir;
-  hypr-exec =  "exec dbus-launch Hyprland";
 
 in {
 
@@ -49,10 +48,17 @@ in {
       ];
     };
 
-    #TODO: Check if needed
-    security.pam.services.swaylock = {
-      text = ''auth include login '';
+    ##login manager (greetd)
+    services.greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --sessions Hyprland --cmd dbus-launch Hyprland " ;
+          user = "${config.user.name}";
+        };
+      };
     };
+
 
     # Sudo: I hate entering my password
     security.sudo = {
