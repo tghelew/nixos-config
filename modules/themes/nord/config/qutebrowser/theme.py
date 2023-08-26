@@ -300,5 +300,5 @@ c.colors.tabs.selected.even.bg = base0D
 # Background color for webpages if unset (or empty to use the theme's
 # color).
 # Dark mode
-c.colors.webpage.prefers_color_scheme_dark = true
-c.colors.webpage.darkmode.enabled = true
+c.colors.webpage.prefers_color_scheme_dark = True
+c.colors.webpage.darkmode.enabled = True
