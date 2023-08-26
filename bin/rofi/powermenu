@@ -14,10 +14,10 @@ options="$power_off\n$reboot\n$lock\n$suspend\n$log_out"
 
 case "$(echo -e "$options" | $rofi_command -dmenu -selected-row 2)" in
     $power_off)
-        systemctl poweroff
+        poweroff
         ;;
     $reboot)
-        systemctl reboot
+        sudo reboot
         ;;
     $lock)
         zzz

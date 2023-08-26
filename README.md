@@ -11,13 +11,14 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  - **Prooper** secret management
  
 # TODO 
- * Finalize _rofi_ theme
+ * ~~Finalize _rofi_ theme~~
  * Setup theme for swaylock
  * Setup secret using _agenix_
  * Setup external backup using tomb?
  * Configure Emacs with Tlux
  * Setup _pass_
  * Configure Waybar with _nord_ theme
+ * Setup [hanlr](https://github.com/chmln/handlr)
  * Setup a scratch terminal with tmux
  * Setup a Calc scratch terminal
  * Setup kitty as the default terminal

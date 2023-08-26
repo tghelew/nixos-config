@@ -134,6 +134,31 @@ in {
           "waybar" = {source = ./config/waybar; recursive = true;};
           "dunst/dunstrc".text = import ./config/dunstrc cfg;
           "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf cfg;
+          "swaylock/config".text = ''
+            # Swaylock - Effect
+            screenshots
+            grace =  5
+            fade-in  = 0.2
+            effect-blur  = 7x5
+            effect-vignette  = 0.5:0.5
+
+            # Swaylock
+            indicator
+            daemonize
+            indicator-radius  = 100
+            indicator-thickness  = 7
+            font = ${font.mono.name}
+            font-size = ${font.mono.size}
+            color = ${colors.types.bg}
+            ring-color =  ${colors.grey}
+            key-hl-color  = ${colors.green}
+            text-color = ${colors.dimwhite}
+            inside-color  = ${colors.dimblue}
+            inside-clear-color = ${colors.dimwhite}
+            inside-wrong-color = ${colors.red}
+            separator-color  = ${colors.black}
+
+          '';
 
         })
         (mkIf desktop.media.graphics.illustrator.enable {

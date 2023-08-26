@@ -40,6 +40,7 @@ in {
       systemPackages = with pkgs; [
         #NOTE: Check ./default.nix
         swaylock
+        swayidle
         dunst
         unstable.swww
         waybar
@@ -108,6 +109,7 @@ in {
     home.configFile = {
       "hypr/hyprland.conf".text = import "${configDir}/hypr/hyprland.conf" { inherit config pkgs; };
       "hypr/rc.d" = {source = "${configDir}/hypr/rc.d"; recursive = true;};
+      "swayidle" = {source = "${configDir}/swayidle"; recursive = true;};
     };
   };
 }
