@@ -134,7 +134,7 @@ in {
           "waybar" = {source = ./config/waybar; recursive = true;};
           "dunst/dunstrc".text = import ./config/dunstrc cfg;
           "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf cfg;
-          "swaylock/config".text = ''
+          "swaylock/config".text = with config.modules.theme; ''
             # Swaylock - Effect
             screenshots
             grace =  5
@@ -147,8 +147,8 @@ in {
             daemonize
             indicator-radius  = 100
             indicator-thickness  = 7
-            font = ${font.mono.name}
-            font-size = ${font.mono.size}
+            font = ${fonts.mono.name}
+            font-size = ${fonts.mono.size}
             color = ${colors.types.bg}
             ring-color =  ${colors.grey}
             key-hl-color  = ${colors.green}
