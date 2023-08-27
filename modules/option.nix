@@ -65,7 +65,7 @@ with lib.my;
           dataFile   = mkAliasDefinitions options.home.dataFile;
         };
 
-        systemd.user = mkAliasDefiniations options.systemd;
+        systemd.user = mkAliasDefinitions options.systemd;
       };
     };
 
