@@ -44,6 +44,7 @@ in {
         wlr-randr
         wev
         swappy
+        btop
         libsForQt5.polkit-kde-agent
     ];
 
