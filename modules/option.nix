@@ -23,9 +23,7 @@ with lib.my;
       file       = mkOpt' attrs {} "Files to place directly in $HOME";
       configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
       dataFile   = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
-    };
-    systemd = {
-      user = mkOpt' attrs {} "Systemd options from home-manager";
+      services = mkOpt' attrs {} "Systemd options from home-manager";
     };
 
     env = mkOption {
@@ -62,13 +60,14 @@ with lib.my;
           # Necessary for home-manager to work with flakes, otherwise it will
           # look for a nixpkgs channel.
           stateVersion = config.system.stateVersion;
+          services = mkAliasDefinitions options.systemd.user.services;
         };
         xdg = {
           configFile = mkAliasDefinitions options.home.configFile;
           dataFile   = mkAliasDefinitions options.home.dataFile;
         };
 
-        systemd.user = mkAliasDefinitions options.systemd;
+        systemd.user.services = mkAliasDefinitions options.home.services;
       };
     };
 
