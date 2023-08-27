@@ -149,7 +149,7 @@ in {
             indicator-thickness=10
             font=${fonts.sans.name}
             font-size=${toString fonts.sans.size}
-            color=${builtins.replaceStrings ["#"] [""] builtins.replaceStrings ["#"] [""] colors.types.bg}
+            color=${builtins.replaceStrings ["#"] [""] colors.types.bg}
             ring-color=${builtins.replaceStrings ["#"] [""] colors.grey}
             key-hl-color=${builtins.replaceStrings ["#"] [""] colors.green}
             text-color=${builtins.replaceStrings ["#"] [""] colors.dimwhite}
