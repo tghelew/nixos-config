@@ -104,7 +104,7 @@ in {
   '';
 
     # Dunst service
-    systemd.services.dunst = {
+    home.services.dunst = {
       enable = true;
 
       Unit = {
@@ -122,7 +122,7 @@ in {
     };
 
     # Swayidle service
-    systemd.services.swayidle = {
+    home.services.swayidle = {
       enable = true;
       Unit = {
         Description = "Idle manager for Wayland";
@@ -142,7 +142,7 @@ in {
     };
 
     # SWWW service
-    systemd.services.swww = {
+    home.services.swww = {
       enable = true;
 
       Unit = {
