@@ -148,7 +148,7 @@ in {
 
       Service = {
         Type = "simple";
-        ExecStart = "${pkgs.unstable}/bin/swww init";
+        ExecStart = "${pkgs.unstable.swww}/bin/swww init";
       };
 
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
