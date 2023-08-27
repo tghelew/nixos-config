@@ -64,6 +64,8 @@ with lib.my;
           configFile = mkAliasDefinitions options.home.configFile;
           dataFile   = mkAliasDefinitions options.home.dataFile;
         };
+
+        systemd.user = mkAliasDefiniations options.systemd;
       };
     };
 

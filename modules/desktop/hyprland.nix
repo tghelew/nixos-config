@@ -81,6 +81,7 @@ in {
         hidpi = true;
       };
       package = pkgs.unstable.hyprland;
+      portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
     };
 
     programs.waybar = {
@@ -92,8 +93,7 @@ in {
 
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk
-                       pkgs.unstable.xdg-desktop-portal-hyprland ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk];
     };
 
     systemd.sleep.extraConfig = ''
@@ -104,7 +104,7 @@ in {
   '';
 
     # Dunst service
-    systemd.user.services.dunst = {
+    systemd.services.dunst = {
       enable = true;
 
       Unit = {
@@ -122,7 +122,7 @@ in {
     };
 
     # Swayidle service
-    systemd.user.services.swayidle = {
+    systemd.services.swayidle = {
       enable = true;
       Unit = {
         Description = "Idle manager for Wayland";
@@ -142,7 +142,7 @@ in {
     };
 
     # SWWW service
-    systemd.user.services.swww = {
+    systemd.services.swww = {
       enable = true;
 
       Unit = {
