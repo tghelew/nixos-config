@@ -24,6 +24,9 @@ with lib.my;
       configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
       dataFile   = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
     };
+    systemd = {
+      user = mkOpt' attrs {} "Systemd options from home-manager";
+    };
 
     env = mkOption {
       type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
