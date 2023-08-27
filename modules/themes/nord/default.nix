@@ -137,26 +137,27 @@ in {
           "swaylock/config".text = with config.modules.theme; ''
             # Swaylock - Effect
             screenshots
-            grace =  5
-            fade-in  = 0.2
-            effect-blur  = 7x5
-            effect-vignette  = 0.5:0.5
+            grace=5
+            fade-in=0.2
+            effect-blur=7x5
+            effect-vignette=0.5:0.5
 
             # Swaylock
-            indicator
+            #indicator
             daemonize
-            indicator-radius  = 100
-            indicator-thickness  = 7
-            font = ${fonts.mono.name}
-            font-size = ${toString fonts.mono.size}
-            color = ${colors.types.bg}
-            ring-color =  ${colors.grey}
-            key-hl-color  = ${colors.green}
-            text-color = ${colors.dimwhite}
-            inside-color  = ${colors.dimblue}
-            inside-clear-color = ${colors.dimwhite}
-            inside-wrong-color = ${colors.red}
-            separator-color  = ${colors.black}
+            indicator-radius=100
+            indicator-thickness=10
+            font=${fonts.sans.name}
+            font-size=${toString fonts.sans.size}
+            color=${builtins.replaceStrings ["#"] [""] builtins.replaceStrings ["#"] [""] colors.types.bg}
+            ring-color=${builtins.replaceStrings ["#"] [""] colors.grey}
+            key-hl-color=${builtins.replaceStrings ["#"] [""] colors.green}
+            text-color=${builtins.replaceStrings ["#"] [""] colors.dimwhite}
+            inside-color=${builtins.replaceStrings ["#"] [""] colors.dimblue}
+            inside-clear-color=${builtins.replaceStrings ["#"] [""] colors.dimwhite}
+            inside-wrong-color=${builtins.replaceStrings ["#"] [""] colors.red}
+            inside-ver-color=${builtins.replaceStrings ["#"] [""] colors.blue}
+            separator-color=${builtins.replaceStrings ["#"] [""] colors.black}
 
           '';
 

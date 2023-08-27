@@ -112,6 +112,7 @@ in {
       };
 
       Service = {
+        enable = true;
         Type = "simple";
         ExecStart = "${pkgs.dunst}/bin/dunst";
       };
@@ -129,6 +130,7 @@ in {
 
       Service = {
         Type = "simple";
+        enable = true;
         # swayidle executes commands using "sh -c", so the PATH needs to contain a shell.
         Environment = [ "PATH=${pkgs.bash}/bin/bash" ];
         ExecStart =
@@ -147,8 +149,9 @@ in {
       };
 
       Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.unstable.swww}/bin/swww init";
+        enable = true;
+        Type = "forking";
+        ExecStart = "${pkgs.unstable.swww}/bin/swww-daemon";
       };
 
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
