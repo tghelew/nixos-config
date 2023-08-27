@@ -116,7 +116,7 @@ in {
         ExecStart = "${pkgs.dunst}/bin/dunst";
       };
 
-      Install = { WantedBy = [ "default.target"  ]; };
+      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
     # Swayidle service
@@ -135,7 +135,7 @@ in {
           "${pkgs.swayidle}/bin/swayidle -w";
       };
 
-      Install = { WantedBy = [ "default.target"  ]; };
+      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
     # SWWW service
@@ -151,7 +151,7 @@ in {
         ExecStart = "${pkgs.unstable.swww}/bin/swww-daemon";
       };
 
-      Install = { WantedBy = [ "default.target"  ]; };
+      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
     home.configFile = {
