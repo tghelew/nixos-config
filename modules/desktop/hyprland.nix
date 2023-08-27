@@ -49,6 +49,7 @@ in {
       ];
     };
 
+    systemd.defaultUnit = "graphical.target";
     # This is required!
     security.pam.services.swaylock = {
       text = ''auth include login '';
@@ -112,12 +113,11 @@ in {
       };
 
       Service = {
-        enable = true;
         Type = "simple";
         ExecStart = "${pkgs.dunst}/bin/dunst";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
+      Install = { WantedBy = [ "graphical.target"  ]; };
     };
 
     # Swayidle service
@@ -130,14 +130,13 @@ in {
 
       Service = {
         Type = "simple";
-        enable = true;
         # swayidle executes commands using "sh -c", so the PATH needs to contain a shell.
         Environment = [ "PATH=${pkgs.bash}/bin/bash" ];
         ExecStart =
           "${pkgs.swayidle}/bin/swayidle -w";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
+      Install = { WantedBy = [ "graphical.target"  ]; };
     };
 
     # SWWW service
@@ -149,12 +148,11 @@ in {
       };
 
       Service = {
-        enable = true;
         Type = "forking";
         ExecStart = "${pkgs.unstable.swww}/bin/swww-daemon";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
+      Install = { WantedBy = [ "graphical.target"  ]; };
     };
 
     home.configFile = {

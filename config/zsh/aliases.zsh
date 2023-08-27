@@ -43,7 +43,9 @@ alias rcpu='rcp --chmod=go='
 alias rcpdu='rcpd --chmod=go='
 
 alias jc='journalctl -xe'
+alias jcf='journalctl -f'
 alias sc=systemctl
+alias scu='systemctl --user'
 alias ssc='sudo systemctl'
 
 if (( $+commands[exa] )); then
@@ -53,7 +55,6 @@ if (( $+commands[exa] )); then
   alias llm='ll --sort=modified'
   alias la="LC_COLLATE=C exa -abhlF";
   alias tree='exa --tree'
-  alias ls=exa
 fi
 
 if (( $+commands[fasd] )); then
