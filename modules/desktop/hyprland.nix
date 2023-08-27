@@ -92,8 +92,8 @@ in {
 
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk
-                       pkgs.unstable.xdg-desktop-portal-hyprland ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk];
+                       #pkgs.unstable.xdg-desktop-portal-hyprland ];
     };
 
     systemd.sleep.extraConfig = ''
