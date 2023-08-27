@@ -49,6 +49,11 @@ in {
       ];
     };
 
+    # This is required!
+    security.pam.services.swaylock = {
+      text = ''auth include login '';
+    };
+
     ##login manager (greetd)
     services.greetd = {
       enable = true;
@@ -87,7 +92,8 @@ in {
 
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk
+                       pkgs.unstable.xdg-desktop-portal-hyprland ];
     };
 
     systemd.sleep.extraConfig = ''
@@ -97,13 +103,60 @@ in {
     AllowHybridSleep=yes
   '';
 
-    systemd.user.services."dunst" = {
+    # Dunst service
+    systemd.user.services.dunst = {
       enable = true;
-      description = "";
-      wantedBy = [ "default.target" ];
-      serviceConfig.Restart = "always";
-      serviceConfig.RestartSec = 2;
-      serviceConfig.ExecStart = "${pkgs.dunst}/bin/dunst";
+
+      Unit = {
+        Description = "Notification manager working with Wayland";
+        Documentation = "man:dunst(1)";
+        PartOf = [ "graphical-session.target" ];
+      };
+
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.dunst}/bin/dunst";
+      };
+
+      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
+    };
+
+    # Swayidle service
+    systemd.user.services.swayidle = {
+      enable = true;
+      Unit = {
+        Description = "Idle manager for Wayland";
+        Documentation = "man:swayidle(1)";
+        PartOf = [ "graphical-session.target" ];
+      };
+
+      Service = {
+        Type = "simple";
+        # swayidle executes commands using "sh -c", so the PATH needs to contain a shell.
+        Environment = [ "PATH=${pkgs.bash}/bin/bash" ];
+        ExecStart =
+          "${pkgs.swayidle}/bin/swayidle -w";
+      };
+
+      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
+    };
+
+    # SWWW service
+    systemd.user.services.swww = {
+      enable = true;
+
+      Unit = {
+        Description = "Wallpaper manager for Wayland";
+        Documentation = "man:swww(1)";
+        PartOf = [ "graphical-session.target" ];
+      };
+
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.unstable}/bin/swww init";
+      };
+
+      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
     home.configFile = {
