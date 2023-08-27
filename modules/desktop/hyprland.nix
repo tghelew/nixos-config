@@ -81,7 +81,6 @@ in {
         hidpi = true;
       };
       package = pkgs.unstable.hyprland;
-      portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
     };
 
     programs.waybar = {
@@ -93,7 +92,8 @@ in {
 
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk
+                       pkgs.unstable.xdg-desktop-portal-hyprland ];
     };
 
     systemd.sleep.extraConfig = ''
