@@ -1,31 +1,36 @@
 #!/usr/bin/env sh
 
+
 rofi_command="rofi -theme theme/powermenu.rasi"
-logout_command="hyprctl dispatch exit"
+logout_comd="hyprctl dispatch exit"
+suspend_cmd="systemctl suspend"
+lock_cmd="swaylock"
+reboot_cmd="sudo reboot"
+shutdown_cmd="poweroff"
 
 ### Options ###
 power_off="\tShutdown"
 reboot="\tReboot"
-lock="\tLock"
+lock="\tLock"
 suspend="鈴\tSleep"
-log_out="\tLogout"
+log_out="\tLogout"
 # Variable passed to rofi
 options="$power_off\n$reboot\n$lock\n$suspend\n$log_out"
 
 case "$(echo -e "$options" | $rofi_command -dmenu -selected-row 2)" in
-    $power_off)
-        poweroff
+     *Shutdown)
+        $shutdown_cmd
         ;;
-    $reboot)
-        sudo reboot
+    *Reboot)
+        $reboot_cmd
         ;;
-    $lock)
-        zzz
+    *Lock)
+        $lock_cmd
         ;;
-    $suspend)
-        systemctl suspend
+    *Sleep)
+        $suspend_cmd
         ;;
-    $log_out)
-        $logout_commad
+    *Logout)
+        $logout_cmd
         ;;
 esac
