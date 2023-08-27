@@ -105,8 +105,6 @@ in {
 
     # Dunst service
     home.services.dunst = {
-      enable = true;
-
       Unit = {
         Description = "Notification manager working with Wayland";
         Documentation = "man:dunst(1)";
@@ -123,7 +121,6 @@ in {
 
     # Swayidle service
     home.services.swayidle = {
-      enable = true;
       Unit = {
         Description = "Idle manager for Wayland";
         Documentation = "man:swayidle(1)";
@@ -143,8 +140,6 @@ in {
 
     # SWWW service
     home.services.swww = {
-      enable = true;
-
       Unit = {
         Description = "Wallpaper manager for Wayland";
         Documentation = "man:swww(1)";
