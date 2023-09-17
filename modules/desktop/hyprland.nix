@@ -3,7 +3,7 @@
 with lib;
 with lib.my;
 let
-  #TODO: Setup waybar modules, themes for all apps
+  #TODO: Setup waybar modules
   cfg = config.modules.desktop.hypr;
   configDir = config.nixos-config.configDir;
 
@@ -35,8 +35,9 @@ in {
         GDK_BACKEND = "wayland";
         WLR_NO_HARDWARE_CURSORS = "1";
         MOZ_ENABLE_WAYLAND = "1";
-
+        _JAVA_AWT_WM_NONREPARENTING = "1";
       };
+
       systemPackages = with pkgs; [
         #NOTE: Check ./default.nix
         swaylock-effects
@@ -109,6 +110,7 @@ in {
         Description = "Notification manager working with Wayland";
         Documentation = "man:dunst(1)";
         PartOf = [ "graphical-session.target" ];
+        After = [ "display-manaer.service" ];
       };
 
       Service = {
@@ -116,7 +118,6 @@ in {
         ExecStart = "${pkgs.dunst}/bin/dunst";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
     # Swayidle service
@@ -125,6 +126,7 @@ in {
         Description = "Idle manager for Wayland";
         Documentation = "man:swayidle(1)";
         PartOf = [ "graphical-session.target" ];
+        After = [ "display-manaer.service" ];
       };
 
       Service = {
@@ -135,7 +137,6 @@ in {
           "${pkgs.swayidle}/bin/swayidle -w";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
     # SWWW service
@@ -144,14 +145,14 @@ in {
         Description = "Wallpaper manager for Wayland";
         Documentation = "man:swww(1)";
         PartOf = [ "graphical-session.target" ];
+        After = [ "display-manaer.service" ];
       };
 
       Service = {
-        Type = "forking";
+        Type = "simple";
         ExecStart = "${pkgs.unstable.swww}/bin/swww-daemon";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
     home.configFile = {
