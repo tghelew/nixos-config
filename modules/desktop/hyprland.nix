@@ -110,7 +110,7 @@ in {
         Description = "Notification manager working with Wayland";
         Documentation = "man:dunst(1)";
         PartOf = [ "graphical-session.target" ];
-        After = [ "display-manaer.service" ];
+        Wants = [ "graphical.target" ];
       };
 
       Service = {
@@ -126,7 +126,7 @@ in {
         Description = "Idle manager for Wayland";
         Documentation = "man:swayidle(1)";
         PartOf = [ "graphical-session.target" ];
-        After = [ "display-manaer.service" ];
+        Wants = [ "graphical.target" ];
       };
 
       Service = {
@@ -145,7 +145,7 @@ in {
         Description = "Wallpaper manager for Wayland";
         Documentation = "man:swww(1)";
         PartOf = [ "graphical-session.target" ];
-        After = [ "display-manaer.service" ];
+        Wants = [ "graphical.target" ];
       };
 
       Service = {
