@@ -109,8 +109,7 @@ in {
       Unit = {
         Description = "Notification manager working with Wayland";
         Documentation = "man:dunst(1)";
-        PartOf = [ "graphical-session.target" ];
-        Wants = [ "graphical.target" ];
+        PartOf = [ "graphical.target" ];
       };
 
       Service = {
@@ -118,6 +117,7 @@ in {
         ExecStart = "${pkgs.dunst}/bin/dunst";
       };
 
+      Install = { WantedBy = [ "graphical.target"  ]; };
     };
 
     # Swayidle service
@@ -125,8 +125,7 @@ in {
       Unit = {
         Description = "Idle manager for Wayland";
         Documentation = "man:swayidle(1)";
-        PartOf = [ "graphical-session.target" ];
-        Wants = [ "graphical.target" ];
+        PartOf = [ "graphical.target" ];
       };
 
       Service = {
@@ -137,6 +136,7 @@ in {
           "${pkgs.swayidle}/bin/swayidle -w";
       };
 
+      Install = { WantedBy = [ "graphical.target"  ]; };
     };
 
     # SWWW service
@@ -144,8 +144,7 @@ in {
       Unit = {
         Description = "Wallpaper manager for Wayland";
         Documentation = "man:swww(1)";
-        PartOf = [ "graphical-session.target" ];
-        Wants = [ "graphical.target" ];
+        PartOf = [ "graphical.target" ];
       };
 
       Service = {
@@ -153,6 +152,7 @@ in {
         ExecStart = "${pkgs.unstable.swww}/bin/swww-daemon";
       };
 
+      Install = { WantedBy = [ "graphical.target"  ]; };
     };
 
     home.configFile = {
