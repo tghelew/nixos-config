@@ -117,7 +117,7 @@ in {
         ExecStart = "${pkgs.dunst}/bin/dunst";
       };
 
-      Install = { WantedBy = [ "graphical.target"  ]; };
+      Install = { WantedBy = [ "default.target"  ]; };
     };
 
     # Swayidle service
@@ -136,7 +136,7 @@ in {
           "${pkgs.swayidle}/bin/swayidle -w";
       };
 
-      Install = { WantedBy = [ "graphical.target"  ]; };
+      Install = { WantedBy = [ "default.target"  ]; };
     };
 
     # SWWW service
@@ -152,7 +152,7 @@ in {
         ExecStart = "${pkgs.unstable.swww}/bin/swww-daemon";
       };
 
-      Install = { WantedBy = [ "graphical.target"  ]; };
+      Install = { WantedBy = [ "default.target"  ]; };
     };
 
     home.configFile = {
