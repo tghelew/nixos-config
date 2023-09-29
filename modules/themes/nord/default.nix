@@ -134,7 +134,7 @@ in {
         })
 
         (mkIf (desktop.hypr.enable){
-          "waybar/config".text = builtins.toJSON (import ./config/waybar/config.nix cfg);
+          # "waybar/config".text = builtins.toJSON (import ./config/waybar/config.nix cfg);
           "waybar/style.css".text = import ./config/waybar/style.nix cfg;
           "dunst/dunstrc".text = import ./config/dunstrc cfg;
           "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf cfg;
