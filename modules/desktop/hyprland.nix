@@ -130,10 +130,7 @@ in {
 
       Service = {
         Type = "simple";
-        # swayidle executes commands using "sh -c", so the PATH needs to contain a shell.
-        Environment = [ "PATH=${pkgs.bash}/bin/bash" ];
-        ExecStart =
-          "${pkgs.swayidle}/bin/swayidle -w";
+        ExecStart = "${pkgs.swayidle}/bin/swayidle -w";
       };
 
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
