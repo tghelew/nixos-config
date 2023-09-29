@@ -50,7 +50,7 @@ window#waybar.hidden {
 
 #workspaces button {
 	border: none;
-	color:  #d4d2a9;
+	color:  ${colors.cyan};
 	padding: 3px;
 	background: transparent;
 	box-shadow: none;
