@@ -86,7 +86,7 @@ in {
 
     programs.waybar = {
       enable = true;
-      package = pkgs.unstable.waybar-hyprland;
+      package = pkgs.unstable.waybar;
     };
 
     modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
