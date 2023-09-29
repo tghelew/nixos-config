@@ -4,7 +4,7 @@
   layer = "top";
   position = "top";
   spacing = 0;
-  height = 34;
+  height = 24;
   mod = "dock";
   modules-left = [
     "hyprland/workspaces"
@@ -76,11 +76,11 @@
       on-scroll = 1;
       on-right-click = "mode";
       format = {
-        months   = "<span color ='${builtins.replaceStrings ["\""] [""] colors.dimwhite}><b>{}</b></span>'";
-        days     = "<span color ='${builtins.replaceStrings ["\""] [""] colors.magenta}><b>{}</b></span>'";
-        weeks    = "<span color ='${builtins.replaceStrings ["\""] [""] colors.green}><b>{}</b></span>'";
-        weekdays = "<span color ='${builtins.replaceStrings ["\""] [""] colors.yellow}><b>{}</b></span>'";
-        today    = "<span color ='${builtins.replaceStrings ["\""] [""] colors.red}><b><u>{}</u></b></span>'";
+        months   = "<span color ='${builtins.replaceStrings ["\""] [""] colors.dimwhite}'><b>{}</b></span>";
+        days     = "<span color ='${builtins.replaceStrings ["\""] [""] colors.magenta}'><b>{}</b></span>";
+        weeks    = "<span color ='${builtins.replaceStrings ["\""] [""] colors.green}'><b>{}</b></span>";
+        weekdays = "<span color ='${builtins.replaceStrings ["\""] [""] colors.yellow}'><b>{}</b></span>";
+        today    = "<span color ='${builtins.replaceStrings ["\""] [""] colors.red}'><b><u>{}</u></b></span>";
       };
     };
     action = {
