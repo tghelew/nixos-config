@@ -8,7 +8,7 @@ let cfg = config.modules.theme;
     themesDir = config.nixos-config.themesDir;
     withXserver = config.services.xserver.enable;
     withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
-in  rec {
+in {
   config = mkIf (cfg.active == "nord") (mkMerge [
     # Desktop-agnostic configuration
     {
@@ -134,11 +134,11 @@ in  rec {
         })
 
         (mkIf (desktop.hypr.enable) {
-          "waybar/config".text = builtins.toJSON (import ./config/waybar/config.nix cfg);
-          "waybar/style.css".text = import ./config/waybar/style.nix cfg;
-          "dunst/dunstrc".text = import ./config/dunstrc cfg;
-          "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf cfg;
-          "swaylock/config".text = with config.modules.theme; ''
+          "waybar/config".text = builtins.toJSON (import ./config/waybar/config.nix theme);
+          "waybar/style.css".text = import ./config/waybar/style.nix theme;
+          "dunst/dunstrc".text = import ./config/dunstrc theme;
+          "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf theme;
+          "swaylock/config".text = with theme; ''
             # Swaylock - Effect
             screenshots
             grace=5
