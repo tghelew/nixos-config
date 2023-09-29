@@ -1,8 +1,4 @@
-{config, colors, fonts, ... }:
-
-let
-  var = config.environment.variables;
-in
+{colors, fonts, ... }:
 
 {
   layer = "top";
@@ -142,7 +138,7 @@ in
   "custom/power" = {
     format = "";
     tooltip = false;
-    on-click = "${var.NIXOS_CONFIG_BIN}/rofi/powermenu";
+    on-click = "$NIXOS_CONFIG_BIN/rofi/powermenu";
 
   };
 
