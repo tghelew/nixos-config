@@ -78,7 +78,7 @@ window#waybar.hidden {
 
 #workspaces button:hover {
 	border: none;
-	background: radial-gradient(circle, ${colors.blue} 20%, ${colors.grey}) 30%);
+	background: radial-gradient(circle, ${colors.blue} 20%, ${colors.grey} 30%);
 }
 
 #workspaces button.active:hover, #workspaces button.urgent:hover {
