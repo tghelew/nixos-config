@@ -1,4 +1,4 @@
-{colors, fonts, ... }:
+{ colors, fonts, ... }:
 ''
 * {
   font-family: Material Design Icons, FontAwesome, Weather Icons, ${fonts.mono.name}
@@ -240,5 +240,4 @@ label:focus {
 #cpu {
   font-size: 16px;
 }
-
 ''
