@@ -1,7 +1,7 @@
 { colors, fonts, ... }:
 ''
 * {
-  font-family: Material Design Icons, FontAwesome, Weather Icons, ${fonts.mono.name}
+  font-family: Material Design Icons, FontAwesome, Weather Icons, ${fonts.mono.name};
   font-size: 17px;
 }
 
