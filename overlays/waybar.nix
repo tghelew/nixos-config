@@ -1,6 +1,6 @@
 final: prev:
 {
-waybar = final.waybar.overrideAttrs (oldAttrs: {
+waybar = prev.waybar.overrideAttrs (oldAttrs: {
   src = final.fetchFromGithub {
     owner = "Alexays";
     repo = "waybar";
