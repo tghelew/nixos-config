@@ -76,7 +76,7 @@ in {
       dimmagenta    = mkOpt str "#FF00FF"; # 23
       dimcyan       = mkOpt str "#00FFFF"; # 24
       dimwhite      = mkOpt str "#FFFFFF"; # 25
-      dimgrey       = mkOpt str "#888888"; # 8
+      dimgrey       = mkOpt str "#888888"; # 26
 
       # Color classes
       types = {
