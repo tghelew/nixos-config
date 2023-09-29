@@ -32,7 +32,7 @@ window#waybar.hidden {
 #wireplumber,
 #battery,
 #backlight,
-#custom/power,
+#custom-power,
 #cpu {
   color: ${colors.red};
   border-radius: 8px 8px 8px 8px;
@@ -193,7 +193,7 @@ window#waybar.hidden {
   border-radius: 8px 8px 8px 8px;
 }
 
-#custom/power{
+#custom-power{
   color: ${colors.brightred};
   margin-right: 12px;
   border-radius: 8px;
