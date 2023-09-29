@@ -2,7 +2,7 @@
 ''
 * {
   font-family: Material Design Icons, FontAwesome, Weather Icons, ${fonts.mono.name};
-  font-size: 17px;
+  font-size: 12px;
 }
 
 window#waybar {
@@ -10,7 +10,7 @@ window#waybar {
   color: ${colors.white};
   border-radius: 8px;
   border-width: 3px;
-  border-color: ${colors.brightblack};
+  border-color: transparent;
   border-style: solid;
 }
 
@@ -99,7 +99,7 @@ window#waybar.hidden {
   background-color: ${colors.black};
   padding: 0em 2em;
 
-  font-size: 20px;
+  font-size: 15px;
 
   padding-left: 7.5px;
   padding-right: 7.5px;
@@ -107,9 +107,9 @@ window#waybar.hidden {
   padding-top: 2px;
   padding-bottom: 2px;
 
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
 }
 
 #workspaces {
@@ -121,7 +121,7 @@ window#waybar.hidden {
   color: ${colors.dimblue};
   padding-left: 10px;
   margin-right: 10px;
-  font-size: 25px;
+  font-size: 15px;
   border-radius: 0px 8px 8px 0px;
   margin-left: -5px;
 }
@@ -131,7 +131,7 @@ window#waybar.hidden {
   color: ${colors.dimgrey};
   padding-right: 5px;
   padding-left: 8px;
-  font-size: 21.2px;
+  font-size: 15px;
 }
 
 #network {
@@ -140,7 +140,7 @@ window#waybar.hidden {
   border-radius: 8px 0px 0px 8px;
   padding-left: 12px;
   padding-right: 14px;
-  font-size: 20px;
+  font-size: 15px;
   margin-right: -5px;
 }
 
@@ -152,14 +152,14 @@ window#waybar.hidden {
   color: ${colors.brightcyan};
   border-radius: 0px 8px 8px 0px;
   padding-right: 2px;
-  font-size: 22px;
+  font-size: 15px;
 }
 
 #battery.plugged {
   color: ${colors.brightcyan};
   padding-left: 6px;
   padding-right: 12px;
-  font-size: 22px;
+  font-size: 15px;
 }
 
 #battery.charging {
@@ -170,7 +170,7 @@ window#waybar.hidden {
 
 #battery.full,
 #battery.plugged {
-  font-size: 22.5px;
+  font-size: 15px;
   padding-right: 10px;
 }
 
@@ -185,11 +185,11 @@ window#waybar.hidden {
 #clock {
   color: ${colors.brightblack};
   font-family: ${fonts.mono.name};
-  font-size: 17px;
+  font-size: 12px;
   font-weight: bold;
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   border-radius: 8px 8px 8px 8px;
 }
 
@@ -221,9 +221,9 @@ label:focus {
 
 #tray {
   margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 18px;
   border-radius: 8px 8px 8px 8px;
 }
 
@@ -238,6 +238,6 @@ label:focus {
 
 #memory,
 #cpu {
-  font-size: 16px;
+  font-size: 12px;
 }
 ''
