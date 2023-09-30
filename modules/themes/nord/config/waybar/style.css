@@ -2,7 +2,7 @@
 ''
 * {
   font-family: Material Icons, FontAwesome, Weather Icons, ${fonts.mono.name};
-  font-size: 10px;
+  font-size: 12px;
 }
 
 window#waybar {
