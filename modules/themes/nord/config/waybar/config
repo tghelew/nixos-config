@@ -38,27 +38,27 @@
     format = "{icon}";
     show-special = true;
     format-icons =  {
-      default = "";
-      "1" = "";
-      "2" = "";
-      "3" = "";
-      "4" = "";
-      "5" = "";
-      "6" = "";
-      "7" = "";
-      "8" = "";
-      "9" = "";
-      active = "";
+      default = "";
+      "1" = "";
+      "2" = "";
+      "3" = "";
+      "4" = "";
+      "5" = "";
+      "6" = "";
+      "7" = "";
+      "8" = "";
+      "9" = "";
+      active = "";
       urgent = "";
       special = "";
     };
-    persistent-workspaces = {
-      "1" = ["*"];
-      "2" = ["*"];
-      "3" = ["*"];
-      "4" = ["*"];
-      "5" = ["*"];
-    };
+    # persistent-workspaces = {
+    #   "1" = ["*"];
+    #   "2" = ["*"];
+    #   "3" = ["*"];
+    #   "4" = ["*"];
+    #   "5" = ["*"];
+    # };
   };
 
   memory = {
@@ -69,12 +69,12 @@
 
   cpu = {
     interval = 1;
-    format = "   {}% ";
+    format = "  {}% ";
     max-length = 10;
   };
 
   clock = {
-    format = " {:%A %d %B %Y %R}";
+    format = " {:%A %d %B %Y %R}";
     tooltip-format = "<tt><small>{calendar}</small></tt>";
     calendar = {
       mode = "year";
