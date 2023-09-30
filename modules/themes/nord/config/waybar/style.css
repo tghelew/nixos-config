@@ -44,7 +44,7 @@ window#waybar.hidden {
 }
 
 @keyframes button_activate {
-	from { opacity: .3 }
+	from { opacity: .3; }
 	to { opacity: 1.; }
 }
 
@@ -153,18 +153,18 @@ window#waybar.hidden {
   color: ${colors.brightcyan};
   padding-left: 6px;
   padding-right: 12px;
-  font-size: 15px;
+  font-size: 11px;
 }
 
 #battery.charging {
-  font-size: 18px;
+  font-size: 11px;
   padding-right: 13px;
   padding-left: 4px;
 }
 
 #battery.full,
 #battery.plugged {
-  font-size: 15px;
+  font-size: 10px;
   padding-right: 10px;
 }
 
