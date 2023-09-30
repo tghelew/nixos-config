@@ -12,6 +12,8 @@ window#waybar {
   border-width: 3px;
   border-color: transparent;
   border-style: solid;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 window#waybar.hidden {
@@ -232,6 +234,6 @@ label:focus {
 
 #memory,
 #cpu {
-  font-size: 12px;
+  font-size: 10px;
 }
 ''
