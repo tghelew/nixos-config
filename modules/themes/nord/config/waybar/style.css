@@ -1,8 +1,8 @@
 { colors, fonts, ... }:
 ''
 * {
-  font-family: Material Icons, FontAwesome, Weather Icons, ${fonts.mono.name};
-  font-size: 12px;
+  font-family: ${fonts.mono.name}, Material Icons, FontAwesome, Weather Icons;
+  font-size: 10px;
 }
 
 window#waybar {
@@ -12,8 +12,6 @@ window#waybar {
   border-width: 3px;
   border-color: transparent;
   border-style: solid;
-  margin-left: 8px;
-  margin-right: 8px;
 }
 
 window#waybar.hidden {
@@ -94,18 +92,9 @@ window#waybar.hidden {
 #tray,
 #network {
   background-color: ${colors.black};
-  padding: 0em 2em;
-
   font-size: 11px;
-
   padding-left: 7.5px;
   padding-right: 7.5px;
-
-  padding-top: 2px;
-  padding-bottom: 2px;
-
-  margin-top: 5px;
-  margin-bottom: 5px;
   margin-right: 5px;
 }
 
@@ -183,9 +172,7 @@ window#waybar.hidden {
   font-family: ${fonts.mono.name};
   font-size: 12px;
   font-weight: bold;
-  margin-top: 5px;
   margin-right: 5px;
-  margin-bottom: 5px;
   border-radius: 5px 5px 5px 5px;
 }
 
@@ -193,22 +180,18 @@ window#waybar.hidden {
   color: ${colors.brightred};
   margin-right: 12px;
   border-radius: 5px;
-  padding: 0 6px 0 6.8px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  padding: 0 6px 0 6px;
 }
 
 tooltip {
   font-family: ${fonts.mono.name};
   border-radius: 5px;
   padding: 15px;
-  background-color: ${colors.dimblack};
 }
 
-tooltip label {
+#tooltip label {
   font-family: ${fonts.mono.name};
   padding: 5px;
-  background-color: ${colors.dimblack};
 }
 
 label:focus {
@@ -217,8 +200,6 @@ label:focus {
 
 #tray {
   margin-right: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
   font-size: 12px;
   border-radius: 5px 5px 5px 5px;
 }
