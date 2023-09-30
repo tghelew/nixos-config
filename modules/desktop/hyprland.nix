@@ -128,7 +128,7 @@ in {
 
       Service = {
         Type = "simple";
-        ExecStart = "${pkgs.swayidle}/bin/swayidle -w";
+        ExecStart = ''${pkgs.bash}/bin/bash -c "PATH=$PATH exec ${pkgs.swayidle}/bin/swayidle -w"'';
       };
 
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
