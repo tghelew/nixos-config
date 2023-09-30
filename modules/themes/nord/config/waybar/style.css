@@ -1,14 +1,14 @@
 { colors, fonts, ... }:
 ''
 * {
-  font-family: Material Design Icons, FontAwesome, Weather Icons, ${fonts.mono.name};
+  font-family: Material Icons, FontAwesome, Weather Icons, ${fonts.mono.name};
   font-size: 10px;
 }
 
 window#waybar {
   background-color: ${colors.black};
   color: ${colors.white};
-  border-radius: 8px;
+  border-radius: 5px;
   border-width: 3px;
   border-color: transparent;
   border-style: solid;
@@ -35,12 +35,12 @@ window#waybar.hidden {
 #custom-power,
 #cpu {
   color: ${colors.red};
-  border-radius: 8px 8px 8px 8px;
+  border-radius: 5px 5px 5px 5px;
 }
 
 #memory {
   color: ${colors.green};
-  border-radius: 8px 8px 8px 8px;
+  border-radius: 5px 5px 5px 5px;
 }
 
 @keyframes button_activate {
@@ -117,7 +117,7 @@ window#waybar.hidden {
   padding-left: 10px;
   margin-right: 10px;
   font-size: 10px;
-  border-radius: 0px 8px 8px 0px;
+  border-radius: 0px 5px 5px 0px;
   margin-left: -5px;
 }
 
@@ -125,16 +125,15 @@ window#waybar.hidden {
 #backlight {
   color: ${colors.dimgrey};
   padding-right: 5px;
-  padding-left: 8px;
+  padding-left: 5px;
   font-size: 10px;
 }
 
 #network {
-  padding-left: 0.2em;
   color: ${colors.dimblue};
-  border-radius: 8px 0px 0px 8px;
-  padding-left: 12px;
-  padding-right: 14px;
+  border-radius: 5px 0px 0px 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   font-size: 10px;
   margin-right: -5px;
 }
@@ -145,7 +144,7 @@ window#waybar.hidden {
 
 #battery {
   color: ${colors.brightcyan};
-  border-radius: 0px 8px 8px 0px;
+  border-radius: 0px 5px 5px 0px;
   padding-right: 2px;
   font-size: 10px;
 }
@@ -178,28 +177,28 @@ window#waybar.hidden {
 
 
 #clock {
-  color: ${colors.brightblack};
+  color: ${colors.dimblue};
   font-family: ${fonts.mono.name};
   font-size: 12px;
   font-weight: bold;
   margin-top: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
-  border-radius: 8px 8px 8px 8px;
+  border-radius: 5px 5px 5px 5px;
 }
 
 #custom-power{
   color: ${colors.brightred};
   margin-right: 12px;
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 0 6px 0 6.8px;
-  margin-top: 7px;
-  margin-bottom: 7px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 tooltip {
   font-family: ${fonts.mono.name};
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 15px;
   background-color: ${colors.dimblack};
 }
@@ -219,7 +218,7 @@ label:focus {
   margin-top: 5px;
   margin-bottom: 5px;
   font-size: 18px;
-  border-radius: 8px 8px 8px 8px;
+  border-radius: 5px 5px 5px 5px;
 }
 
 #tray > .passive {

@@ -52,7 +52,7 @@
       urgent = "";
       special = "";
     };
-    persistent-workspaces = {
+    persistent_workspaces = {
       "*" = [1 2 3 4 5];
     };
   };
