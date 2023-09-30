@@ -17,18 +17,18 @@
     "hyprland/submap"
   ];
 
-  module-right = [
-    "tray"
+  modules-right = [
     "network"
     "bluetooth"
     "wireplumber"
     "battery"
     "backlight"
     "custom/power"
+    "tray"
   ];
 
   "hyprland/submap" = {
-    format = " {}";
+    format = " {}";
     max-length = 8;
     tooltip = false;
   };
@@ -44,14 +44,17 @@
       "3" = "";
       "4" = "";
       "5" = "";
-		  "6" = "";
-		  "7" = "";
-		  "8" = "";
-		  "9" = "";
-		  active = "";
-		  urgent = "";
-		  special = "";
-	  };
+      "6" = "";
+      "7" = "";
+      "8" = "";
+      "9" = "";
+      active = "";
+      urgent = "";
+      special = "";
+    };
+    persistent-workspaces = {
+      "*" = [1 2 3 4 5];
+    };
   };
 
   memory = {
@@ -67,7 +70,7 @@
   };
 
   clock = {
-    format = " {:%A %d %B %Y, %R}";
+    format = " {:%A %d %B %Y %R}";
     tooltip-format = "<tt><small>{calendar}</small></tt>";
     calendar = {
       mode = "year";

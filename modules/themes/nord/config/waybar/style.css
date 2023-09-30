@@ -2,7 +2,7 @@
 ''
 * {
   font-family: Material Design Icons, FontAwesome, Weather Icons, ${fonts.mono.name};
-  font-size: 12px;
+  font-size: 10px;
 }
 
 window#waybar {
@@ -58,18 +58,13 @@ window#waybar.hidden {
 
 #workspaces button.active {
 	color:  ${colors.blue};
-	background: radial-gradient(circle, ${colors.blue} 5%,
-                                      ${colors.black} 18%,
-                                      ${colors.grey} 23%,
-                                      ${colors.dimblack} 24%,
-                                      ${colors.grey} 30%);
+	background: transparent;
 
 	animation: button_activate .2s ease-in-out;
 }
 
 #workspaces button.urgent {
 	color:  ${colors.red};
-	background: radial-gradient(circle, ${colors.blue} 20%, ${colors.grey} 30%);
 }
 
 #workspaces button.persistent {
@@ -78,7 +73,7 @@ window#waybar.hidden {
 
 #workspaces button:hover {
 	border: none;
-	background: radial-gradient(circle, ${colors.blue} 20%, ${colors.grey} 30%);
+	background: ${colors.dimblue};
 }
 
 #workspaces button.active:hover, #workspaces button.urgent:hover {
@@ -99,7 +94,7 @@ window#waybar.hidden {
   background-color: ${colors.black};
   padding: 0em 2em;
 
-  font-size: 15px;
+  font-size: 11px;
 
   padding-left: 7.5px;
   padding-right: 7.5px;
@@ -121,7 +116,7 @@ window#waybar.hidden {
   color: ${colors.dimblue};
   padding-left: 10px;
   margin-right: 10px;
-  font-size: 15px;
+  font-size: 10px;
   border-radius: 0px 8px 8px 0px;
   margin-left: -5px;
 }
@@ -131,7 +126,7 @@ window#waybar.hidden {
   color: ${colors.dimgrey};
   padding-right: 5px;
   padding-left: 8px;
-  font-size: 15px;
+  font-size: 10px;
 }
 
 #network {
@@ -140,7 +135,7 @@ window#waybar.hidden {
   border-radius: 8px 0px 0px 8px;
   padding-left: 12px;
   padding-right: 14px;
-  font-size: 15px;
+  font-size: 10px;
   margin-right: -5px;
 }
 
@@ -152,7 +147,7 @@ window#waybar.hidden {
   color: ${colors.brightcyan};
   border-radius: 0px 8px 8px 0px;
   padding-right: 2px;
-  font-size: 15px;
+  font-size: 10px;
 }
 
 #battery.plugged {
