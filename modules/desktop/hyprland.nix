@@ -3,7 +3,6 @@
 with lib;
 with lib.my;
 let
-  #TODO: Setup waybar modules
   cfg = config.modules.desktop.hypr;
   configDir = config.nixos-config.configDir;
 
@@ -44,7 +43,6 @@ in {
         swayidle
         dunst
         unstable.swww
-        waybar
         libnotify
         wtype
       ];
