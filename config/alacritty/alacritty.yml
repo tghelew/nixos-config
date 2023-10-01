@@ -1,4 +1,4 @@
-{config, ...}:
+{config, pkgs, ...}:
   let
     home = config.environment.sessionVariables.XDG_CONFIG_HOME;
   in
@@ -257,7 +257,7 @@ hints:
    - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
              [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
      hyperlinks: true
-     command: xdg-open
+     command: ${pkgs.handlr}/bin/handlr open
      post_processing: true
      mouse:
        enabled: true
