@@ -11,8 +11,8 @@ in {
     enable = mkBoolOpt false;
     tlux = rec {
       enable = mkBoolOpt false;
-      repoUrl = mkOpt types.str "git@github.comm:tghelew/emacs.d";
-      configRepoUrl = mkOpt types.str "git@github.com:tghelew/linux-emacs-private";
+      repoUrl = mkOpt types.str "https://github.com/tghelew/emacs.d";
+      configRepoUrl = mkOpt types.str "https://github.com/tghelew/linux-emacs-private";
     };
   };
 
@@ -60,14 +60,20 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
-    #WARNING: ssh must be configure prior to sucessfully running this activation
     system.userActivationScripts = mkIf cfg.tlux.enable {
       installTluxEmacs = ''
-        PATH=${pkgs.openssh}/bin:$PATH
-        if [[ ! -d "$XDG_CONFIG_HOME/emacs" && -f "$HOME/.ssh/id_github.pub" ]]; then
+        if [[ ! -d "$XDG_CONFIG_HOME/emacs" ]]; then
            ${pkgs.git}/bin/git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
            ${pkgs.git}/bin/git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
-           echo -n "Tlux Configuration file installed! Do not forget to run: temacs install"
+           echo -n "Tlux Configuration files installed! Do not forget to run: temacs install"
+        else
+           current_path=$(pwd)
+           cd "$XDG_CONFIG_HOME/emacs"
+           ${pkgs.git}/bin/git pull --rebase --autostash"
+           cd "$XDG_CONFIG_HOME/tlux"
+           ${pkgs.git}/bin/git pull --rebase --autostash"
+           cd "$current_path"
+           echo -n "Tlux Configuration files updated! Do not forget to run: temacs sync -p && reload"
         fi
 
       '';
