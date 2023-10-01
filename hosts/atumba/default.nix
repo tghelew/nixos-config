@@ -1,4 +1,8 @@
 { pkgs, config, lib, inputs, ... }:
+
+let
+  configDir = config.nixos-config.configDir;
+in
 {
   imports = [
     ../home.nix
@@ -66,9 +70,9 @@
   time.timeZone = "Europe/Zurich";
 
   ## SSH config
-  home.file.".ssh/config" = {source = "../../config/ssh/config";};
+  home.file.".ssh/config" = {source = "${configDir}/ssh/config";};
   #gnupg
-  home.configFile."gnupg/gpg.conf" = {source = "../../config/gnupg/gpg.conf";};
+  home.configFile."gnupg/gpg.conf" = {source = "${configDir}/config/gnupg/gpg.conf";};
 
   ## Personal backups
   #TODO: Backups to tomb
