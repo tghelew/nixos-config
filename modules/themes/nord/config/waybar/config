@@ -47,11 +47,7 @@
       special = "";
     };
     persistent_workspaces = {
-      "1" = ["*"];
-      "2" = ["*"];
-      "3" = ["*"];
-      "4" = ["*"];
-      "5" = ["*"];
+      "*" = [1 2 3 4 5];
     };
   };
 
@@ -118,7 +114,7 @@
 
   battery = {
     design-capacity = true;
-    full-at = 81;
+    full-at = 99;
     format = "{icon} {capacity}%";
     format-icons = {
       default = [
