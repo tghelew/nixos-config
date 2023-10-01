@@ -23,4 +23,6 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * Setup a Calc scratch terminal
  * Setup kitty as the default terminal
  * Update MacOS configuration (_yabi_)
+ * Add dedicated keybinding for _Atumba_
+
 
