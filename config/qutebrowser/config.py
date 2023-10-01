@@ -59,9 +59,7 @@ config.bind('zz', 'close')
 config.bind('tm', 'tab-mute')
 config.bind('wi', 'devtools bottom')
 config.bind(';;', 'hint inputs --first')  # easier to reach than ;t
-config.bind(';e', 'hint inputs --first ;; fake-key <Ctrl+a> ;; :spawn nohup bspc rule -a "Emacs:*" -o state=floating sticky=on && emacsclient --eval "(emacs-everywhere)"')
-# ;v already bound to 'spawn mpv {url}'
-config.bind(';V', 'hint links spawn mpv {hint-url}')
+config.bind(';v', 'hint links spawn mpv {hint-url}')
 
 # Use external editor
 c.editor.command = ['emacsclient', '-c', '-F', '((name . "qutebrowser-editor"))', '+{line}:{column}', '{}']
@@ -69,13 +67,6 @@ c.editor.command = ['emacsclient', '-c', '-F', '((name . "qutebrowser-editor"))'
 config.bind('<Ctrl+E>',    'edit-text', mode='insert')
 config.bind('<Ctrl+E>',    'hint inputs --first ;; edit-text', mode='normal')
 config.bind('<Shift+Ins>', 'fake-key <Ctrl+V>', mode='insert')
-
-# # Vaultwarden integration
-# config.bind(";pp", 'spawn -u qute-bwmenu')
-# config.bind(";pu", 'spawn -u qute-bwmenu --field username')
-# config.bind(";ps", 'spawn -u qute-bwmenu --field password')
-# config.bind(";po", 'spawn -u qute-bwmenu --field otp')
-# config.bind(";pl", 'spawn -u qute-bwmenu --last')
 
 ## Ex-commands
 

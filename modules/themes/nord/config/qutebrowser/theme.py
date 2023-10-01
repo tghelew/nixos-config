@@ -21,6 +21,13 @@ base0D = "#81a1c1"
 base0E = "#b48ead"
 base0F = "#5e81ac"
 
+# set fonts
+c.fonts.default_size = "8pt"
+c.fonts.web.size.default = 12
+c.fonts.web.size.default_fixed = 10
+
+# zoom
+c.zoom.default = 90
 # set qutebrowser colors
 
 # Text color of the completion widget. May be a single color to use for
