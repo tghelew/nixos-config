@@ -72,7 +72,7 @@ in
   ## SSH config
   home.file.".ssh/config" = {source = "${configDir}/ssh/config";};
   #gnupg
-  home.configFile."gnupg/gpg.conf" = {source = "${configDir}/config/gnupg/gpg.conf";};
+  home.configFile."gnupg/gpg.conf" = {source = "${configDir}/gnupg/gpg.conf";};
 
   ## Personal backups
   #TODO: Backups to tomb
