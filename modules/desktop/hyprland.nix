@@ -87,7 +87,7 @@ in {
       package = pkgs.unstable.waybar;
     };
 
-    modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
+    modules.theme.onReload.hyprland = "${pkgs.unstable.hyprland}/bin/hyprctl reload";
 
     xdg.portal = {
       enable = true;
@@ -128,7 +128,7 @@ in {
 
       Service = {
         Type = "simple";
-        ExecStart = ''${pkgs.bash}/bin/bash -c "PATH=$PATH exec ${pkgs.swayidle}/bin/swayidle -w"'';
+        ExecStart = "${pkgs.swayidle}/bin/swayidle -w";
       };
 
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
@@ -153,7 +153,7 @@ in {
     home.configFile = {
       "hypr/hyprland.conf".text = import "${configDir}/hypr/hyprland.conf" { inherit config pkgs; };
       "hypr/rc.d" = {source = "${configDir}/hypr/rc.d"; recursive = true;};
-      "swayidle" = {source = "${configDir}/swayidle"; recursive = true;};
+      "swayidle/config".text = import "${configDir}/swayidle/config" {inherit pkgs;};
     };
   };
 }
