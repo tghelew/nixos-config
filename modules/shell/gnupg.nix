@@ -15,7 +15,7 @@ in {
 
     programs.gnupg.agent.enable = true;
 
-    user.packages = mkIf cfg.useTomb [ pkgs.tomb ];
+    user.packages = mkIf cfg.useTomb [ pkgs.tomb  pkgs.steghide];
 
     home.configFile."gnupg/gpg-agent.conf" = {
       text = ''
