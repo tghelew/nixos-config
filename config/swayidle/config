@@ -1,6 +1,6 @@
 {pkgs, ...}:
 ''
 timeout 180 '${pkgs.swaylock-effects}/bin/swaylock'
-timeout 300 '[[ $XDG_CURRENT_DESKTOP == "Hyprland" ]] && ${pkgs.unstable.hyprland}/bin/hyprctl dispactch dpms off' resume  '[[ $XDG_CURRENT_DESKTOP == "Hyprland" ]] && ${pkgs.unstable.hyprland}/bin/hyprctl dispactch dpms on'
+timeout 300 '[[ $XDG_CURRENT_DESKTOP == "Hyprland" ]] && ${pkgs.unstable.hyprland}/bin/hyprctl dispatch dpms off' resume  '[[ $XDG_CURRENT_DESKTOP == "Hyprland" ]] && ${pkgs.unstable.hyprland}/bin/hyprctl dispatch dpms on'
 before-sleep '${pkgs.swaylock-effects}/bin/swaylock'
 ''
