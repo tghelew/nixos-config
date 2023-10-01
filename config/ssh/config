@@ -1,0 +1,43 @@
+#.ssh client config file
+PubkeyAcceptedKeyTypes +ssh-rsa
+
+Host github*
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/private/id_github
+    Port 22
+    Protocol 2
+
+Host git*
+     Hostname git.ghelew.net
+     User root
+     Identityfile ~/.ssh/private/id_admin
+     Port 2203
+     Protocol 2
+
+Host imana* emby*
+     User root
+     Identityfile ~/.ssh/private/id_admin
+     Port 2203
+     Protocol 2
+
+Host dns obsd* *.amazonaws.com
+      IdentityFile ~/.ssh/private/id_rootvm
+      Port 2203
+      Protocol 2
+
+# Match keyword must be at the end of the file
+Match User thierry,git
+      IdentityFile ~/.ssh/private/id_rsa
+      Port 2203
+      Protocol 2
+
+Match User admin,adminvm
+      IdentityFile ~/.ssh/private/id_admin
+      Port 2203
+      Protocol 2
+
+Match User root
+      IdentityFile ~/.ssh/private/id_rootvm
+      Port 2203
+      Protocol 2

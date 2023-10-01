@@ -45,12 +45,16 @@
     shell = {
       direnv.enable = true;
       git.enable    = true;
-      gnupg.enable  = true;
+      gnupg = {
+        enable = true;
+        useTomb = true;
+      };
+      #NOTE: Do I need tmux locally ?
       tmux.enable   = false;
       zsh.enable    = true;
     };
     services = {
-      ssh.enable = false;
+      ssh.enable = true;
       docker.enable = true;
     };
     theme.active = "nord";
@@ -61,7 +65,12 @@
   hardware.opengl.enable = true;
   time.timeZone = "Europe/Zurich";
 
+  ## SSH config
+  home.file.".ssh/config" = {source = "../../config/ssh/config";};
+  #gnupg
+  home.configFile."gnupg/gpg.conf" = {source = "../../config/gnupg/gpg.conf";};
+
   ## Personal backups
-  #TODO: Backups
+  #TODO: Backups to tomb
 
 }
