@@ -7,6 +7,10 @@ in {
   networking.extraHosts = ''
     192.168.1.1   router.home
 
+    # DNS Server & Soon mail server
+    137.220.54.49 eshub
+    46.23.94.97   eshua
+
     # Hosts
     # Block garbage
     ${optionalString (config.services.xserver.enable
