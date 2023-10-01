@@ -12,6 +12,7 @@ in {
 
   config = mkIf cfg.enable {
     env.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
+    environment.systemPackages = [ pkgs.pinentry ];
 
     programs.gnupg.agent.enable = true;
 
