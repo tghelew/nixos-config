@@ -118,6 +118,7 @@
 
   battery = {
     design-capacity = true;
+    full-at = 81;
     format = "{icon} {capacity}%";
     format-icons = {
       default = [
