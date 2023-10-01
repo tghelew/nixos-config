@@ -64,8 +64,8 @@ in {
     system.userActivationScripts = mkIf cfg.tlux.enable {
       installTluxEmacs = ''
         if [[ ! -d "$XDG_CONFIG_HOME/emacs" && -f "$HOME/.ssh/id_github.pub" ]]; then
-           ${pkgs.git}/bin/git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$EMACSDIR"
-           ${pkgs.git}/bin/git clone "${cfg.tlux.configRepoUrl}" "$TLUXDIR"
+           ${pkgs.git}/bin/git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
+           ${pkgs.git}/bin/git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
            echo -n "Tlux Configuration file installed! Do not forget to run: temacs install"
         fi
 
