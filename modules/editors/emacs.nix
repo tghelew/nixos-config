@@ -11,8 +11,8 @@ in {
     enable = mkBoolOpt false;
     tlux = rec {
       enable = mkBoolOpt false;
-      repoUrl = mkOpt types.str "https://github.com/tghelew/emacs.d";
-      configRepoUrl = mkOpt types.str "https://github.com/tghelew/linux-emacs-private";
+      repoUrl = mkOpt types.str "git@github.comm:tghelew/emacs.d";
+      configRepoUrl = mkOpt types.str "git@github.com:tghelew/linux-emacs-private";
     };
   };
 
@@ -35,7 +35,7 @@ in {
       fd                  # faster projectile indexing
       imagemagick         # for image-dired
       (mkIf (config.programs.gnupg.agent.enable)
-        pinentry_emacs)   # in-emacs gnupg prompts
+        pinentry-emacs)   # in-emacs gnupg prompts
       zstd                # for undo-fu-session/undo-tree compression
 
       ## Module dependencies
@@ -60,17 +60,17 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
-    # TODO: setup agenix
-    # system.userActivationScripts = mkIf cfg.tlux.enable {
-    #   installTluxEmacs = ''
-    #     if [ ! -d "$XDG_CONFIG_HOME/emacs" ]; then
-    #        git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
-    #        git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
-    #        echo -n "Tlux Configuration file installed! Do not forget to run: temacs install"
-    #     fi
+    #WARNING: ssh must be configure prior to sucessfully running this activation
+    system.userActivationScripts = mkIf cfg.tlux.enable {
+      installTluxEmacs = ''
+        if [[ ! -d "$XDG_CONFIG_HOME/emacs" && -f "$HOME/.ssh/id_github.pub" ]]; then
+           git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$EMACSDIR"
+           git clone "${cfg.tlux.configRepoUrl}" "$TLUXDIR"
+           echo -n "Tlux Configuration file installed! Do not forget to run: temacs install"
+        fi
 
-    #   '';
-    # };
+      '';
+    };
 
     nix.settings = {
       substituters = ["https://nix-community.cachix.org"];	# Install cached version so rebuild should not be required
