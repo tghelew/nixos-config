@@ -42,6 +42,7 @@ in {
     ++ optionals withWayland [
         wl-clipboard
         wlr-randr
+        handlr
         wev
         swappy
         btop
