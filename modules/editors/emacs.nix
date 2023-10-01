@@ -63,6 +63,7 @@ in {
     #WARNING: ssh must be configure prior to sucessfully running this activation
     system.userActivationScripts = mkIf cfg.tlux.enable {
       installTluxEmacs = ''
+        PATH=${pkgs.openssh}/bin/ssh::$PATH
         if [[ ! -d "$XDG_CONFIG_HOME/emacs" && -f "$HOME/.ssh/id_github.pub" ]]; then
            ${pkgs.git}/bin/git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
            ${pkgs.git}/bin/git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
