@@ -61,30 +61,6 @@ in {
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
 
-    installTluxEmacs = pkgs.writeShellApplication {
-      name = "installTluxEmacs";
-      runtimeInputs = [
-        git
-        openssh
-      ];
-      text = ''
-        if [[ ! -d "$XDG_CONFIG_HOME/emacs"  && -f ${repoPubKeyPath} ]]; then
-           git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
-           git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
-           echo -n "Tlux Configuration files installed! Do not forget to run: temacs install"
-        else
-           current_path=$(pwd)
-           cd "$XDG_CONFIG_HOME/emacs"
-           git pull --rebase --autostash"
-           cd "$XDG_CONFIG_HOME/tlux"
-           git pull --rebase --autostash"
-           cd "$current_path"
-           echo -n "Tlux Configuration files updated! Do not forget to run: temacs sync -p && reload"
-        fi
-      '';
-
-    };
-
     # NOTE: This is not strictly repoducable as it follow the main branch wihtout hash!
     #WARNING: ssh must be installed and properly configure to fetch this private repository
     system.userActivationScripts = mkIf cfg.tlux.enable {
