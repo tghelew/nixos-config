@@ -79,9 +79,9 @@ in {
                     echo -n "Tlux Configuration files installed! Do not forget to run: temacs install"
                   else
                     current_path=$(pwd)
-                    cd "$XDG_CONFIG_HOME/emacs"
+                    cd "\${XDG_CONFIG_HOME}/emacs"
                     git pull --rebase --autostash"
-                    cd "$XDG_CONFIG_HOME/tlux"
+                    cd "\${XDG_CONFIG_HOME}/tlux"
                     git pull --rebase --autostash"
                     cd "$current_path"
                     echo -n "Tlux Configuration files updated! Do not forget to run: temacs sync -p && reload"
