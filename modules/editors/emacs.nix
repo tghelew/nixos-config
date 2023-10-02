@@ -13,7 +13,7 @@ in {
       enable = mkBoolOpt false;
       repoUrl = mkOpt types.str "git@github.com:tghelew/emacs.d";
       configRepoUrl = mkOpt types.str "git@github.com:tghelew/linux-emacs-private";
-      repoPubkeyPath = mkOpt  types.str "$HOME/.ssh/id_github.pub";
+      repoPubKeyPath = mkOpt  types.str "$HOME/.ssh/id_github.pub";
     };
   };
 
@@ -73,16 +73,16 @@ in {
                   openssh
                 ];
                 text = ''
-                  if [[ ! -d "$XDG_CONFIG_HOME/emacs" ]]; then
+                  if [[ ! -d "$XDG_CONFIG_HOME"/emacs && -f ${cfg.tlux.repoPubKeyPath} ]]; then
                     git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
                     git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
                     echo -n "Tlux Configuration files installed! Do not forget to run: temacs install"
                   else
                     current_path=$(pwd)
-                    cd ""$XDG_CONFIG_HOME"/emacs"
-                    git pull --rebase --autostash"
-                    cd ""$XDG_CONFIG_HOME"/tlux"
-                    git pull --rebase --autostash"
+                    cd ${config.env.EMACSDIR}
+                    git pull --rebase --autostash
+                    cd ${config.env.TLUXDIR}
+                    git pull --rebase --autostash
                     cd "$current_path"
                     echo -n "Tlux Configuration files updated! Do not forget to run: temacs sync -p && reload"
                   fi
