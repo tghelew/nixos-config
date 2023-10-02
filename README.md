@@ -8,13 +8,13 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
 # Goals
  - **Centralized** spot for landing all my nixes configurations
  - **One Click** deployment and setup
- - **Prooper** secret management
+ - **Proper** secret management
  
 # TODO 
  * ~~Finalize _rofi_ theme~~
  * ~~Setup theme for swaylock~~
- * Setup secret using _agenix_
- * Setup external backup using tomb?
+ * ~~Setup secret using _agenix_~~
+ * ~~Setup external backup using tomb~~
  * Configure Emacs with Tlux
  * Setup _pass_
  * ~~Configure Waybar with _nord_ theme~~
