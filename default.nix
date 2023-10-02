@@ -65,6 +65,7 @@ with lib.my;
   environment.systemPackages = with pkgs; [
     cached-nix-shell
     git
+    unstable.git-credential-oauth
     dig
     vim
     wget
