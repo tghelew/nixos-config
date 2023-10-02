@@ -59,7 +59,7 @@ in {
       PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
       EMACSDIR = "$XDG_CONFIG_HOME/emacs/";
       TLUXDIR = "$XDG_CONFIG_HOME/tlux/";
-      TLUXLOCALDIR = "$EMACSDIR/.local/";
+      TLUXLOCALDIR = "$XDG_CONFIG_HOME/emacs/.local/";
     };
 
     modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
