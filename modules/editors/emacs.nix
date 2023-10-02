@@ -80,10 +80,10 @@ in {
                   fi
                 '';
               };
-      in
-      ''
-        ${tluxScript}/bin/installTluxEmacs
-      '';
+        in
+        ''
+          ${tluxScript}/bin/installTluxEmacs
+        '';
     };
 
     nix.settings = {
