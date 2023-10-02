@@ -41,10 +41,10 @@ in
       python.enable = true;
     };
     editors = {
-      default = "emacs";
       emacs.enable = true;
       emacs.tlux.enable = true;
       vim.enable = true;
+      default = config.modules.editors.emacs.defaultEditor;
     };
     shell = {
       direnv.enable = true;

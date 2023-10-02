@@ -6,6 +6,10 @@ with lib;
 with lib.my;
 let cfg = config.modules.editors.emacs;
     configDir = config.nixos-config.configDir;
+    defaultEditorScript = with pkgs; writeShellScriptBin "default-editor"
+    ''
+     ${emacs-unstable}/bin/emacsclient "$@" -a ""
+    '';
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
@@ -14,6 +18,7 @@ in {
       repoUrl = mkOpt types.str "git@github.com:tghelew/emacs.d";
       configRepoUrl = mkOpt types.str "git@github.com:tghelew/linux-emacs-private";
       repoPubKeyPath = mkOpt  types.str "$HOME/.ssh/id_github.pub";
+      defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/default-editor";
     };
   };
 
