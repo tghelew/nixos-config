@@ -13,12 +13,12 @@ let cfg = config.modules.editors.emacs;
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
+    defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/default-editor";
     tlux = rec {
       enable = mkBoolOpt false;
       repoUrl = mkOpt types.str "git@github.com:tghelew/emacs.d";
       configRepoUrl = mkOpt types.str "git@github.com:tghelew/linux-emacs-private";
       repoPubKeyPath = mkOpt  types.str "$HOME/.ssh/id_github.pub";
-      defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/default-editor";
     };
   };
 
