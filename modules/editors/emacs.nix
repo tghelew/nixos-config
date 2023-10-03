@@ -72,7 +72,7 @@ in {
       symlinkEmacs =
       ''
         if [[ ! -h "$HOME/.emacs.d" ]]; then
-            ln -s "$HOME/.emacs.d" "${config.env.EMACSDIR}"
+            ln -s "${config.env.EMACSDIR}" "$HOME/.emacs.d"
         fi
       '';
       installTlux =
