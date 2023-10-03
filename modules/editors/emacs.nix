@@ -53,6 +53,8 @@ in {
       sqlite
       # :lang latex & :lang org (latex previews)
       texlive.combined.scheme-medium
+      # export to html
+      pandoc
     ];
 
     env = {
@@ -64,7 +66,11 @@ in {
 
     modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
 
-    fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
+    fonts.fonts = with pkgs;
+      [
+        emacs-all-the-icons-fonts
+        nerdfonts
+      ];
 
     #NOTE: This is not strictly repoducable as it follow the main branch wihtout hash!
     #WARNING: ssh must be installed and properly configure to fetch this private repository
