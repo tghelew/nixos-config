@@ -43,6 +43,7 @@ alias rcpu='rcp --chmod=go='
 alias rcpdu='rcpd --chmod=go='
 
 alias jc='journalctl -xe'
+alias jcu='journactl --user -xe'
 alias jcf='journalctl -f'
 alias sc=systemctl
 alias scu='systemctl --user'
@@ -58,9 +59,8 @@ if (( $+commands[exa] )); then
 fi
 
 if (( $+commands[fasd] )); then
-  # fuzzy completion with 'z' when called without args
-  unalias z 2>/dev/null
-  function z {
+  # fuzzy completion with 'zs' when called without args
+  function zs {
     [ $# -gt 0 ] && _z "$*" && return
     cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
   }
