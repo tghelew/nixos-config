@@ -33,6 +33,7 @@ in {
       })
       qgnomeplatform        # QPlatformTheme for a better Qt application inclusion in GNOME
       libsForQt5.qtstyleplugin-kvantum # SVG-based Qt5 theme engine plus a config tool and extra theme
+      xdg-utils
     ] ++ optionals withXserver [
       feh       # image viewer
       xclip
