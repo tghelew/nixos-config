@@ -19,9 +19,9 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
    * fix warnings
    * adapt to emacs 29
    * change prompt when in vterm
+ * Add multimedia keybinding in Hyprland
  * Setup _pass_
  * ~~Configure Waybar with _nord_ theme~~
- * Setup [hanlr](https://github.com/chmln/handlr)
  * Setup a scratch terminal with tmux
  * Setup a Calc scratch terminal
  * Setup kitty as the default terminal
