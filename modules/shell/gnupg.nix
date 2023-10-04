@@ -6,7 +6,7 @@ let cfg = config.modules.shell.gnupg;
 in {
   options.modules.shell.gnupg = with types; {
     enable   = mkBoolOpt false;
-    cacheTTL = mkOpt int 3600;  # 1hr
+    cacheTTL = mkOpt int 7200;  # 2hr
     useTomb = mkBoolOpt true;
   };
 
