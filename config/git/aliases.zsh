@@ -27,6 +27,7 @@ alias gs='git status --short .'
 alias gss='git status'
 alias gst='git stash'
 alias gr='git reset HEAD'
+alias grh='git reset --hard HEAD'
 alias gv='git rev-parse'
 
 # fzf
