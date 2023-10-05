@@ -32,8 +32,6 @@ in {
       # Replaces photoshop
       (if cfg.photoshop.enable then [
         gimp
-        #FIXME: package is broken due to python2 requirement
-        # gimpPlugins.resynthesizer  # content-aware scaling in gimp
       ] else []) ++
 
       # 3D modelling
