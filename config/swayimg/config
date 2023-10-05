@@ -57,7 +57,7 @@ antialiasing = no
 #app_id = swayimg
 
 # Enable/disable integration with Sway WM (window position managing)
-sway = yes
+sway = no
 
 # Section with key bindings (key -> action)
 [keys]
@@ -91,9 +91,6 @@ j = step_down
 equal = zoom_in
 plus = zoom_in
 minus = zoom_out
-x = zoom_optimal
-z = zoom_fit
-Z = zoom_fill
 0 = zoom_real
 BackSpace = zoom_reset
 F5 = rotate_left
