@@ -41,9 +41,9 @@ c.prompt.radius = 0
 c.spellcheck.languages = ['en-US']
 c.session.lazy_restore = True
 c.tabs.show = 'multiple'
-c.tabs.title.format = '{audio}{current_title} - {host}'
-c.tabs.title.format_pinned = ''
-c.window.title_format = '{current_title} - {host} - qutebrowser'
+c.tabs.title.format = '{audio}{index}:{current_title} - {host}'
+c.tabs.title.format_pinned = '{index}'
+c.window.title_format = '{host} - qutebrowser'
 
 
 #
