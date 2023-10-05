@@ -49,4 +49,15 @@ if [[ $TERM != dumb ]]; then
 
   _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
   autopair-init
+  # make sure current folder is defined as title
+  precmd () {print -Pn "\e]0;%\y: %~\a"}
+  # Stop TRAMP (in Emacs) from hanging or term/shell from echoing back commands
+  if [[ $TERM == linux || -n $INSIDE_EMACS ]]; then
+    unsetopt zle prompt_cr prompt_subst
+    whence -w precmd >/dev/null && unfunction precmd
+    whence -w preexec >/dev/null && unfunction preexec
+    #TODO: Setup proper prompt
+    PS1='$ '
+  fi
 fi
+
