@@ -4,7 +4,7 @@
 set -xv
 _required_list=(jq hyprctl)
 _clients=$(hyprctl -j clients)
-_clients_parsed=$(hyprctl -j clients | jq -cr '.[] | "\(.address)|\(.initialTitle)"')
+_clients_parsed=$(hyprctl -j clients | jq -cr '.[] | "\(.address)|\(.title)"')
 
 for cmd in $_required_list; do
 	if ! command -v $cmd >/dev/null; then
@@ -24,7 +24,7 @@ fi
 if [ $# -eq 1 ]; then
 	selected=$1
 	# Select the first element in the output.
-	window=$(echo ${_clients} | jq ".[] | first(select(.initialTitle == \"${selected}\"))")
+	window=$(echo ${_clients} | jq ".[] | first(select(.title == \"${selected}\"))")
 	if [[ $window == "" ]]; then
 		exit 1
 	fi
