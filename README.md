@@ -19,13 +19,15 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
    * fix warnings
    * adapt to emacs 29
    * change prompt when in vterm
- * Add multimedia keybinding in Hyprland
+ * ~~Add multimedia keybinding in Hyprland~~
  * Setup _pass_
  * ~~Configure Waybar with _nord_ theme~~
- * Setup a scratch terminal with tmux
- * Setup a Calc scratch terminal
+ * ~~Setup a scratch terminal with tmux~~
+ * ~~Setup a Calc scratch terminal~~
  * Setup kitty as the default terminal
  * Update MacOS configuration (_yabi_)
- * Add dedicated keybinding for _Atumba_
+ * Setup mpv keybindings
+ * qutebrowser update nord theme (links colors)
+ * qutebrowser change how editor is opened (terminal)
 
 
