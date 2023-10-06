@@ -8,6 +8,7 @@ in {
   options.modules.shell.tmux = with types; {
     enable = mkBoolOpt false;
     rcFiles = mkOpt (listOf (either str path)) [];
+    theme = mkOpt path null;
   };
 
   config = mkIf cfg.enable {
@@ -21,6 +22,11 @@ in {
 
     home.configFile = {
       "tmux" = { source = "${configDir}/tmux"; recursive = true; };
+      "tmux/theme" = mkIf (cfg.theme != null) {
+        source = cfg.theme;
+        recursive = true;
+        executable = true;
+      };
       "tmux/extraInit" = {
         text = ''
           #!/usr/bin/env bash

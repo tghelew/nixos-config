@@ -54,7 +54,7 @@ in
         useTomb = true;
       };
       #NOTE: Do I need tmux locally ?
-      tmux.enable   = false;
+      tmux.enable   = true;
       zsh.enable    = true;
     };
     services = {
