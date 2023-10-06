@@ -6,9 +6,9 @@ listview {
   columns: 1;
 }
 
-inputbar {
-  width: 1100px;
-}
+/* inputbar { */
+/*   width: 1100px; */
+/* } */
 
 textbox-icon {
   str: "  ";
