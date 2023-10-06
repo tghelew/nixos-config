@@ -29,5 +29,6 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * Setup mpv keybindings
  * qutebrowser update nord theme (links colors)
  * qutebrowser change how editor is opened (terminal)
+ * Use [Configuration - Stylix](https://danth.github.io/stylix/configuration.html)? 
 
 

@@ -2,6 +2,9 @@
 # Nord https://github.com/nordtheme/tmux
 # Copyright (c) 2016-present Sven Greb <development@svengreb.de>
 # This source code is licensed under the MIT license found in the license file.
+# NOTE: In order for theme to load this file *must* be named "load"
+#       Additionally, colors theme is dependent of the terminal configuration
+
 
 NORD_TMUX_COLOR_THEME_FILE=nord.conf
 NORD_TMUX_VERSION=0.3.0

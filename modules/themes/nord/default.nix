@@ -75,7 +75,7 @@ in {
           else null;
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
-        shell.tmux.rcFiles = [ ./config/tmux/tmux.conf ];
+        shell.tmux.theme = ./config/tmux;
         desktop.browsers = {
           firefox.chromePath = ./config/firefox;
         };
