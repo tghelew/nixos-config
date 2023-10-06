@@ -1,0 +1,59 @@
+#!/usr/bin/env zsh
+
+# debug
+# set -x
+# Toggle a scratch terminal window. A scratch terminal is a disposable terminal
+# for one-off, quick commands that don't warrant a dedicated terminal.
+
+#---- Validation
+_message () {
+   local type=${1:-"Error"}
+   if [[ $type =~ "[Ee][Rr][Rr][Oo][Rr]"  ]]; then
+      >&2 printf "%s: %s\n" $type ${2:-"Something happends..."}
+      exit 1
+   else
+       printf "%s: %s\n" $type ${2:-"Something happends..."}
+   fi
+}
+
+_run_checks () {
+
+local cmds=(jq hyprctl tmux)
+set -a missing
+
+for c in ${cmds}; do
+    if ! (( $+commands[$c] )); then
+        missing+=" ${c}"
+    fi
+done
+[ ${#missing[@]} -gt 0 ] && _message "Error" "Missing program(s): ${missing[@]}"
+}
+#--- END Validation
+
+#NOTE: think twice when changing the name of the this variable
+export CONFIG_SCRATCH_CLASS=scratch
+CMD=${*:-"tmux new-session -A -s $CONFIG_SCRATCH_CLASS -n $CONFIG_SCRATCH_CLASS"}
+focused_addr=$(hyprctl -j activewindow | jq -cr '.address')
+scratch=$(
+    hyprctl -j clients |\
+        jq -c ".[] | select(.class == \"${CONFIG_SCRATCH_CLASS}\" and .hidden == false)")
+
+
+if [[ -n $scratch ]]; then
+    local scratch_addr="$(echo $scratch | jq -r '.address')"
+    if [[ "$focused_addr" == "$scratch_addr" ]]; then
+        hyprctl dispatch closewindow address:$scratch_addr
+    else
+        hyprctl dispatch focuswindow address:$scratch_addr
+    fi
+elif (( $+commands[alacritty] )); then
+    (){
+        alacritty msg create-window $@ ||  alacritty $@
+    } --class $CONFIG_SCRATCH_CLASS --title $CONFIG_SCRATCH_CLASS -e ${(Q)${(z)CMD}} # split and remove quote
+elif (( $+commands[kitty] )); then
+    kitty --class $CONFIG_SCRATCH_CLASS --name $CONFIG_SCRATCH_CLASS \
+          --title $CONFIG_SCRATCH_CLASS --detach "$CMD"
+
+else
+    _message "Error" "No shell to launch the scratch terminal with"
+fi
