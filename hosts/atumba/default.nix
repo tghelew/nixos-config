@@ -66,6 +66,7 @@ in
 
   ## Local config
   networking.networkmanager.enable = true;
+  programs.nm-applet.enable = true;
   hardware.opengl.enable = true;
   time.timeZone = "Europe/Zurich";
 
