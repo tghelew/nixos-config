@@ -6,12 +6,12 @@
 }
 
 window#waybar {
-  background-color: ${colors.black};
+  background-color: transparent;
   color: ${colors.white};
   border-radius: 5px;
   border-width: 3px;
   border-color: transparent;
-  border-style: solid;
+  border-style: none;
 }
 
 window#waybar.hidden {
@@ -36,6 +36,14 @@ window#waybar.hidden {
 #cpu {
   color: ${colors.red};
   border-radius: 5px 5px 5px 5px;
+}
+
+.modules-center,
+.modules-left,
+.modules-right {
+  background-color: ${colors.black};
+  border-radius: 5px 5px 5px 5px;
+
 }
 
 #memory {
@@ -91,7 +99,6 @@ window#waybar.hidden {
 #wireplumber,
 #tray,
 #network {
-  background-color: ${colors.black};
   font-size: 11px;
   padding-left: 7.5px;
   padding-right: 7.5px;
@@ -216,5 +223,6 @@ label:focus {
 #memory,
 #cpu {
   font-size: 10px;
+  font-family: FontAwesome, ${fonts.mono.name}
 }
 ''

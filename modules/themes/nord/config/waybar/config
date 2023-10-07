@@ -7,6 +7,7 @@
   height = 30;
   margin-left = 8;
   margin-right = 8;
+  margin-top = 3;
   mod = "dock";
   modules-left = [
     "hyprland/workspaces"
@@ -31,7 +32,7 @@
 
   "hyprland/submap" = {
     format = " {}";
-    max-length = 8;
+    max-length = 15;
     tooltip = false;
   };
 
@@ -44,7 +45,7 @@
       persistent = "";
       active = "";
       urgent = "";
-      special = "";
+      special = "";
     };
     persistent_workspaces = {
       "1" = ["eDP-1"];
@@ -56,14 +57,16 @@
   };
 
   memory = {
+    # FontAwesome
     interval = 5;
-    format = " {}%";
+    format = " {}%";
     max-length = 10;
   };
 
   cpu = {
+    # FontAwesome
     interval = 1;
-    format = " {}%";
+    format = " {}%";
     max-length = 12;
   };
 
