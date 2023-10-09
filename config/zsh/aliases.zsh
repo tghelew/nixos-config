@@ -1,7 +1,7 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias -- -='cd -'
+alias ---='cd -'
 
 alias q=exit
 alias c=clear
@@ -61,8 +61,8 @@ fi
 if (( $+commands[fasd] )); then
   # fuzzy completion with 'zs' when called without args
   function zs {
-    [ $# -gt 0 ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+    [ $# -gt 0 ] && z "$*" && return
+    cd "$(z -l 2>&1 | fzf --height 40% --reverse --info:inline --tac | sed 's/^[0-9,.]* *//')"
   }
 fi
 
@@ -84,5 +84,13 @@ function r {
 
 
 function alval {
-  alias | grep -i $1 | fzf -i
+  alias | grep -i $1 | fzf -i --info:inline
 }
+
+
+# Global aliases
+alias -g G='| grep --color-auto -i'
+alias -g L='| less -ei'
+
+
+#TODO: Add get aliases (using zstyle)?
