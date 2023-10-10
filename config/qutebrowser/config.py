@@ -59,7 +59,8 @@ config.bind('zz', 'close')
 config.bind('tm', 'tab-mute')
 config.bind('wi', 'devtools bottom')
 config.bind(';;', 'hint inputs --first')  # easier to reach than ;t
-config.bind(';v', 'hint links spawn mpv {hint-url}')
+config.bind(';v', 'hint links spawn mpv --ytdl-format="best[height<=1080]" {hint-url}')
+config.bind(';V', 'hint links spawn mpv {hint-url}')
 
 # Use external editor
 c.editor.command = ['emacsclient', '-c', '-F', '((name . "qutebrowser-editor"))', '+{line}:{column}', '{}']
@@ -294,9 +295,9 @@ config.bind('<Ctrl-F>', 'rl-forward-word', mode='command')
 # config.bind('<Return>', 'follow-hint', mode='hint')
 
 ## Bindings for insert mode
-# config.bind('<Ctrl-E>', 'open-editor', mode='insert')
 # config.bind('<Escape>', 'leave-mode', mode='insert')
 # config.bind('<Shift-Ins>', 'insert-text {primary}', mode='insert')
+
 
 ## Bindings for passthrough mode
 # config.bind('<Ctrl-V>', 'leave-mode', mode='passthrough')
@@ -307,14 +308,14 @@ config.bind('<Ctrl-F>', 'rl-forward-word', mode='command')
 # config.bind('<Alt-D>', 'rl-kill-word', mode='prompt')
 # config.bind('<Alt-F>', 'rl-forward-word', mode='prompt')
 # config.bind('<Ctrl-?>', 'rl-delete-char', mode='prompt')
-# config.bind('<Ctrl-A>', 'rl-beginning-of-line', mode='prompt')
-# config.bind('<Ctrl-B>', 'rl-backward-char', mode='prompt')
-# config.bind('<Ctrl-E>', 'rl-end-of-line', mode='prompt')
-# config.bind('<Ctrl-F>', 'rl-forward-char', mode='prompt')
-config.bind('<Ctrl-B>', 'rl-backward-word', mode='prompt')
-config.bind('<Ctrl-F>', 'rl-forward-word', mode='prompt')
-# config.bind('<Ctrl-H>', 'rl-backward-delete-char', mode='prompt')
-# config.bind('<Ctrl-K>', 'rl-kill-line', mode='prompt')
+config.bind('<Ctrl-O>', 'rl-beginning-of-line', mode='prompt')
+config.bind('<Ctrl-B>', 'rl-backward-char', mode='prompt')
+config.bind('<Ctrl-E>', 'rl-end-of-line', mode='prompt')
+config.bind('<Ctrl-F>', 'rl-forward-char', mode='prompt')
+config.bind('<Ctrl-Shift-B>', 'rl-backward-word', mode='prompt')
+config.bind('<Ctrl-Shift-F>', 'rl-forward-word', mode='prompt')
+config.bind('<Ctrl-H>', 'rl-backward-delete-char', mode='prompt')
+config.bind('<Ctrl-K>', 'rl-kill-line', mode='prompt')
 # config.bind('<Ctrl-U>', 'rl-unix-line-discard', mode='prompt')
 # config.bind('<Ctrl-W>', 'rl-unix-word-rubout', mode='prompt')
 # config.bind('<Ctrl-X>', 'prompt-open-download', mode='prompt')

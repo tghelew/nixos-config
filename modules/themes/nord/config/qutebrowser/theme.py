@@ -308,3 +308,8 @@ c.colors.tabs.selected.even.bg = base0D
 # color).
 # Dark mode
 c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.darkmode.policy.images = "smart"
+c.colors.webpage.darkmode.policy.page = "smart"
+c.colors.webpage.darkmode.threshold.text = 150
+c.colors.webpage.darkmode.threshold.background = 205
+c.colors.webpages.darkmode.increase_text_contrast = True
