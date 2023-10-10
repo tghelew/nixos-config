@@ -26,9 +26,7 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * ~~Setup a Calc scratch terminal~~
  * Setup kitty as the default terminal
  * Update MacOS configuration (_yabi_)
- * Setup mpv keybindings
- * qutebrowser update nord theme (links colors)
- * qutebrowser change how editor is opened (terminal)
- * Use [Configuration - Stylix](https://danth.github.io/stylix/configuration.html)? 
+ * ~~Setup mpv keybindings~~
+ * waybar: include windows/workspace counter (using hyrctl activeworkspace)
 
 

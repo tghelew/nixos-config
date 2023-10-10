@@ -138,6 +138,7 @@ in {
           "waybar/style.css".text = import ./config/waybar/style.css theme;
           "dunst/dunstrc".text = import ./config/dunstrc theme;
           "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf theme;
+          "mpv/theme.conf".text = import ./config/mpv/theme.conf theme;
           "swaylock/config".text = with theme; ''
             # Swaylock - Effect
             screenshots
