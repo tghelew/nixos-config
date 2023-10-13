@@ -4,6 +4,7 @@
 
 { config, options, lib, pkgs, ... }:
 
+#FIXME: Properly support xdg
 with lib;
 with lib.my;
 let devCfg = config.modules.dev;
@@ -11,7 +12,6 @@ let devCfg = config.modules.dev;
 in {
   options.modules.dev.common-lisp = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
   config = mkMerge [
@@ -20,10 +20,6 @@ in {
         sbcl
         lispPackages.quicklisp
       ];
-    })
-
-    (mkIf cfg.xdg.enable {
-      # TODO
     })
   ];
 }

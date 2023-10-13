@@ -2,6 +2,7 @@
 #
 # JS is one of those "when it's good, it's alright, when it's bad, it's a
 # disaster" languages.
+# FIXME: properly support xdg config
 
 { config, options, lib, pkgs, ... }:
 
@@ -12,7 +13,6 @@ let devCfg = config.modules.dev;
 in {
   options.modules.dev.node = {
     enable = mkBoolOpt false;
-    modules.xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
   config = mkMerge [

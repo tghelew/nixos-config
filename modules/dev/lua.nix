@@ -14,7 +14,6 @@ let devCfg = config.modules.dev;
 in {
   options.modules.dev.lua = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.enableXDG;
     love2D.enable = mkBoolOpt false;
   };
 
@@ -25,10 +24,6 @@ in {
         luaPackages.moonscript
         (mkIf cfg.love2D.enable love2d)
       ];
-    })
-
-    (mkIf cfg.xdg.enable {
-      # TODO
     })
   ];
 }

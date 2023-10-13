@@ -73,4 +73,16 @@ with lib.my;
     unzip
     file
   ];
+  # documentation
+  documentation = {
+    enable = true;
+    doc.enable = true;
+    info.enable = true;
+    nixos.includeAllModules = true;
+    man = {
+      enable = false;
+      generateCaches = true;
+      mandoc.enable = true;
+    };
+  };
 }

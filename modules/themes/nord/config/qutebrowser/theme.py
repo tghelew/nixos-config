@@ -307,9 +307,10 @@ c.colors.tabs.selected.even.bg = base0D
 # Background color for webpages if unset (or empty to use the theme's
 # color).
 # Dark mode
+c.colors.webpage.bg = ""
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.policy.images = "smart"
 c.colors.webpage.darkmode.policy.page = "smart"
 c.colors.webpage.darkmode.threshold.text = 150
 c.colors.webpage.darkmode.threshold.background = 205
-c.colors.webpages.darkmode.increase_text_contrast = True
+c.colors.webpage.darkmode.increase_text_contrast = True

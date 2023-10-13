@@ -1,5 +1,6 @@
 { config, options, lib, pkgs, my, ... }:
 
+#FIXME: properly support xdg
 with lib;
 with lib.my;
 let devCfg = config.modules.dev;
@@ -7,7 +8,6 @@ let devCfg = config.modules.dev;
 in {
   options.modules.dev.scala = {
     enable = mkBoolOpt false;
-    xdg.enable = mkBoolOpt devCfg.xdg.enable;
   };
 
   config = mkMerge [
@@ -19,8 +19,5 @@ in {
       ];
     })
 
-    (mkIf cfg.xdg.enable {
-      # TODO
-    })
   ];
 }

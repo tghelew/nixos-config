@@ -10,7 +10,7 @@ in
   ];
 
   ## Modules
-  modules = {
+  modules = with config.modules;{
     desktop = {
       hypr.enable = true;
       apps = {
@@ -37,6 +37,7 @@ in
       };
     };
     dev = {
+      enable = true;
       rust.enable = true;
       python.enable = true;
     };
@@ -44,7 +45,7 @@ in
       emacs.enable = true;
       emacs.tlux.enable = true;
       vim.enable = true;
-      default = config.modules.editors.emacs.defaultEditor;
+      default = editors.emacs.defaultEditor;
     };
     shell = {
       direnv.enable = true;
