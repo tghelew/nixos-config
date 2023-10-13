@@ -7,7 +7,7 @@ with lib.my;
 let cfg = config.modules.theme;
     themesDir = config.nixos-config.themesDir;
     withXserver = config.services.xserver.enable;
-    withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
+    withWayland = config.modules.desktop.hypr.enable;
 in {
   config = mkIf (cfg.active == "nord") (mkMerge [
     # Desktop-agnostic configuration

@@ -4,7 +4,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.desktop;
     withXserver = config.services.xserver.enable;
-    withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
+    withWayland = cfg.hypr.enable;
 in {
   config = mkIf (withXserver || withWayland) {
     assertions = [

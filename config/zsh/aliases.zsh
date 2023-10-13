@@ -1,7 +1,6 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias ---='cd -'
 
 alias q=exit
 alias c=clear

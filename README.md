@@ -28,5 +28,7 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * Update MacOS configuration (_yabi_)
  * ~~Setup mpv keybindings~~
  * waybar: include windows/workspace counter (using hyrctl activeworkspace)
+ * mpv: include script youtube-download ? 
+ * desktop: add xdg-mime association. 
 
 
