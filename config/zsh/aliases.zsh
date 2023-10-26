@@ -78,18 +78,34 @@ function zman {
 # Create a reminder with human-readable durations, e.g. 15m, 1h, 40s, etc
 function r {
   local time=$1; shift
-  sched "$time" "notify-send --urgency=critical 'Reminder' '$@'; ding";
+  sched "$time" "notify-send --urgency=critical 'Reminder' '$@'";
 }; compdef r=sched
 
 
 function alval {
-  alias | grep -i $1 | fzf -i --info:inline
+  alias | grep -i $1 | fzf -i --info=inline
 }
 
+function search {
+  local cmd="grep --color-auto -i "
+  if (( $+commands[rg] )); then
+    cmd="rg --color=auto "
+  fi
+  $cmd $@
+
+}
+
+function wl-showkeys {
+  if (( $+commands[wev] )); then
+    wev -f wl_keyboards:key
+  else
+   >&2 echo "Program [wev] is missing make sure to install it"
+  fi
+}
 
 # Global aliases
-alias -g G='| grep --color-auto -i'
-alias -g L='| less -ei'
+alias -g G='| search '
+alias -g L='| less -ei '
 
 
 #TODO: Add get aliases (using zstyle)?
