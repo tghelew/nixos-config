@@ -14,6 +14,7 @@ in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
     defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/default-editor";
+    useForEmail = mkBoolOpt false;
     tlux = rec {
       enable = mkBoolOpt false;
       repoUrl = mkOpt types.str "git@github.com:tghelew/emacs.d";
@@ -55,6 +56,18 @@ in {
       texlive.combined.scheme-medium
       # export to html
       pandoc
+      # dired video thumbmailer
+      ffmpegthumbnailer
+      # Video/Audio metadata info
+      mediainfo
+      # tar & unzip
+      gnutar
+      unzip
+      # Used for email
+      (mkIf cfg.useForEmail
+        mu)
+      (mkIf cfg.useForEmail
+        isync)
     ];
 
     env = {

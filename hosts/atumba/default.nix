@@ -43,6 +43,7 @@ in
     };
     editors = {
       emacs.enable = true;
+      emacs.useForEmail = true;
       emacs.tlux.enable = true;
       vim.enable = true;
       default = editors.emacs.defaultEditor;
