@@ -78,11 +78,11 @@ with lib.my;
     enable = true;
     doc.enable = true;
     info.enable = true;
-    nixos.includeAllModules = true;
+    # nixos.includeAllModules = true;
     man = {
-      enable = false;
+      enable = true;
       generateCaches = true;
-      mandoc.enable = true;
+      mandoc.enable = false;
     };
   };
 }

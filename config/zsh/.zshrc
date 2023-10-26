@@ -52,7 +52,7 @@ if [[ $TERM != dumb ]]; then
   # make sure current folder is defined as title
   precmd () {print -Pn "\e]0;%\y: %~\a"}
   # Stop TRAMP (in Emacs) from hanging or term/shell from echoing back commands
-  if [[ $TERM == linux || ${INSIDE_EMACS:-NULL} != "vterm" ]]; then
+  if [[ $TERM == linux || ${INSIDE_EMACS:-vterm} != "vterm" ]]; then
     unsetopt zle prompt_cr prompt_subst
     whence -w precmd >/dev/null && unfunction precmd
     whence -w preexec >/dev/null && unfunction preexec

@@ -64,6 +64,7 @@ in {
       gnutar
       unzip
       # Used for email
+      # TODO This is ugly!
       (mkIf cfg.useForEmail
         mu)
       (mkIf cfg.useForEmail
