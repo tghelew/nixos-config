@@ -97,7 +97,7 @@ function search {
 
 function wl-showkeys {
   if (( $+commands[wev] )); then
-    wev -f wl_keyboards:key
+    wev -f wl_keyboard:key
   else
    >&2 echo "Program [wev] is missing make sure to install it"
   fi
