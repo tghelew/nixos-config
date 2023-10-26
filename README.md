@@ -30,5 +30,8 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * waybar: include windows/workspace counter (using hyrctl activeworkspace)
  * mpv: include script youtube-download ? 
  * desktop: add xdg-mime association. 
+ * add zig modules
+ * fix rofi script hyprwindows when title contains ```quote```
+ * Implement hide window using special workspace (named hidden)
 
 
