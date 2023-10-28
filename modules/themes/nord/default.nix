@@ -12,7 +12,7 @@ in {
   config = mkIf (cfg.active == "nord") (mkMerge [
     # Desktop-agnostic configuration
     {
-      modules = {
+     modules = {
         theme = {
           wallpapers = mkDefault ./config/wallpaper;
           gtk = {

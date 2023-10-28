@@ -10,6 +10,7 @@
   margin-top = 3;
   mod = "dock";
   modules-left = [
+    "custom/windows"
     "hyprland/workspaces"
     "cpu"
     "memory"
@@ -21,13 +22,13 @@
   ];
 
   modules-right = [
+    "tray"
     "network"
     # "bluetooth"
     "wireplumber"
     "battery"
     "backlight"
     "custom/power"
-    "tray"
   ];
 
   "hyprland/submap" = {
@@ -121,7 +122,7 @@
 
   battery = {
     design-capacity = true;
-    full-at = 99;
+    full-at = 81;
     format = "{icon} {capacity}%";
     format-icons = {
       default = [
@@ -145,6 +146,26 @@
     tooltip = false;
     on-click = "$NIXOS_CONFIG_BIN/rofi/powermenu";
 
+  };
+
+  "custom/windows" = {
+    interval = 2;
+    return-type = "json";
+    format = "󰍹 {icon}";
+    format-icons = {
+     "0"= "󰅚";
+     "1"= "󰲡";
+     "2"= "󰲣";
+     "3"= "󰲥";
+     "4"= "󰲧";
+     "5"= "󰲩";
+     "6"= "󰲫";
+     "7"= "󰲭";
+     "8"= "󰲯";
+     "9"= "󰲱";
+  };
+    tooltip = false;
+    exec =  "hyprctl -j activeworkspace | jq --unbuffered --compact-output '{alt:.windows}'";
   };
 
   tray = {

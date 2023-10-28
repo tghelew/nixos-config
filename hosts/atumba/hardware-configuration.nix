@@ -4,8 +4,9 @@
   imports = ["${modulesPath}/installer/scan/not-detected.nix" ];
 
   boot = {
-    initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
-    initrd.kernelModules = [ "dm-snapshot" "i915" ];
+    initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" "dm-raid"];
+    initrd.kernelModules = [ "dm-snapshot" "i915" "dm-raid"];
+    initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
         device = "/dev/disk/by-partuuid/926e4930-3291-4b98-bd51-82917bb5a6cb";
@@ -13,8 +14,14 @@
         allowDiscards = true;
         preLVM = true;
       };
+      mirror = {
+        device = "/dev/disk/by-partuuid/97a2f0df-65cf-4066-b386-e10697f88a80";
+        allowDiscards = true;
+        fallbackToPassword = true;
+        preLVM = true;
+      };
     };
-    kernelModules = [ "kvm-intel"];
+    kernelModules = [ "kvm-intel" "dm-raid"];
     extraModulePackages = [];
     kernelParams = [
       # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
@@ -53,6 +60,11 @@
       automount.enable = true;
     };
     sensors.enable = true;
+
+    network = {
+      enable = true;
+      applet = true;
+    };
   };
 
   # CPU

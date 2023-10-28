@@ -11,6 +11,7 @@ in {
   config = mkIf cfg.enable {
     services.pipewire = {
       enable = true;
+      package = pkgs.unstable.pipewire;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
