@@ -12,10 +12,10 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      mpv
-      mpvc  # CLI controller for mpv
+      unstable.mpv
+      unstable.mpvc  # CLI controller for mpv
       ffmpeg
-      yt-dlp
+      unstable.yt-dlp
     ];
 
     home.configFile = {

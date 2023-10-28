@@ -2,7 +2,7 @@
 ''
 * {
   font-family: ${fonts.mono.name}, Material Icons, FontAwesome, Weather Icons;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 window#waybar {
@@ -33,6 +33,7 @@ window#waybar.hidden {
 #battery,
 #backlight,
 #custom-power,
+#custom-windows,
 #cpu {
   color: ${colors.red};
   border-radius: 5px 5px 5px 5px;
@@ -51,11 +52,13 @@ window#waybar.hidden {
   border-radius: 5px 5px 5px 5px;
 }
 
+
 @keyframes button_activate {
 	from { opacity: .3; }
 	to { opacity: 1.; }
 }
 
+#custom-windows,
 #workspaces button {
 	border: none;
 	color:  ${colors.cyan};
@@ -99,7 +102,6 @@ window#waybar.hidden {
 #wireplumber,
 #tray,
 #network {
-  font-size: 11px;
   padding-left: 7.5px;
   padding-right: 7.5px;
   margin-right: 5px;
@@ -187,6 +189,10 @@ window#waybar.hidden {
   color: ${colors.brightred};
   margin-right: 12px;
   border-radius: 5px;
+  padding: 0 6px 0 6px;
+}
+
+#tray {
   padding: 0 6px 0 6px;
 }
 

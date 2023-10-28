@@ -21,6 +21,7 @@ in {
         exfat     # Windows drives
         ntfs3g    # Windows drives
         hfsprogs  # MacOS drives
+        parted    # partitioning
       ];
     }
 
@@ -41,19 +42,10 @@ in {
         services.fstrim.enable = false;
         services.zfs.trim.enable = true;
       })
-      (mkIf cfg.automount.enable {
-        environment.systemPackages = with pkgs; [
-          udiskie
-        ];
 
-        systemd.user.services."udiskie" = {
-          enable = true;
-          description = "Handle automounting of usb devices";
-          wantedBy = [ "multi-user.target" ];
-          serviceConfig.ExecStart = "${pkgs.udiskie}/bin/udiskie";
-        };
-
-      })
     ]))
+    (mkIf cfg.automount.enable {
+      services.udisks2.enable = true;
+    })
   ]);
 }

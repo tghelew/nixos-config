@@ -86,15 +86,6 @@ function alval {
   alias | grep -i $1 | fzf -i --info=inline
 }
 
-function search {
-  local cmd="grep --color-auto -i "
-  if (( $+commands[rg] )); then
-    cmd="rg --color=auto "
-  fi
-  $cmd $@
-
-}
-
 function wl-showkeys {
   if (( $+commands[wev] )); then
     wev -f wl_keyboard:key
@@ -102,6 +93,12 @@ function wl-showkeys {
    >&2 echo "Program [wev] is missing make sure to install it"
   fi
 }
+
+if (( $+commands[rg] )); then
+  alias search=rg
+else
+  alias search=grep
+fi
 
 # Global aliases
 alias -g G='| search '

@@ -15,10 +15,10 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * ~~Setup theme for swaylock~~
  * ~~Setup secret using _agenix_~~
  * ~~Setup external backup using tomb~~
- * Configure Emacs with Tlux
-   * fix warnings
-   * adapt to emacs 29
-   * change prompt when in vterm
+ ~~* Configure Emacs with Tlux~~
+   ~~* fix warnings~~
+   ~~* adapt to emacs 29~~
+   ~~* change prompt when in vterm~~
  * ~~Add multimedia keybinding in Hyprland~~
  * Setup _pass_
  * ~~Configure Waybar with _nord_ theme~~
@@ -33,5 +33,6 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * add zig modules
  * fix rofi script hyprwindows when title contains ```quote```
  * Implement hide window using special workspace (named hidden)
+ * Use GDM with fingerprint? 
 
 
