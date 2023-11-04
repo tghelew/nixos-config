@@ -1,5 +1,5 @@
 {
-  description = " NixOS config.";
+  description = " Tlux Nix[OS] config.";
 
   inputs = {
     nixos-config.url = "github:tghelew/nixos-config";

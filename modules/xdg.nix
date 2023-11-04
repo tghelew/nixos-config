@@ -7,6 +7,8 @@
 {
   home-manager.users.${config.user.name}.xdg.enable = true;
 
+  # xdg-mine
+
   environment = {
     sessionVariables = {
       # These are the defaults, and xdg.enable does set them, but due to load
