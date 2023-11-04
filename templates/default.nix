@@ -6,9 +6,14 @@
   };
 
   # Hosts
-  host-desktop = {
-    path = ./hosts/desktop;
-    description = "A starter hosts/* config for someone's daily driver";
+  host-linux-desktop = {
+    path = ./hosts/linux/desktop;
+    description = "A starter hosts/linux/* config for someone's daily driver";
+  };
+
+  host-darwin-desktop = {
+    path = ./hosts/darwin/desktop;
+    description = "A starter hosts/darwin/* config for someone's daily driver";
   };
   # TODO: host-vultr
   # TODO: host-vm

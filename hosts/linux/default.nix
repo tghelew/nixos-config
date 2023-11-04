@@ -5,7 +5,7 @@ with lib.my;
 {
   imports =
     [ inputs.home-manager.nixosModules.home-manager ]
-    ++ (mapModulesRec' (toString ./modules) import);
+    ++ (mapModulesRec' (toString ../../modules) import);
 
   environment.variables.NIXOS_CONFIG = config.nixos-config.dir;
   environment.variables.NIXOS_CONFIG_BIN = config.nixos-config.binDir;
