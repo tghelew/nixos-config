@@ -6,10 +6,12 @@ with builtins;
 with lib;
 with lib.my;
 let inherit (inputs) agenix;
-    secretsDir = "${toString ../hosts}/${config.networking.hostName}/secrets";
+    secretsDir = linuxXorDarwin
+        "${toString ../hosts/linux}/${config.networking.hostName}/secrets"
+        "${toString ../hosts/darwin}/${config.networking.hostName}/secrets";
     secretsFile = "${secretsDir}/secrets.nix";
 in {
-  imports = [ agenix.nixosModules.age ];
+  imports = [ (linuxXorDarwin agenix.nixosModules.age agenix.darwinModules.age) ];
   environment.systemPackages = [ agenix.packages.${pkgs.system}.default ];
 
   age = {

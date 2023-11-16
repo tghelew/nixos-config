@@ -13,7 +13,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       unstable.mpv
-      unstable.mpvc  # CLI controller for mpv
+      #unstable.mpvc  # CLI controller for mpv
       ffmpeg
       unstable.yt-dlp
     ];

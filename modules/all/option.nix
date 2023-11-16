@@ -12,11 +12,12 @@ with lib.my;
           (findFirst pathExists (toString ../.) [
             "/mnt/etc/nixos-config"
             "/etc/nixos-config"
+            "${config.user.home}/.config/nixos-config"
           ]));
       binDir     = mkOpt path "${config.nixos-config.dir}/bin";
       configDir  = mkOpt path "${config.nixos-config.dir}/config";
       modulesDir = mkOpt path "${config.nixos-config.dir}/modules";
-      themesDir  = mkOpt path "${config.nixos-config.modulesDir}/themes";
+      themesDir  = mkOpt path "${config.nixos-config.modulesDir}/all/themes";
     };
 
     home = {
@@ -43,13 +44,18 @@ with lib.my;
           name = if elem user [ "" "root" ] then "thierry" else user;
       in {
         inherit name;
-        description = "The primary user account";
-        extraGroups = [ "wheel" ];
-        isNormalUser = true;
-        home = "/home/${name}";
-        group = "users";
-        uid = 1000;
-      };
+      } // linuxXorDarwin
+        ({
+          description = "The primary user account";
+          extraGroups = [ "wheel" ];
+          isNormalUser = true;
+          home = "/home/${name}";
+          group = "users";
+          uid = 1000;
+        })
+        ({
+          home = "/Users/${name}";
+        });
 
     home-manager = {
       useUserPackages = true;
@@ -66,7 +72,7 @@ with lib.my;
           dataFile   = mkAliasDefinitions options.home.dataFile;
         };
 
-        systemd.user.services = mkAliasDefinitions options.home.services;
+        systemd.user.services = linuxXorDarwin (mkAliasDefinitions options.home.services) {};
       };
     };
 
