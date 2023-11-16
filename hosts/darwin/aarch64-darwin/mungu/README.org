@@ -1,0 +1,10 @@
+#+TITLE: Mungu
+#+DATE: November 12, 2023
+
+* Overview
+My work laptop (Macbook Pro M1) in order to work and have fun with vm
+
+* Specs
+
+* Installation
+** TBD

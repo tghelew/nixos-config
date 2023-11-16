@@ -20,16 +20,28 @@ in
       ];
     };
 
-  mkDarwinHost = path: attrs @ {system ? sys, ...}:     #TODO
-    abort "Darwin Missing";
+  mkDarwinHost = path: attrs @ {system ? sys, ...}:
+    lib.darwin.darwinSystem {
+      inherit system;
+      specialArgs = {inherit lib system inputs;};
+      modules = [
+        ../hosts/darwin # default.nix
+        (import path)
+      ];
+
+    };
+
+
+  # linuxXorDarwin :: exLinux -> exDarwin  -> ex
+  linuxXorDarwin = linux: darwin:
+    if pkgs.stdenv.isLinux then linux
+    else if  pkgs.stdenv.isDarwin then darwin
+      else abort "Unsupported host: " + sys;
+
 
   mapHosts = dir: attrs @ { system ? system, ... }:
     mapModules dir
-      (if pkgs.stdenv.isLinux then
+      (linuxXorDarwin
         (hostPath: mkNixOsHost hostPath attrs)
-        else if pkgs.stdenv.isDarwin then
-          (hostPath: mkDarwinHost hostPath attrs)
-      else
-          abort "Non- Linux host are not available yet!"
-      );
+        (hostPath: mkDarwinHost hostPath attrs));
 }

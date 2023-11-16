@@ -34,7 +34,7 @@
       };
     };
 
-  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable,... }:
+  outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable, darwin, ... }:
 
     let
 
@@ -57,7 +57,10 @@
           pkgs = pkgsFor system;
         in
         nixpkgs.lib.extend
-        (self: super: { my = import ./lib { inherit pkgs inputs; lib = self; }; });
+        (self: super: {
+          my = import ./lib { inherit pkgs inputs; lib = self; };
+          darwin = inputs.darwin.lib;
+        });
 
       overlay = system: {
         default =
