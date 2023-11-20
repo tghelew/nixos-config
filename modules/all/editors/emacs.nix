@@ -10,6 +10,7 @@ let cfg = config.modules.editors.emacs;
     ''
      ${emacs-unstable}/bin/emacsclient "$@" -a ""
     '';
+    os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
@@ -18,7 +19,7 @@ in {
     tlux = rec {
       enable = mkBoolOpt false;
       repoUrl = mkOpt types.str "git@github.com:tghelew/emacs.d";
-      configRepoUrl = mkOpt types.str "git@github.com:tghelew/linux-emacs-private";
+      configRepoUrl = mkOpt types.str "git@github.com:tghelew/${os}-emacs-private";
       repoPubKeyPath = mkOpt  types.str "$HOME/.ssh/id_github.pub";
     };
   };
@@ -29,47 +30,48 @@ in {
     user.packages = with pkgs; [
       ## Emacs itself
       binutils       # native-comp needs 'as', provided by this
+    ] ++
       # 28.2 + native-comp
-      ((emacsPackagesFor emacs-unstable).emacsWithPackages
+      (if pkgs.stdenv.isLinux then [
+        ((emacsPackagesFor emacs-unstable).emacsWithPackages
         (epkgs: [ epkgs.vterm ]))
+      ] else []) ++
 
-      ## Doom dependencies
-      git
-      (ripgrep.override {withPCRE2 = true;})
-      gnutls              # for TLS connectivity
+      (if pkgs.stdenv.isDarwin then [emacs-unstable] else []) ++
 
-      ## Optional dependencies
-      fd                  # faster projectile indexing
-      imagemagick         # for image-dired
-      (mkIf (config.programs.gnupg.agent.enable)
-        pinentry-emacs)   # in-emacs gnupg prompts
-      zstd                # for undo-fu-session/undo-tree compression
+      [
+        ## Doom dependencies
+        git
+        (ripgrep.override {withPCRE2 = true;})
+        gnutls              # for TLS connectivity
 
-      ## Module dependencies
-      # :checkers spell
-      (aspellWithDicts (ds: with ds; [ en en-computers en-science fr ]))
-      # :tools editorconfig
-      editorconfig-core-c # per-project style config
-      # :tools lookup & :lang org +roam
-      sqlite
-      # :lang latex & :lang org (latex previews)
-      texlive.combined.scheme-medium
-      # export to html
-      pandoc
-      # dired video thumbmailer
-      ffmpegthumbnailer
-      # Video/Audio metadata info
-      mediainfo
-      # tar & unzip
-      gnutar
-      unzip
+        ## Optional dependencies
+        fd                  # faster projectile indexing
+        imagemagick         # for image-dired
+        (mkIf (config.programs.gnupg.agent.enable)
+          pinentry-emacs)   # in-emacs gnupg prompts
+        zstd                # for undo-fu-session/undo-tree compression
+
+        ## Module dependencies
+        # :checkers spell
+        (aspellWithDicts (ds: with ds; [ en en-computers en-science fr ]))
+        # :tools editorconfig
+        editorconfig-core-c # per-project style config
+        # :tools lookup & :lang org +roam
+        sqlite
+        # :lang latex & :lang org (latex previews)
+        texlive.combined.scheme-medium
+        # export to html
+        pandoc
+        # dired video thumbmailer
+        ffmpegthumbnailer
+        # Video/Audio metadata info
+        mediainfo
+        # tar & unzip
+        gnutar
+        unzip ] ++
       # Used for email
-      # TODO This is ugly!
-      (mkIf cfg.useForEmail
-        mu)
-      (mkIf cfg.useForEmail
-        isync)
-    ];
+      (if cfg.useForEmail then [mu isync ] else []);
 
     env = {
       PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
@@ -82,7 +84,6 @@ in {
 
     fonts.fonts = with pkgs;
       [
-        emacs-all-the-icons-fonts
         nerdfonts
       ];
 
