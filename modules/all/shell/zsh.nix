@@ -46,6 +46,8 @@ in {
       fzf
       jq
       ripgrep
+      du-dust
+      lsof
     ];
 
     env = {
