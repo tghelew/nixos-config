@@ -6,19 +6,31 @@ let cfg = config.modules.desktop.term;
     configDir = config.nixos-config.configDir;
 in {
   options.modules.desktop.term = {
-    default = mkOpt types.str "alacritty";
+    default = mkOpt (types.nullOr types.str) null;
     theme = mkOpt (types.nullOr types.path) null;
   };
 
   config = {
     user.packages = with pkgs; [
-      alacritty
+      bat
+      exa
+      fd
+      fzf
+      jq
+      ripgrep
     ];
-    env.TERMINAL = cfg.default;
+    environment = mkIf pkgs.stdenv.isDarwin {
+      etc = {
+        terminfo = {
+          source = "${pkgs.ncurses}/share/terminfo";
+        };
+      };
 
-    home.configFile."alacritty/alacritty.yml".text = import "${configDir}/alacritty/alacritty.yml" { inherit config pkgs; };
-    home.configFile."alacritty/extra.yml" = mkIf (cfg.theme != null) {
-      text = import cfg.theme config.modules.theme;
+      systemPackages = [
+        pkgs.ncurses
+      ];
     };
+    env.TERMINAL = optionals (cfg.default != null) cfg.default;
+
   };
 }
