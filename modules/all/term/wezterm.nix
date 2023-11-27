@@ -25,21 +25,15 @@ in {
     };
 
     user.packages = with pkgs; [
-      bat
-      exa
-      fd
-      fzf
-      jq
-      ripgrep
       wezterm
-      (makeDesktopItem {
+      (optional pkgs.stdenv.isLinux (makeDesktopItem {
         name = "Wezterm";
         desktopName = "Wezterm Terminal";
         genericName = "Default terminal";
         icon = "utilities-terminal";
         exec = "${wezterm}";
         categories = [ "Development" "System" "Utility" ];
-      })
+      }))
     ];
   };
 }

@@ -25,6 +25,8 @@ in {
             sans.size = 10;
             mono.name = "Fira Code";
             mono.size = 12;
+            icons.name = "Fira Code Nerd Font";
+            icons.size = 8;
           };
           colors = {
             black         = "#3b4252";
@@ -69,10 +71,8 @@ in {
           };
         };
 
-        desktop.term.theme =
-          if  config.modules.desktop.term.default == "alacritty"
-          then "${themesDir}/${cfg.active}/config/alacritty.yaml"
-          else null;
+        # The file needs to start with an underscore to prevent it to load automatically
+        desktop.term.theme = "${themesDir}/${cfg.active}/config/_${config.modules.desktop.term.default}.nix";
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
         shell.tmux.theme = ./config/tmux;

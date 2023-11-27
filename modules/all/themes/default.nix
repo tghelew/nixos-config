@@ -45,6 +45,12 @@ in {
         name = mkOpt str "Sans";
         size = mkOpt int 10;
       };
+
+      icons = {
+        name = mkOpt str "Icons";
+        size = mkOpt int 10;
+
+      };
     };
 
     colors = {

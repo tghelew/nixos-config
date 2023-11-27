@@ -29,8 +29,8 @@ in
         recording.enable = true;
       };
       term = {
-        default = "alacritty";
-        wezterm.enable = false;
+        default = "kitty";
+        kitty.enable = true;
       };
       vm = {
         qemu.enable = true;
