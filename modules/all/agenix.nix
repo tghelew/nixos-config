@@ -26,6 +26,10 @@ in {
       options.age.identityPaths.default ++ (filter pathExists [
         "${config.user.home}/.ssh/private/id_ed25519"
         "${config.user.home}/.ssh/private/id_rsa"
+        /etc/ssh/ssh_host_dsa_key
+        /etc/ssh/ssh_host_ecdsa_key
+        /etc/ssh/ssh_host_ed25519_key
+        /etc/ssh/ssh_host_rsa_key
       ]);
   };
 }
