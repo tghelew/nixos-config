@@ -30,4 +30,11 @@ in
     path = ~/.ssh/private/id_rsa;
     symlink = false;
   };
+
+  #gpg secret keys
+  "secret_ghelew_net.age" = {
+    publicKeys = keys;
+    mode = "600";
+    symlink = true;
+  };
 }
