@@ -6,6 +6,7 @@ let nixBin =
         ${nixFlakes}/bin/nix --option experimental-features "nix-command flakes" "$@"
       '';
 in mkShell {
+  name="default nixos-config shell";
   buildInputs = [
     git
     nix-zsh-completions

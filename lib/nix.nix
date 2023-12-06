@@ -2,7 +2,7 @@
 
 with lib;
 with lib.my;
-let sys = pkgs.stdenv.currentSystem;
+let sys = pkgs.stdenv.hostPlatform.system;
 in
 {
   mkNixOsHost = path: attrs @ { system ? sys, ... }:
