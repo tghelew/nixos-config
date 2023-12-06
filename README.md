@@ -24,15 +24,17 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * ~~Configure Waybar with _nord_ theme~~
  * ~~Setup a scratch terminal with tmux~~
  * ~~Setup a Calc scratch terminal~~
- * Setup kitty as the default terminal
+ * ~~Setup kitty as the default terminal~~
  * Update MacOS configuration (_yabi_)
  * ~~Setup mpv keybindings~~
- * waybar: include windows/workspace counter (using hyrctl activeworkspace)
+ * ~~waybar: include windows/workspace counter (using hyrctl activeworkspace)~~
  * mpv: include script youtube-download ? 
  * desktop: add xdg-mime association. 
  * add zig modules
  * fix rofi script hyprwindows when title contains ```quote```
  * Implement hide window using special workspace (named hidden)
  * Use GDM with fingerprint? 
+ * include python tools configuration files (pylint)
+ 
 
 

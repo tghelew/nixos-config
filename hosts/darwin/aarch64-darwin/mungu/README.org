@@ -2,9 +2,18 @@
 #+DATE: November 12, 2023
 
 * Overview
-My work laptop (Macbook Pro M1) in order to work and have fun with vm
+My work laptop (MacBook Pro M1) in order to work and have fun with vm
 
 * Specs
 
 * Installation
-** TBD
+1. Install nix on target machine
+   #+begin_src sh
+ sh <(curl -L https://nixos.org/nix/install)
+   #+end_src
+2. Clone this repository to ~$HOME/.config/~
+3. Run the following command
+   #+begin_src sh
+cd ~/.config/nixos-config
+./bin/tnix rebuilt -t darwin -host <hostname>
+   #+end_src
