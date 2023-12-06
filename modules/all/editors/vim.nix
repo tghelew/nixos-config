@@ -5,7 +5,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.editors.vim;
+let
+  cfg = config.modules.editors.vim;
+
 in {
   options.modules.editors.vim = {
     enable = mkBoolOpt false;
@@ -14,7 +16,7 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       editorconfig-core-c
-      #TODO: setup neowim configuration
+      #TODO: setup neovim configuration using kickstart
       unstable.neovim
     ];
 

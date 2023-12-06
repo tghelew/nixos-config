@@ -2,15 +2,28 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.shell.gnupg;
+let
+  cfg = config.modules.shell.gnupg;
+  pinentry = linuxXorDarwin
+    "${pkgs.pinentry-gtk2}/bin/pinentry"
+    "${pkgs.pinentry_mac}/Contents/MacOS/pinentry-mac";
 in {
   options.modules.shell.gnupg = with types; {
     enable   = mkBoolOpt false;
     cacheTTL = mkOpt int 7200;  # 2hr
     useTomb = mkBoolOpt true;
+    secretKeysPath = mkOpt (nullOr str) null;
   };
 
+
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = pkgs.stdenv.isLinux && cfg.useTomb;
+        message = "Tomb can't be used on non Linux systems";
+      }
+    ];
+
     env.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
     environment.systemPackages = with pkgs;[
       pinentry-curses
@@ -22,9 +35,49 @@ in {
 
     home.configFile."gnupg/gpg-agent.conf" = {
       text = ''
+        allow-loopback-pinentry
+        allow-emacs-pinentry
         default-cache-ttl ${toString cfg.cacheTTL}
-        pinentry-program ${pkgs.pinentry.gtk2}/bin/pinentry
+        pinentry-program ${pinentry}
       '';
+    };
+
+    system.userActivationScripts = {
+      setupGnuPG =
+        let
+          secretPath =
+            if cfg.secretKeysPath != null &&
+               builtins.hasAttr cfg.secretKeysPath config.age.secrets then
+
+              config.age.secrets."${cfg.secretKeysPath}".path
+
+            else "";
+
+          gpgScript =
+              pkgs.writeShellApplication {
+                name = "setupGnuPG";
+                runtimeInputs = with pkgs; [
+                  gnupg
+                  findutils
+                  coreutils
+                ];
+                text = ''
+                  if [[ ! -d "${config.env.GNUPGHOME}" ]]; then
+                    umask 077
+                    mkdir -p "${config.env.GNUPGHOME}"
+                  else
+                      find "${config.env.GNUPGHOME}" -type d -exec chmod 700 {} \;
+                      find "${config.env.GNUPGHOME}" -type f -exec chmod 600 {} \;
+                  fi
+                  if [[ -r "${secretPath}"  ]]; then
+                    gpg --import ${secretPath}
+                  fi
+                '';
+              };
+        in
+        ''
+          ${gpgScript}/bin/setupGnuPG
+        '';
     };
   };
 }

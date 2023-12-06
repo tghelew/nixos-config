@@ -16,11 +16,12 @@ in {
     enable = mkBoolOpt false;
     defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/default-editor";
     useForEmail = mkBoolOpt false;
+    package = mkOpt types.package pkgs.emacs-unstable;
     tlux = rec {
       enable = mkBoolOpt false;
       repoUrl = mkOpt types.str "git@github.com:tghelew/emacs.d";
       configRepoUrl = mkOpt types.str "git@github.com:tghelew/${os}-emacs-private";
-      repoPubKeyPath = mkOpt  types.str "$HOME/.ssh/id_github.pub";
+      repoPubKeyPath = mkOpt  types.str "${config.user.home}/.ssh/id_github.pub";
     };
   };
 
@@ -32,13 +33,10 @@ in {
       binutils       # native-comp needs 'as', provided by this
     ] ++
       # 28.2 + native-comp
-      (if pkgs.stdenv.isLinux then [
-        ((emacsPackagesFor emacs-unstable).emacsWithPackages
+      (linuxXorDarwin [
+        ((emacsPackagesFor cfg.package).emacsWithPackages
         (epkgs: [ epkgs.vterm ]))
-      ] else []) ++
-
-      (if pkgs.stdenv.isDarwin then [emacs-unstable] else []) ++
-
+      ] [cfg.package]) ++
       [
         ## Doom dependencies
         git
@@ -71,7 +69,8 @@ in {
         gnutar
         unzip ] ++
       # Used for email
-      (if cfg.useForEmail then [mu isync ] else []);
+      optionals cfg.useForEmail
+      [mu isync ];
 
     env = {
       PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
@@ -89,7 +88,7 @@ in {
 
     #NOTE: This is not strictly repoducable as it follow the main branch wihtout hash!
     #WARNING: ssh must be installed and properly configure to fetch this private repository
-    system.userActivationScripts = mkIf cfg.tlux.enable {
+    system.userActivationScripts = mkIf (cfg.tlux.enable && pathExists cfg.tlux.repoPubKeyPath) {
       symlinkEmacs =
       ''
         if [[ ! -h "$HOME/.emacs.d" ]]; then

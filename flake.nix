@@ -90,14 +90,17 @@
           lib.my.mapModulesRec ./modules import
       ) linuxSystems;
 
-      myNixOSConfigurations = map (system:
+      myConfiguration = os: systems: map (system:
         let
           lib = libFor system;
-          path =  ./hosts/linux/${system};
+          path =  ./hosts/${os}/${system};
         in
           if builtins.pathExists path then
             lib.my.mapHosts path {inherit system;}
-          else {}) linuxSystems;
+          else {}) systems;
+
+      myNixOSConfigurations = myConfiguration "linux" linuxSystems;
+      myDarwinConfigurations = myConfiguration "darwin" darwinSystems;
 
       devShell = system:
         let
@@ -131,6 +134,8 @@
         { nixos-config = import ./hosts/linux; } // myNixOSModules;
 
       nixosConfigurations = builtins.foldl' (a: b: a // b) {} myNixOSConfigurations;
+
+      darwinConfigurations = builtins.foldl' (a: b: a // b) {} myDarwinConfigurations;
 
       devShells = forAllSystems devShell;
 

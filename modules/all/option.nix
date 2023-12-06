@@ -42,11 +42,12 @@ with lib.my;
     user =
       let user = builtins.getEnv "USER";
           name = if elem user [ "" "root" ] then "thierry" else user;
+          description = if name == "thierry" then "Thierry Ghelew" else "The primary user account";
       in {
         inherit name;
+        inherit description;
       } // linuxXorDarwin
         ({
-          description = "The primary user account";
           extraGroups = [ "wheel" ];
           isNormalUser = true;
           home = "/home/${name}";

@@ -21,7 +21,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs;
-      (if cfg.tool.enable then [ imagemagick ] else []) ++
+      (if cfg.tools.enable then [ imagemagick ] else []) ++
 
       (if cfg.tools.enable  && isLinux then [font-manager] else []) ++
 
