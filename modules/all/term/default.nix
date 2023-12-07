@@ -13,7 +13,7 @@ in {
   config = {
     user.packages = with pkgs; [
       bat
-      exa
+      eza
       fd
       fzf
       jq

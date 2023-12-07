@@ -81,7 +81,7 @@ in {
 
     modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
 
-    fonts.fonts = with pkgs;
+    fonts.packages = with pkgs;
       [
         nerdfonts
       ];

@@ -77,7 +77,6 @@ in {
       enable = true;
       xwayland = {
         enable = true;
-        hidpi = true;
       };
       package = pkgs.unstable.hyprland;
     };

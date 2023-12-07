@@ -12,7 +12,7 @@ in {
 
     fonts = {
       fontDir.enable = true;
-      fonts = with pkgs; [
+      packages = with pkgs; [
         symbola
         meslo-lgs-nf
         mononoki
