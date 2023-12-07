@@ -48,13 +48,13 @@ alias sc=systemctl
 alias scu='systemctl --user'
 alias ssc='sudo systemctl'
 
-if (( $+commands[exa] )); then
-  alias exa="exa --group-directories-first --git";
-  alias l="exa -blF";
-  alias ll="exa -abghilmu";
+if (( $+commands[eza] )); then
+  alias eza="eza --group-directories-first --git";
+  alias l="eza -blF";
+  alias ll="eza -abghilmu";
   alias llm='ll --sort=modified'
-  alias la="LC_COLLATE=C exa -abhlF";
-  alias tree='exa --tree'
+  alias la="LC_COLLATE=C eza -abhlF";
+  alias tree='eza --tree'
 fi
 
 if (( $+commands[fasd] )); then
