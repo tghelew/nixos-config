@@ -1,0 +1,749 @@
+#!/usr/bin/env cached-nix-shell
+#! nix-shell -i python -p python3 python3Packages.termcolor
+
+import textwrap
+import sys
+import os
+import re
+import shutil
+import platform
+import glob
+
+from argparse import ArgumentParser, RawDescriptionHelpFormatter,Namespace, ArgumentTypeError
+from typing import Callable,Any
+from dataclasses import dataclass
+from subprocess import run, CalledProcessError, CompletedProcess
+from termcolor import colored
+
+
+
+class TnixException(Exception):
+    """
+    Tnix Exception type
+    """
+
+@dataclass
+class GlobalArgs(Namespace):
+    """
+    Simple class holding parser arguments
+    """
+
+@dataclass
+class CommandArgs(Namespace):
+    """
+    Simple class holding command's parsed argument
+    """
+Function = Callable[tuple[CommandArgs, [str]], Any]
+
+class Command:
+    """
+     Abstration for a Tnix Command
+    """
+
+    def __init__(self, names: [str], desc: str, func: Function = None):
+        self.__name = names.pop(0).lower()
+        self.__aliases = map(lambda s: s.lower(), names)
+        self.__desc = desc
+        self.__args = (CommandArgs, [])
+        self.__func = func
+        self.__options = ArgumentParser(prog=self.__name, description=self.__desc)
+        self.__subparsers = None
+        self.__subparsers_parser = {}
+        if self.__name in _commands:
+            raise TnixException("Command: {self.name} is already registered")
+        _commands[self.__name] = self
+
+
+        for alias in self.__aliases:
+            if alias in _aliases:
+                raise TnixException("Aliases: {alias} is already assigned to {cmd}")
+            _aliases[alias] = self.__name
+
+    def __eq__(self, other):
+        if isinstance(Command, other):
+            return other.name == self.__name
+        return False
+
+    @property
+    def name(self) -> str:
+        """
+        return the name of the command
+        """
+        return self.__name
+
+    @property
+    def args(self) -> tuple[CommandArgs, [str]]:
+        """
+        Get the parsed argument object
+        """
+        return self.__args
+
+    @args.setter
+    def args(self, arg: [str]):
+        """
+        Set parsed argument
+        """
+        self.__args = self.__options.parse_known_args(arg, namespace=CommandArgs)
+
+    def add_description(self, desc: str) -> None:
+        """
+        Add description to command
+        """
+        self.__desc = desc
+        self.__options.description = desc
+
+    def add_subparser(self, name: str, desc: str):
+        """
+        Add a subparser for the command.
+        Note that only one subparser is authorized.
+        """
+        if self.__subparsers is None:
+            self.__subparsers = \
+                self.__options.add_subparsers(help=f"Sub Command for {self.__name}",
+                                              dest="subCommand")
+        self.__subparsers_parser[name] = \
+            self.__subparsers.add_parser(name, help=desc)
+
+    def add_argument(self, *args, **kwargs):
+        """
+        Add a new agument to the Command.
+        It supports the same arguments as ArgumentParser.add_argument
+        """
+        name = "__empty__"
+        if kwargs.get('name'):
+            name = kwargs['name']
+            kwargs.pop('name')
+
+        if len(name) <= 0 or name == '__empty__':
+            self.__options.add_argument(*args, **kwargs)
+        elif self.__subparsers_parser.get(name):
+            self.__subparsers_parser[name].add_argument(*args, **kwargs)
+        else:
+            raise TnixException(f"Sub parser for name: {name} does not exists")
+
+
+    def function(self, func: Function):
+        """
+        Add command's function
+        """
+        self.__func = func
+
+    def apply(self) -> Any:
+        """
+        Apply the function using `self.args` object
+        """
+        if self.__func:
+            try:
+                return self.__func(self.__args)
+            except Exception as err:
+                raise TnixException(f'Command: {self.__name}\n{err}')\
+                    from err
+        else:
+            raise TnixException(f"Command {colored(self.__name,attrs=['bold'])}"\
+            " does not have a function defined.")
+
+
+    def __str__(self):
+        return f'\n  {self.__name:<22}{self.__desc.split(".")[0]}'
+
+_global_description: str = '''
+   Nix's CLI is difficult to remember at least for me and the logic is
+   also difficult to grasp. So, I adapted the original `hey` script
+   from H. Lissner made in Ruby to Python. The only reason for this is
+   because I don't know anything about Ruby.
+   All commands available in this script is what I use mostly and should
+   be easy to remember.
+
+   Note: `tnix` can also be used as a short-cut to nix-env:
+   tnix env -q
+   tnix env -iA nixos.htop
+   tnix env -e htop
+'''
+
+
+#List of commands
+_commands: dict[str, Command] = {}
+
+#Current command
+_command: Command = None
+
+#Dictionary of aliases' command
+_aliases: dict[str, str] = {}
+
+_global_args: tuple[GlobalArgs, [str]] = (GlobalArgs, [])
+_command_args: tuple[CommandArgs, [str]] = (CommandArgs, [])
+
+#: Help functions
+def run_shell(*args, sudo=False, noerror=False) -> int:
+    """
+    Execute a shell command
+    """
+    if not isinstance(args, tuple):
+        raise TnixException("Missing argument to shell command")
+
+    if sudo:
+        args = ['sudo'] + list(args)
+
+    if _global_args and _global_args[0].dryrun:
+        print(f'{args}\n')
+        return True
+
+    try:
+        result: CompletedProcess = run(args, check=True)
+        return result.returncode
+    except CalledProcessError as err:
+        if not noerror:
+            raise TnixException(f"Error while executing shell command:\n\t{err}") from err
+        return 0
+
+def rebuild(*args, darwin = False, sudo = False):
+    """
+    Help command to perform a nixos rebuild
+    """
+
+
+    host = ""
+    args = filter(lambda s: len(s.strip()) > 0, list(args))
+
+    if hasattr(_global_args[0], 'host'):
+        host = _global_args[0].host
+    elif hasattr(_command_args[0], 'host'):
+        host = _command_args[0].host
+    else:
+        raise TnixException("Error while rebuilding: Cannot determine hostname.")
+
+    if darwin:
+        temp_dir = os.path.join((os.environ.get("TMP") or os.environ.get("TMPDIR") or \
+            "/tmp") + "darwin_result")
+
+        if not shutil.which("darwin-rebuild"):
+            run_shell("nix", "build",
+                      "--extra-experimental-features", "nix-command",
+                      "--extra-experimental-features", "flakes",
+                      "--impure", "--out-link", temp_dir,
+                      f"{_global_args[0].flake}#darwinConfigurations.{host}.system")
+
+            run_shell(f"./{temp_dir}/darwin-rebuild"
+                      "--flake", f"{_global_args[0].flake}#{host}",
+                      *args, sudo=sudo)
+        else:
+            run_shell("darwin-rebuild",
+                      "--flake", f"{_global_args[0].flake}#{host}",
+                      *args, sudo=sudo)
+    else:
+        run_shell("nixos-rebuild",
+                "--flake", f'{_global_args[0].flake}#{_command_args[0].host}',
+                "--option", "pure-eval", "no", *args, sudo=sudo)
+
+
+def user_error(message: str):
+    """
+    Print user error and exit
+    """
+    print(f'{colored(message, "red")}')
+    sys.exit(1)
+
+def run_command(cmd: str, args):
+    """
+    Execute command if it's known
+    """
+    command: str = cmd.lower()
+    command = _aliases.get(command) or command
+
+    if command in _commands:
+        _command = _commands[command]
+        _command.args = args
+        _command_args = _command.args
+        _command.apply()
+    elif command:
+        user_error(f"Error: Could not recognize command: {command}")
+    else:
+        raise TnixException("Somthing wrong appended.")
+
+#:  End Help functions
+
+# Command definition
+
+# REPL
+def _command_func(arg: tuple[CommandArgs, [str]]):
+    """
+     Open a nix-repl
+    """
+    run_shell("nix", "repl",'--expr' ,
+                f'builtins.getFlake "{_global_args[0].flake}"', *arg[1])
+
+_command = Command(['repl'], "Open a nix-repl with nixpkgs and nixos-config preloaded")
+_command.function(_command_func)
+# End REPL
+
+# CHECK
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Run Check on flake
+    """
+
+    # Cannot assign a value to a list within a tuple
+    additional_args = arg[1]
+
+    if _global_args[0].debug:
+        additional_args = ["--show-trace"] + additional_args
+
+    if additional_args:
+        run_shell("nix", "flake", "check", *additional_args, _global_args[0].flake)
+    else:
+        run_shell("nix", "flake", "check", _global_args[0].flake)
+
+_command = Command(['check', 'ck'], "Run 'nix flake check' on your nixos-config")
+_command.function(_command_func)
+# End CHECK
+
+# SHOW
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Run nix flake show
+    """
+
+    # Cannot assign a value to a list within a tuple
+    additional_args = arg[1]
+
+    if _global_args[0].debug:
+        additional_args = ["--show-trace"] + additional_args
+
+    if additional_args:
+        run_shell("nix", "flake", "show", *additional_args, _global_args[0].flake)
+    else:
+        run_shell("nix", "flake", "show", _global_args[0].flake)
+
+_command = Command(['show'], "Run 'nix flake show' on your nixos-config")
+_command.function(_command_func)
+# End SHOW
+
+# INFO
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Run nix flake show
+    """
+
+    # Cannot assign a value to a list within a tuple
+    additional_args = arg[1]
+    repo = arg[0].repo
+    if re.search("^[^/]+/[^/]+$", repo):
+        repo = f"https://github.com/{repo}"
+
+    prefetch = f"nix-prefetch-{arg[0].type} --quiet {' '.join(additional_args)} {repo}"
+    run_shell("nix-shell", "-p", "nix-prefetch-scripts","--run", prefetch)
+
+_command = Command(['info'], "Retrive details (including SHA) for a given repo")
+_command.add_argument("repo",
+                      help="URL of the repo, default to 'https://github.com' if not a full url",
+                      metavar="URL", action="store")
+
+_command.add_argument('-t', '--type', help="What version contrl system to use (default is git)",
+                      metavar="VCS", choices=["bzr", "cvs", "git", "hg", "svn" ],
+                      action="store", default='git')
+
+_command.function(_command_func)
+# End INFO
+
+# THEME
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Quickly swap theme
+    """
+    _additional_args = arg[1]
+    os.environ['THEME'] = arg[0].name.lower()
+    rebuild("--fast", "test", *_additional_args, darwin =_global_args[0].os == "darwin")
+
+
+_command = Command(['theme'], "Quickly swap to anohter theme module")
+_command.add_argument("name",
+                      help="Name of the theme (e.g: nord)",
+                      metavar="THEME_NAME", action="store")
+_command.add_argument("--host",
+                      help="Name of the target host",
+                      metavar="hostname", action="store")
+
+_command.function(_command_func)
+# End THEME
+
+# TEST
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Quickly rebuild
+    """
+    _additional_args = arg[1]
+    rebuild("--fast", "test", *_additional_args, darwin =_global_args[0].os == "darwin")
+
+
+_command = Command(['test', 't'], "Quickly rebuild, for quick interaction")
+_command.add_argument("--host",
+                      help="Name of the target host",
+                      metavar="hostname", action="store")
+
+_command.function(_command_func)
+# End TEST
+
+# REBUILD
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Quickly rebuild
+    """
+    _additional_args = arg[1]
+    current_dir = os.getcwd()
+    try:
+        os.chdir(_global_args[0].flake)
+        if len(_additional_args) <= 0:
+            _additional_args = ["switch"]
+
+        rebuild(*["--build-host", arg[0].build_host] if arg[0].build_host else '',
+                *["--target-host", arg[0].target_host] if arg[0].target_host else '',
+                "--fast" if arg[0].fast else "",
+                "--show-trace" if _global_args[0].debug else "",
+                *_additional_args,
+                darwin =_global_args[0].os == "darwin",
+                sudo = not arg[0].user )
+
+    finally:
+        os.chdir(current_dir)
+
+
+_command = Command(['rebuild', 're'], "Rebuild the current system's flake")
+_command.add_argument("--build-host",
+                      help="Where to build the flake",
+                      metavar="HOST", action="store")
+_command.add_argument("--target-host",
+                      help="Where to deploy the built derivations",
+                      metavar="HOST", action="store")
+_command.add_argument("--host",
+                      help="Name of the target host",
+                      metavar="hostname", action="store")
+_command.add_argument("-u", "--user",
+                      help="Rebuild as user, rather than root",
+                      metavar="username", action='store')
+_command.add_argument("--fast",
+                      help="Equivalent to --no-build-nix --show-trace for quick rebuilding",
+                       action='store_true')
+
+_command.function(_command_func)
+# End REBUILD
+
+# ROLLBACK
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Rollback to last generation
+    """
+    _additional_args = arg[1]
+    rebuild("--rollback", "switch", *_additional_args, darwin =_global_args[0].os == "darwin")
+
+
+_command = Command(['rollback', 'rb'], "Roll back to last generation")
+_command.add_argument("--host",
+                      help="Name of the target host",
+                      metavar="hostname", action="store")
+
+_command.function(_command_func)
+# End ROLLBACK
+
+# UPDATE
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     update specific flakes or all of them
+    """
+    if arg[0].inputs and arg[0].inputs[0].strip().lower() == 'all':
+        print(f"{colored('Updating all flakes...', 'green')}")
+        run_shell('nix', 'flake', "update", _global_args[0].flake,
+                  "--impure")
+    else:
+        print(f"{colored('Trying to update flake(s): ' + ' '.join(arg[0].inputs), 'green')}")
+        run_shell('nix', 'flake','lock', "--impure",
+                  *[item for sublist in map(lambda i: ["--update-input", i], arg[0].inputs)
+                    for item in sublist],
+                  _global_args[0].flake)
+
+
+_command = Command(['update', 'u'], "Update specific flake or all of them")
+_command.add_argument("inputs",
+                      help="Space/Tab seperated list of input to update",
+                      nargs='*',
+                      metavar="inputs", action="store", default=["all"])
+
+_command.function(_command_func)
+# End UPDATE
+
+# UPGRADE
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Update all inputs and rebuild system
+    """
+    run_command('update', list(arg[1]))
+    run_command('rebuild', list(arg[1]))
+
+_command = Command(['upgrade', 'up'], "Update all inputs and rebuild system")
+
+_command.function(_command_func)
+# End UPGRADE
+
+# SEARCH
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Search nixpkgs for a package
+    """
+    run_shell("nix", "search", "nixpkgs", *arg[0].patterns)
+
+_command = Command(['search', 's'], "Search nixpkgs for a package")
+_command.add_argument("patterns",
+                      help="Space/Tab separated list of pattern",
+                      nargs="*",
+                      metavar="pattern", action="store")
+
+_command.function(_command_func)
+# End SEARCH
+
+# SWAP
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Recursively swap nix-store symlinks with copies (or back).
+    """
+    for target in arg[0].patterns:
+        if os.path.isdir(target):
+            files = glob.glob(f"{target}/**/*.nix-store-backup", recursive = True)
+            if len(files) > 0:
+                print(colored('They are swap files here. Unswapping!', 'green'))
+            else:
+                print(colored(f'Swapping file in {target}', 'green'))
+                files = glob.glob(f"{target}/**/*", recursive = True)
+                files = [f for f in files if os.path.islink(f)]
+                files = [f for f in files if re.match("/nix/store/", os.readlink(f))]
+            print(files)
+            run_command('swap', files)
+        elif os.path.isfile(target) and re.search(r"\.nix-store-backup", target):
+            print(colored(f'Unswapping {target}', 'green'))
+            run_shell("mv", "-i", target, f"{target.split('.nix-store-backup')[0]}")
+        elif os.path.isfile(target):
+            print(colored(f'Swapping {target}', 'green'))
+            run_shell("mv", target, f"{target}.nix-store-backup")
+            run_shell("cp", f"{target}.nix-store-backup", target)
+            run_shell("chmod", "u+rw", target)
+        else:
+            user_error(f"Not a valid target: {target}")
+
+_command = Command(['swap', 'sw'],
+                   "Recursively swap nix-store symlinks with copies (or back)." +
+                   " The purpose is so you can have copies of your nixos-config" +
+                   " that can be modified in place" +
+                   " (so as to iterate on them quickly between changes)." +
+                   " Run again to restore the old link(s).\n\n" +
+                   f"{colored('Warning:', 'yellow')} backup your copies," +
+                   " or they will be destroyed when restored!")
+
+_command.add_argument("patterns",
+                      help="Space/Tab separated list of pattern",
+                      nargs="*",
+                      metavar="pattern", action="store")
+
+_command.function(_command_func)
+# End SWAP
+
+# GC
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Garbage collect & Optimize nix store
+    """
+    if arg[0].all or arg[0].system:
+        print(colored("Cleaning up your system profile...", 'green'))
+        run_shell("nix-collect-garbage", "-d", sudo=True)
+        run_shell("nix-store", "--optimize", sudo=True)
+        # Clear out left-over secrets. The switch-to-configuration call below
+        # be generated
+        if os.path.exists("/run/secrets/"):
+            run_shell("rm", "-rf", "/run/secrets/*")
+        # nix-collect-garbage is a Nix tool, not a NixOS tool. It won't delete old
+        # boot entries until you do a nixos-reubild.
+        # Instead we properly delete them by reloading the current environment.
+        if _global_args[0].os == "linux":
+            run_shell("nix-env", "--delete-generation", "old", "--profile",
+                      "/nix/var/nix/profiles/system", sudo=True)
+            run_shell("/nix/var/nix/profiles/system/bin/switch-to-configuration",
+                      "switch", sudo=True)
+
+    if arg[0].all or not arg[0].system:
+        print(colored("Cleaning up your user profile...", 'green'))
+        run_shell("nix-collect-garbage", "-d")
+
+_command = Command(['gc'], "Garbace collect & Optimize nix store")
+_command.add_argument("-a","--all",
+                      help="GC both the user and system profiles",
+                      action="store_true")
+_command.add_argument("-s","--system",
+                      help="Only GC the system profile",
+                      action="store_true")
+
+_command.function(_command_func)
+# GC
+
+# GENERATIONS
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Explore, manage, diff across generations
+    """
+    _additional_args = arg[1]
+    try:
+        match arg[0].subCommand:
+            case "diff":
+                start= arg[0].start if arg[0].start  else ""
+                end= arg[0].end if arg[0].end  else ""
+                if start == end:
+                    user_error("Comparing the same profile! aborting...")
+                elif not os.path.exists(f"{arg[0].profile}-{start}-link") and start > 0:
+                    user_error(f"Generation path: {arg[0].profile}-{start}-link does not exist!")
+                elif not os.path.exists(f"{arg[0].profile}-{end}-link") and end > 0:
+                    user_error(f"Generation path: {arg[0].profile}-{end}-link does not exist!")
+
+                print(colored(f"Showing diff from {start} to {end}",'green'))
+                from_path = arg[0].profile if start <= 0 else f"{arg[0].profile}-{start}-link"
+                to_path = arg[0].profile if end <= 0 else f"{arg[0].profile}-{end}-link"
+
+                from_derv = run(['nix-store', '-q', '--references', from_path],
+                                capture_output=True, check=True, text=True).stdout.split('\n')
+                to_derv = run(['nix-store', '-q', '--references', to_path],
+                                capture_output=True, check=True, text=True).stdout.split('\n')
+                for item in set(from_derv) - set(to_derv):
+                    print(colored(f"-- {item}", 'red'))
+                for item in set(to_derv) - set(from_derv):
+                    print(colored(f"++ {item}", 'green'))
+            case "remove":
+                run_shell("nix-env", "--delete-generations", "--profile",
+                          arg[0].profile, *_additional_args, sudo=True)
+            case "list":
+                run_shell("nix-env", "--list-generations", "--profile", arg[0].profile, sudo=True)
+            case "switch":
+                run_shell("nix-env", "--profile", arg[0].profile,
+                          "--switch-generation", str(arg[0].generation), sudo=True)
+            case "rollback":
+                run_shell("nix-env", "--profile", arg[0].profile,
+                          "--rollback", sudo=True)
+            case _:
+                user_error("Unknown command")
+    except AttributeError:
+        user_error("Malformed Command line arguments.")
+
+
+def arg_type_positive_integer(value):
+    "Check if value passed is a positive integer"
+    try:
+        ivalue = int(value)
+        if ivalue <= 0:
+            raise ArgumentTypeError(f"argument value ({value}) must be a positive integer.")
+        return ivalue
+    except ValueError as err:
+        raise ArgumentTypeError(f"Value {value} is not an integer literal") from err
+
+_command = Command(['generations', 'gen'], "Explore, manage, diff across generation")
+_command.add_argument("-p","--profile",
+                      help="The profile to use for the sub commands",
+                      metavar="path/to/profile", action="store",
+                      default='/nix/var/nix/profiles/system')
+
+_command.add_subparser('diff', "Diff profiles FROM with TO (number)")
+_command.add_argument("start", name="diff",
+                      help="FROM generation number",
+                      type=arg_type_positive_integer, action="store")
+_command.add_argument("end", name="diff",
+                      help="TO generation number",
+                      type=arg_type_positive_integer, action="store")
+_command.add_subparser('remove', "Delete active generations like `nix-env --delete-generations`")
+_command.add_subparser('list', "list generations of active profile")
+_command.add_subparser('rollback', "Rollback to previous generations of active profile")
+
+_command.add_subparser('switch', "Swtich to generation for the active profile")
+_command.add_argument("generation", name='switch',
+                      help="Switch to generation (number) for PROFILE",
+                      metavar="id", type=arg_type_positive_integer, action="store")
+
+
+_command.function(_command_func)
+# End GENERATIONS
+
+# ENV
+def _command_func(arg: tuple[CommandArgs,[str]]):
+    """
+     Forward command to nix-env
+    """
+    _additional_args = arg[1]
+    run_shell("nix-env", *_additional_args)
+
+_command = Command(['env'], "Forward command to nix-env")
+_command.function(_command_func)
+# End ENV
+
+# Starting point
+def main():
+    """
+     Start the command line
+    """
+    _cmd_description = f"{_global_description}\n\nAvailable Command: "
+    _cmd_description += ''.join(f"{v}" for _,v in _commands.items())
+    _cmd_description = textwrap.dedent(_cmd_description)
+
+
+    _global_parser: ArgumentParser = \
+        ArgumentParser(prog ='tnix', formatter_class = RawDescriptionHelpFormatter,
+                    description = _cmd_description, add_help=False)
+
+    _global_parser.add_argument('command', help="The command to execute", nargs='?', default='none')
+
+    _global_parser.add_argument('-h', '--help',
+                                help="Show this help.",
+                                action='store_true')
+
+    _global_parser.add_argument('-d', '--dryrun',
+                                help="Don't change anything perform dry run.",
+                                action='store_true')
+
+    _global_parser.add_argument('-D', '--debug',
+                                help="Show trace on nix error",
+                                action='store_true')
+
+    _global_parser.add_argument('-o', '--os',
+                                help="Name of the target system",
+                                action='store', choices=['linux', 'darwin'],
+                                default=f"{platform.system().lower}")
+
+    _global_parser.add_argument('-f', '--flake',
+                                help="Change target flake to URI", metavar="URI",
+                                default=os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                                  os.pardir)))
+
+    _global_args = _global_parser.parse_known_args(namespace=GlobalArgs)
+    flake = _global_args[0].flake
+    if "#" in flake:
+        flake, *host = flake.split('#')
+        if len(host) > 1:
+            user_error("Flake is not properly defined:\
+            \n\t Make sure to use only one '#' separator ")
+        _global_args[0].flake = flake
+        _global_args[0].host = host[0]
+
+    if os.path.islink(flake):
+        _global_args[0].flake = os.path.realpath(flake)
+
+    if _global_args[0].command == 'none':
+        if _global_args[0].help:
+            _global_parser.print_help()
+            sys.exit(0)
+        user_error("Error: No command specified")
+    elif not _global_args[0].flake or len(_global_args[0].flake) <= 0:
+        user_error("Error: No flake path has been specified")
+    else:
+        try:
+            if _global_args[0].help:
+                _global_args[1].append('-h')
+
+            run_command(_global_args[0].command, _global_args[1])
+        except TnixException as err:
+            print(f"{colored(err, 'red')}")
+            sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
