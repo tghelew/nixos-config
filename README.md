@@ -34,7 +34,7 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * fix rofi script hyprwindows when title contains ```quote```
  * Implement hide window using special workspace (named hidden)
  * Use GDM with fingerprint? 
- * include python tools configuration files (pylint)
+ * ~~include python tools configuration files (pylint)~~
  
 
 
