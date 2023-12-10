@@ -9,12 +9,12 @@ import shutil
 import platform
 import glob
 
-from argparse import ArgumentParser, RawDescriptionHelpFormatter,Namespace, ArgumentTypeError
-from typing import Callable,Any
+from argparse import ArgumentParser, RawDescriptionHelpFormatter, \
+    Namespace, ArgumentTypeError
+from typing import Callable, Any
 from dataclasses import dataclass
 from subprocess import run, CalledProcessError, CompletedProcess
 from termcolor import colored
-
 
 
 class TnixException(Exception):
@@ -22,18 +22,23 @@ class TnixException(Exception):
     Tnix Exception type
     """
 
+
 @dataclass
 class GlobalArgs(Namespace):
     """
     Simple class holding parser arguments
     """
 
+
 @dataclass
 class CommandArgs(Namespace):
     """
     Simple class holding command's parsed argument
     """
+
+
 Function = Callable[tuple[CommandArgs, [str]], Any]
+
 
 class Command:
     """
@@ -146,6 +151,7 @@ class Command:
     def __str__(self):
         return f'\n  {self.__name:<22}{self.__desc.split(".")[0]}'
 
+
 _global_description: str = '''
    Nix's CLI is difficult to remember at least for me and the logic is
    also difficult to grasp. So, I adapted the original `hey` script
@@ -161,17 +167,18 @@ _global_description: str = '''
 '''
 
 
-#List of commands
+# List of commands
 _commands: dict[str, Command] = {}
 
-#Current command
+# Current command
 _command: Command = None
 
-#Dictionary of aliases' command
+# Dictionary of aliases' command
 _aliases: dict[str, str] = {}
 
 _global_args: tuple[GlobalArgs, [str]] = (GlobalArgs, [])
 _command_args: tuple[CommandArgs, [str]] = (CommandArgs, [])
+
 
 #: Help functions
 def run_shell(*args, sudo=False, noerror=False) -> int:
@@ -196,11 +203,11 @@ def run_shell(*args, sudo=False, noerror=False) -> int:
             raise TnixException(f"Error while executing shell command:\n\t{err}") from err
         return 0
 
-def rebuild(*args, darwin = False, sudo = False):
+
+def rebuild(*args, darwin=False, sudo=False):
     """
     Help command to perform a nixos rebuild
     """
-
 
     host = ""
     args = filter(lambda s: len(s.strip()) > 0, list(args))
@@ -213,8 +220,9 @@ def rebuild(*args, darwin = False, sudo = False):
         raise TnixException("Error while rebuilding: Cannot determine hostname.")
 
     if darwin:
-        temp_dir = os.path.join((os.environ.get("TMP") or os.environ.get("TMPDIR") or \
-            "/tmp") + "darwin_result")
+        temp_dir = os.path.join((os.environ.get("TMP") or
+                                 os.environ.get("TMPDIR") or
+                                 "/tmp") + "darwin_result")
 
         if not shutil.which("darwin-rebuild"):
             run_shell("nix", "build",
@@ -232,8 +240,8 @@ def rebuild(*args, darwin = False, sudo = False):
                       *args, sudo=sudo)
     else:
         run_shell("nixos-rebuild",
-                "--flake", f'{_global_args[0].flake}#{_command_args[0].host}',
-                "--option", "pure-eval", "no", *args, sudo=sudo)
+                  "--flake", f'{_global_args[0].flake}#{_command_args[0].host}',
+                  "--option", "pure-eval", "no", *args, sudo=sudo)
 
 
 def user_error(message: str):
@@ -242,6 +250,7 @@ def user_error(message: str):
     """
     print(f'{colored(message, "red")}')
     sys.exit(1)
+
 
 def run_command(cmd: str, args):
     """
@@ -264,20 +273,24 @@ def run_command(cmd: str, args):
 
 # Command definition
 
+
 # REPL
 def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Open a nix-repl
     """
-    run_shell("nix", "repl",'--expr' ,
-                f'builtins.getFlake "{_global_args[0].flake}"', *arg[1])
+    run_shell("nix", "repl", '--expr',
+              f'builtins.getFlake "{_global_args[0].flake}"', *arg[1])
 
-_command = Command(['repl'], "Open a nix-repl with nixpkgs and nixos-config preloaded")
+
+_command = Command(['repl'],
+                   "Open a nix-repl with nixpkgs and nixos-config preloaded")
 _command.function(_command_func)
 # End REPL
 
+
 # CHECK
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Run Check on flake
     """
@@ -293,12 +306,15 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
     else:
         run_shell("nix", "flake", "check", _global_args[0].flake)
 
-_command = Command(['check', 'ck'], "Run 'nix flake check' on your nixos-config")
+
+_command = Command(['check', 'ck'],
+                   "Run 'nix flake check' on your nixos-config")
 _command.function(_command_func)
 # End CHECK
 
+
 # SHOW
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Run nix flake show
     """
@@ -310,16 +326,19 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
         additional_args = ["--show-trace"] + additional_args
 
     if additional_args:
-        run_shell("nix", "flake", "show", *additional_args, _global_args[0].flake)
+        run_shell("nix", "flake", "show", *additional_args,
+                  _global_args[0].flake)
     else:
         run_shell("nix", "flake", "show", _global_args[0].flake)
+
 
 _command = Command(['show'], "Run 'nix flake show' on your nixos-config")
 _command.function(_command_func)
 # End SHOW
 
+
 # INFO
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Run nix flake show
     """
@@ -330,29 +349,37 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
     if re.search("^[^/]+/[^/]+$", repo):
         repo = f"https://github.com/{repo}"
 
-    prefetch = f"nix-prefetch-{arg[0].type} --quiet {' '.join(additional_args)} {repo}"
-    run_shell("nix-shell", "-p", "nix-prefetch-scripts","--run", prefetch)
+    prefetch = f"nix-prefetch-{arg[0].type} " + \
+        f"--quiet {' '.join(additional_args)} {repo}"
+    run_shell("nix-shell", "-p", "nix-prefetch-scripts", "--run", prefetch)
+
 
 _command = Command(['info'], "Retrive details (including SHA) for a given repo")
 _command.add_argument("repo",
-                      help="URL of the repo, default to 'https://github.com' if not a full url",
+                      help="URL of the repo, " +
+                      "default to 'https://github.com' if not a full url",
                       metavar="URL", action="store")
 
-_command.add_argument('-t', '--type', help="What version contrl system to use (default is git)",
-                      metavar="VCS", choices=["bzr", "cvs", "git", "hg", "svn" ],
+_command.add_argument('-t', '--type',
+                      help="What version control system " +
+                      "to use (default is git)",
+                      metavar="VCS",
+                      choices=["bzr", "cvs", "git", "hg", "svn"],
                       action="store", default='git')
 
 _command.function(_command_func)
 # End INFO
 
+
 # THEME
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Quickly swap theme
     """
     _additional_args = arg[1]
     os.environ['THEME'] = arg[0].name.lower()
-    rebuild("--fast", "test", *_additional_args, darwin =_global_args[0].os == "darwin")
+    rebuild("--fast", "test", *_additional_args,
+            darwin=_global_args[0].os == "darwin")
 
 
 _command = Command(['theme'], "Quickly swap to anohter theme module")
@@ -366,13 +393,15 @@ _command.add_argument("--host",
 _command.function(_command_func)
 # End THEME
 
+
 # TEST
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Quickly rebuild
     """
     _additional_args = arg[1]
-    rebuild("--fast", "test", *_additional_args, darwin =_global_args[0].os == "darwin")
+    rebuild("--fast", "test", *_additional_args,
+            darwin=_global_args[0].os == "darwin")
 
 
 _command = Command(['test', 't'], "Quickly rebuild, for quick interaction")
@@ -383,8 +412,9 @@ _command.add_argument("--host",
 _command.function(_command_func)
 # End TEST
 
+
 # REBUILD
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Quickly rebuild
     """
@@ -400,8 +430,8 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
                 "--fast" if arg[0].fast else "",
                 "--show-trace" if _global_args[0].debug else "",
                 *_additional_args,
-                darwin =_global_args[0].os == "darwin",
-                sudo = not arg[0].user )
+                darwin=_global_args[0].os == "darwin",
+                sudo=not arg[0].user)
 
     finally:
         os.chdir(current_dir)
@@ -421,19 +451,22 @@ _command.add_argument("-u", "--user",
                       help="Rebuild as user, rather than root",
                       metavar="username", action='store')
 _command.add_argument("--fast",
-                      help="Equivalent to --no-build-nix --show-trace for quick rebuilding",
-                       action='store_true')
+                      help="Equivalent to --no-build-nix --show-trace " +
+                      "for quick rebuilding",
+                      action='store_true')
 
 _command.function(_command_func)
 # End REBUILD
 
+
 # ROLLBACK
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Rollback to last generation
     """
     _additional_args = arg[1]
-    rebuild("--rollback", "switch", *_additional_args, darwin =_global_args[0].os == "darwin")
+    rebuild("--rollback", "switch", *_additional_args,
+            darwin=_global_args[0].os == "darwin")
 
 
 _command = Command(['rollback', 'rb'], "Roll back to last generation")
@@ -444,8 +477,9 @@ _command.add_argument("--host",
 _command.function(_command_func)
 # End ROLLBACK
 
+
 # UPDATE
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      update specific flakes or all of them
     """
@@ -455,7 +489,7 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
                   "--impure")
     else:
         print(f"{colored('Trying to update flake(s): ' + ' '.join(arg[0].inputs), 'green')}")
-        run_shell('nix', 'flake','lock', "--impure",
+        run_shell('nix', 'flake', 'lock', "--impure",
                   *[item for sublist in map(lambda i: ["--update-input", i], arg[0].inputs)
                     for item in sublist],
                   _global_args[0].flake)
@@ -470,25 +504,29 @@ _command.add_argument("inputs",
 _command.function(_command_func)
 # End UPDATE
 
+
 # UPGRADE
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Update all inputs and rebuild system
     """
     run_command('update', list(arg[1]))
     run_command('rebuild', list(arg[1]))
 
+
 _command = Command(['upgrade', 'up'], "Update all inputs and rebuild system")
 
 _command.function(_command_func)
 # End UPGRADE
 
+
 # SEARCH
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Search nixpkgs for a package
     """
     run_shell("nix", "search", "nixpkgs", *arg[0].patterns)
+
 
 _command = Command(['search', 's'], "Search nixpkgs for a package")
 _command.add_argument("patterns",
@@ -499,19 +537,20 @@ _command.add_argument("patterns",
 _command.function(_command_func)
 # End SEARCH
 
+
 # SWAP
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Recursively swap nix-store symlinks with copies (or back).
     """
     for target in arg[0].patterns:
         if os.path.isdir(target):
-            files = glob.glob(f"{target}/**/*.nix-store-backup", recursive = True)
+            files = glob.glob(f"{target}/**/*.nix-store-backup", recursive=True)
             if len(files) > 0:
                 print(colored('They are swap files here. Unswapping!', 'green'))
             else:
                 print(colored(f'Swapping file in {target}', 'green'))
-                files = glob.glob(f"{target}/**/*", recursive = True)
+                files = glob.glob(f"{target}/**/*", recursive=True)
                 files = [f for f in files if os.path.islink(f)]
                 files = [f for f in files if re.match("/nix/store/", os.readlink(f))]
             print(files)
@@ -526,6 +565,7 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
             run_shell("chmod", "u+rw", target)
         else:
             user_error(f"Not a valid target: {target}")
+
 
 _command = Command(['swap', 'sw'],
                    "Recursively swap nix-store symlinks with copies (or back)." +
@@ -544,8 +584,9 @@ _command.add_argument("patterns",
 _command.function(_command_func)
 # End SWAP
 
+
 # GC
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Garbage collect & Optimize nix store
     """
@@ -570,6 +611,7 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
         print(colored("Cleaning up your user profile...", 'green'))
         run_shell("nix-collect-garbage", "-d")
 
+
 _command = Command(['gc'], "Garbace collect & Optimize nix store")
 _command.add_argument("-a","--all",
                       help="GC both the user and system profiles",
@@ -581,8 +623,9 @@ _command.add_argument("-s","--system",
 _command.function(_command_func)
 # GC
 
+
 # GENERATIONS
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Explore, manage, diff across generations
     """
@@ -590,8 +633,8 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
     try:
         match arg[0].subCommand:
             case "diff":
-                start= arg[0].start if arg[0].start  else ""
-                end= arg[0].end if arg[0].end  else ""
+                start = arg[0].start if arg[0].start else ""
+                end = arg[0].end if arg[0].end else ""
                 if start == end:
                     user_error("Comparing the same profile! aborting...")
                 elif not os.path.exists(f"{arg[0].profile}-{start}-link") and start > 0:
@@ -606,7 +649,7 @@ def _command_func(arg: tuple[CommandArgs,[str]]):
                 from_derv = run(['nix-store', '-q', '--references', from_path],
                                 capture_output=True, check=True, text=True).stdout.split('\n')
                 to_derv = run(['nix-store', '-q', '--references', to_path],
-                                capture_output=True, check=True, text=True).stdout.split('\n')
+                              capture_output=True, check=True, text=True).stdout.split('\n')
                 for item in set(from_derv) - set(to_derv):
                     print(colored(f"-- {item}", 'red'))
                 for item in set(to_derv) - set(from_derv):
@@ -638,8 +681,9 @@ def arg_type_positive_integer(value):
     except ValueError as err:
         raise ArgumentTypeError(f"Value {value} is not an integer literal") from err
 
+
 _command = Command(['generations', 'gen'], "Explore, manage, diff across generation")
-_command.add_argument("-p","--profile",
+_command.add_argument("-p", "--profile",
                       help="The profile to use for the sub commands",
                       metavar="path/to/profile", action="store",
                       default='/nix/var/nix/profiles/system')
@@ -664,17 +708,41 @@ _command.add_argument("generation", name='switch',
 _command.function(_command_func)
 # End GENERATIONS
 
+
 # ENV
-def _command_func(arg: tuple[CommandArgs,[str]]):
+def _command_func(arg: tuple[CommandArgs, [str]]):
     """
      Forward command to nix-env
     """
     _additional_args = arg[1]
     run_shell("nix-env", *_additional_args)
 
+
 _command = Command(['env'], "Forward command to nix-env")
 _command.function(_command_func)
 # End ENV
+
+
+# SHELL
+def _command_func(arg: tuple[CommandArgs, [str]]):
+    """
+     Forward command to nix-shell and run the default terminal
+    """
+    _additional_args = arg[1]
+    if '--run' in _additional_args:
+        user_error("--run parameter cannot be used!")
+
+    shell = arg[0].shell or "/bin/sh"
+    run_shell("nix-shell", "--run", shell, *_additional_args)
+
+
+_command = Command(['shell'], "set nix-shell and run the default terminal")
+_command.function(_command_func)
+_command.add_argument("-s", "--shell",
+                      help="Shell to use default to `SHELL` environment variable",
+                      metavar="hostname", default="zsh")
+# End SHELL
+
 
 # Starting point
 def main():
@@ -682,13 +750,13 @@ def main():
      Start the command line
     """
     _cmd_description = f"{_global_description}\n\nAvailable Command: "
-    _cmd_description += ''.join(f"{v}" for _,v in _commands.items())
+    _cmd_description += ''.join(f"{v}" for _, v in _commands.items())
     _cmd_description = textwrap.dedent(_cmd_description)
 
-
     _global_parser: ArgumentParser = \
-        ArgumentParser(prog ='tnix', formatter_class = RawDescriptionHelpFormatter,
-                    description = _cmd_description, add_help=False)
+        ArgumentParser(prog='tnix',
+                       formatter_class=RawDescriptionHelpFormatter,
+                       description=_cmd_description, add_help=False)
 
     _global_parser.add_argument('command', help="The command to execute", nargs='?', default='none')
 
