@@ -1,17 +1,17 @@
 { config, options, lib, pkgs, ... }:
 let
-  cfg = config.module.darwin.system;
+  cfg = config.modules.darwin.system;
 in
 with lib;
 with lib.my;
 {
   options = with types; {
-    module.darwin.system = {
-      enable = mkBookOpt false;
+    modules.darwin.system = {
+      enable = mkBoolOpt false;
     };
   };
 
-  module = mkIf cfg.enable {
+  config = mkIf cfg.enable {
     system = {
       stateVersion = 4;
       defaults = {

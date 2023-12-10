@@ -18,7 +18,8 @@ in {
     dicts = mkOpt (listOf str) [ "en-US" "fr-FR" "de-DE" ];
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && pkgs.stdenv.isLinux) {
+    # FIXME: Make it work on Darwin as well
     user.packages = with pkgs; [
       pkg
       (makeDesktopItem {

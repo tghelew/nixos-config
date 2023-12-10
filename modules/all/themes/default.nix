@@ -6,8 +6,9 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.theme;
-  withXserver = config.services.xserver.enable;
-  withWayland = config.programs.hyprland.enable || config.programs.sway.enable;
+  withXserver = pkgs.stdenv.isLinux && config.services.xserver.enable;
+  withWayland = pkgs.stdenv.isLinux &&
+                (config.programs.hyprland.enable || config.programs.sway.enable);
 in {
   options.modules.theme = with types; {
     active = mkOption {
@@ -160,7 +161,9 @@ in {
           Emacs.font: ${name}:pixelsize=${toString(size)}
         '';})
 
-    {
+    ( linuxXorDarwin
+      # Linux
+      {
       # GTK
       home.configFile = {
         "gtk-3.0/settings.ini".text = ''
@@ -198,6 +201,8 @@ in {
         monospace = [ cfg.fonts.mono.name ];
       };
     }
+    #Darwin
+    {})
 
     (mkIf (cfg.wallpapers != null)
       # Set the wallpapers ourselves so we don't need .background-image and/or

@@ -4,6 +4,11 @@ with lib;
 with lib.my;
 let cfg = config.modules.shell.zsh;
     configDir = config.nixos-config.configDir;
+    zshAttrs = {
+      enable = true;
+      enableCompletion = true;
+      promptInit = "";
+    };
 in {
   options.modules.shell.zsh = with types; {
     enable = mkBoolOpt false;
@@ -26,15 +31,13 @@ in {
   config = mkIf cfg.enable {
     users.defaultUserShell = pkgs.zsh;
 
-    programs.zsh = {
-      enable = true;
-      enableCompletion = true;
-      # I init completion myself, because enableGlobalCompInit initializes it
-      # too soon, which means commands initialized later in my config won't get
-      # completion, and running compinit twice is slow.
-      enableGlobalCompInit = false;
-      promptInit = "";
-    };
+
+
+    programs.zsh = linuxXorDarwin
+      #linux
+      (zshAttrs // {enableGlobalCompInit = false;})
+      # Darwin
+      zshAttrs;
 
     user.packages = with pkgs; [
       zsh

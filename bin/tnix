@@ -228,6 +228,7 @@ def rebuild(*args, darwin=False, sudo=False):
             run_shell("nix", "build",
                       "--extra-experimental-features", "nix-command",
                       "--extra-experimental-features", "flakes",
+                      "--show-trace" if _global_args[0].debug else "",
                       "--impure", "--out-link", temp_dir,
                       f"{_global_args[0].flake}#darwinConfigurations.{host}.system")
 

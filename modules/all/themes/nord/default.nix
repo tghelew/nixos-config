@@ -6,8 +6,8 @@ with lib;
 with lib.my;
 let cfg = config.modules.theme;
     themesDir = config.nixos-config.themesDir;
-    withXserver = config.services.xserver.enable;
-    withWayland = config.modules.desktop.hypr.enable;
+    withXserver = pkgs.stdenv.isLinux && config.services.xserver.enable;
+    withWayland = pkgs.stdenv.isLinux && config.modules.desktop.hypr.enable;
 in {
   config = mkIf (cfg.active == "nord") (mkMerge [
     # Desktop-agnostic configuration
@@ -76,19 +76,44 @@ in {
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
         shell.tmux.theme = ./config/tmux;
-        desktop.browsers = {
+        desktop.browsers = mkIf (desktop.browser.default != null) {
           firefox.chromePath = ./config/firefox;
         };
       };
     }
 
     # Desktop (X11) theming
+      # Compositor
+      (linuxXorDarwin
+        {
+          services.picom = mkIf withXserver {
+            fade = true;
+            fadeDelta = 1;
+            fadeSteps = [ 0.01 0.012 ];
+            shadow = true;
+            shadowOffsets = [ (-10) (-10) ];
+            shadowOpacity = 0.22;
+            # activeOpacity = "1.00";
+            # inactiveOpacity = "0.92";
+            settings = {
+              shadow-radius = 12;
+              # blur-background = true;
+              # blur-background-frame = true;
+              # blur-background-fixed = true;
+              blur-kern = "7x7box";
+              blur-strength = 320;
+            };
+          };
+        }
+        #Darwin
+         {})
+
     (mkIf (withXserver || withWayland) {
       user.packages = with pkgs; [
         nordic
         paper-icon-theme # for rofi
       ];
-      fonts = {
+      myfonts = {
         packages = with pkgs; [
           fira-code
           fira-code-symbols
@@ -99,26 +124,6 @@ in {
           material-design-icons
           weather-icons
         ];
-      };
-
-      # Compositor
-      services.picom = mkIf withXserver {
-        fade = true;
-        fadeDelta = 1;
-        fadeSteps = [ 0.01 0.012 ];
-        shadow = true;
-        shadowOffsets = [ (-10) (-10) ];
-        shadowOpacity = 0.22;
-        # activeOpacity = "1.00";
-        # inactiveOpacity = "0.92";
-        settings = {
-          shadow-radius = 12;
-          # blur-background = true;
-          # blur-background-frame = true;
-          # blur-background-fixed = true;
-          blur-kern = "7x7box";
-          blur-strength = 320;
-        };
       };
 
       # Other dotfiles
