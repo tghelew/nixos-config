@@ -10,8 +10,8 @@ in {
       libqalculate  # calculator cli w/ currency conversion
     ] ;
 
-    fonts = {
-      fontDir.enable = true;
+    fonts.fontDir.enable = true;
+    myfonts = {
       packages = with pkgs; [
         symbola
         meslo-lgs-nf

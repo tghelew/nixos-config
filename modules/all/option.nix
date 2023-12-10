@@ -36,6 +36,8 @@ with lib.my;
       default = {};
       description = "Additional Environment Variable to set";
     };
+
+    myfonts.packages = mkOpt nullOr (listOf package);
   };
 
   config = {
@@ -84,10 +86,20 @@ with lib.my;
       allowed-users = users;
     };
 
-   env.PATH = [ "$NIXOS_CONFIG_BIN" "$XDG_BIN_HOME" "$PATH" ];
+    env.PATH = [ "$NIXOS_CONFIG_BIN" "$XDG_BIN_HOME" "$PATH" ];
 
     environment.extraInit =
       concatStringsSep "\n"
         (mapAttrsToList (n: v: "export ${n}=\"${v}\"") config.env);
+    fonts = linuxXorDarwin
+      # Linux
+      {
+        packages = mkAliasDefinitions options.myfonts.packages;
+      }
+      # Darwin
+      {
+        fonts = mkAliasDefinitions options.myfonts.packages;
+      };
+
   };
 }

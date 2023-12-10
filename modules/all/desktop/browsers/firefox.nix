@@ -25,7 +25,8 @@ in {
     userContent = mkOpt' lines "" "Global CSS Styles for websites";
     chromePath = mkOpt' (nullOr path) null "Path to the chrome folder";
   };
-  config = mkIf cfg.enable (mkMerge [
+  config = mkIf (cfg.enable && pkgs.stdenv.isLinux) (mkMerge [
+    #FIXME: make it support Darwin as well
     {
 
       assertions = [
@@ -43,7 +44,7 @@ in {
 
       user.packages = with pkgs; [
         unstable.firefox-bin
-        (makeDesktopItem {
+        (linuxXorDarwin (makeDesktopItem {
           name = "firefox-private";
           desktopName = "Firefox (Private)";
           genericName = "Open a private Firefox window";
@@ -51,6 +52,7 @@ in {
           exec = "${unstable.firefox-bin}/bin/firefox --private-window";
           categories = [ "Network" ];
         })
+         [])
       ];
 
       # Prevent auto-creation of ~/Desktop. The trailing slash is necessary; see

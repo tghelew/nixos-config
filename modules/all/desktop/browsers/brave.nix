@@ -12,7 +12,7 @@ in {
     enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && pkgs.stdenv.isLinux) {
     user.packages = with pkgs; [
       brave
       (makeDesktopItem {

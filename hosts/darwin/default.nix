@@ -15,7 +15,7 @@
          nixPathInputs  = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
          registryInputs = mapAttrs (_: v: { flake = v; }) filteredInputs;
      in {
-       packages = pkgs.nixFlakes;
+       package = pkgs.nixFlakes;
        extraOptions = "experimental-features = nix-command flakes";
        nixPath = nixPathInputs ++ [
          "nixpkgs-overlays=${config.nixos-config.dir}/overlays"
@@ -41,7 +41,6 @@
        };
      };
    environment.systemPackages = with pkgs; [
-     cached-nix-shell
      git
      dig
      wget

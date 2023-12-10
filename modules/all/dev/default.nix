@@ -10,6 +10,5 @@ in {
   };
 
   config = mkIf cfg.enable {
-    documentation.dev.enable = true;
   };
 }
