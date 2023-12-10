@@ -1,4 +1,4 @@
-#!/usr/bin/env cached-nix-shell
+#!/usr/bin/env nix-shell
 #! nix-shell -i python -p python3 python3Packages.termcolor
 
 import textwrap
@@ -222,7 +222,7 @@ def rebuild(*args, darwin=False, sudo=False):
     if darwin:
         temp_dir = os.path.join((os.environ.get("TMP") or
                                  os.environ.get("TMPDIR") or
-                                 "/tmp") + "darwin_result")
+                                 "/tmp") + "/darwin_result")
 
         if not shutil.which("darwin-rebuild"):
             run_shell("nix", "build",
@@ -231,7 +231,7 @@ def rebuild(*args, darwin=False, sudo=False):
                       "--impure", "--out-link", temp_dir,
                       f"{_global_args[0].flake}#darwinConfigurations.{host}.system")
 
-            run_shell(f"./{temp_dir}/darwin-rebuild"
+            run_shell(f".{temp_dir}/darwin-rebuild "
                       "--flake", f"{_global_args[0].flake}#{host}",
                       *args, sudo=sudo)
         else:
