@@ -21,9 +21,9 @@ Host imana* emby*
      Port 2203
      Protocol 2
 
-Host dns obsd* *.amazonaws.com
-      IdentityFile ~/.ssh/private/id_rootvm
-      Port 2203
+Host  *openbsd.amsterdam
+      IdentityFile ~/.ssh/private/id_rsa
+      Port 31415
       Protocol 2
 
 # Match keyword must be at the end of the file
