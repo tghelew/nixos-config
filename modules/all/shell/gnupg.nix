@@ -19,8 +19,8 @@ in {
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = pkgs.stdenv.isLinux && cfg.useTomb;
-        message = "Tomb can't be used on non Linux systems";
+        assertion = pkgs.stdenv.isDarwin && !cfg.useTomb;
+        message = "GnuPG: Tomb can only be used on Linux systems";
       }
     ];
 
@@ -42,8 +42,8 @@ in {
       '';
     };
 
-    system.userActivationScripts = {
-      setupGnuPG =
+    activationScripts = {
+      setupGnuPG.text =
         let
           secretPath =
             if cfg.secretKeysPath != null &&

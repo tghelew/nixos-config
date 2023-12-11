@@ -232,13 +232,13 @@ def rebuild(*args, darwin=False, sudo=False):
                       "--impure", "--out-link", temp_dir,
                       f"{_global_args[0].flake}#darwinConfigurations.{host}.system")
 
-            run_shell(f".{temp_dir}/darwin-rebuild "
+            run_shell(f"{temp_dir}/sw/bin/darwin-rebuild", "--impure",
                       "--flake", f"{_global_args[0].flake}#{host}",
-                      *args, sudo=sudo)
+                      *args, sudo=False)
         else:
-            run_shell("darwin-rebuild",
+            run_shell("darwin-rebuild", "--impure",
                       "--flake", f"{_global_args[0].flake}#{host}",
-                      *args, sudo=sudo)
+                      *args, sudo=False)
     else:
         run_shell("nixos-rebuild",
                   "--flake", f'{_global_args[0].flake}#{_command_args[0].host}',
@@ -741,7 +741,7 @@ _command = Command(['shell'], "set nix-shell and run the default terminal")
 _command.function(_command_func)
 _command.add_argument("-s", "--shell",
                       help="Shell to use default to `SHELL` environment variable",
-                      metavar="hostname", default="zsh")
+                      metavar="shell", default="zsh")
 # End SHELL
 
 

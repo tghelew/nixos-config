@@ -88,14 +88,14 @@ in {
 
     #NOTE: This is not strictly repoducable as it follow the main branch wihtout hash!
     #WARNING: ssh must be installed and properly configure to fetch this private repository
-    system.userActivationScripts = mkIf (cfg.tlux.enable && pathExists cfg.tlux.repoPubKeyPath) {
-      symlinkEmacs =
+    activationScripts = mkIf (cfg.tlux.enable && pathExists cfg.tlux.repoPubKeyPath) {
+      symlinkEmacs.text =
       ''
         if [[ ! -h "$HOME/.emacs.d" ]]; then
             ln -s "${config.env.EMACSDIR}" "$HOME/.emacs.d"
         fi
       '';
-      installTlux =
+      installTlux.text =
         let tluxScript =
               pkgs.writeShellApplication {
                 name = "installTluxEmacs";

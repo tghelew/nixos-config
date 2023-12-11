@@ -34,12 +34,17 @@
 
        gc = {
          automatic = true;
-         dates = "weekly";
-         randomizedDelaySec = "10min";
-         persistent = true;
+         interval = {
+           Hour = 5;
+           Minute = 22;
+           Weekday = 0;
+         };
          options = "--delete-older-than 15d";
        };
      };
+   services = {
+     nix-daemon.enable = true;
+   };
    environment.systemPackages = with pkgs; [
      git
      dig

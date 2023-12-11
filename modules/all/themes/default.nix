@@ -253,7 +253,7 @@ in {
              '');
        in {
          user.packages = [ reloadTheme ];
-         system.userActivationScripts.reloadTheme = ''
+         activationScripts.reloadTheme.text = ''
            [ -z "$NORELOAD" ] && ${reloadTheme}/bin/reloadTheme
          '';
        }))

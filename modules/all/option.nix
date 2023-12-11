@@ -21,10 +21,11 @@ with lib.my;
     };
 
     home = {
-      file       = mkOpt' attrs {} "Files to place directly in $HOME";
-      configFile = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
-      dataFile   = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
-      services   = mkOpt' attrs {} "Systemd options from home-manager";
+      stateVersion = mkOpt' str "23.11" "Alias for state version";
+      file         = mkOpt' attrs {} "Files to place directly in $HOME";
+      configFile   = mkOpt' attrs {} "Files to place in $XDG_CONFIG_HOME";
+      dataFile     = mkOpt' attrs {} "Files to place in $XDG_DATA_HOME";
+      services     = mkOpt' attrs {} "Systemd options from home-manager";
     };
 
     env = mkOption {
@@ -37,7 +38,8 @@ with lib.my;
       description = "Additional Environment Variable to set";
     };
 
-    myfonts.packages = mkOpt nullOr (listOf package);
+    myfonts.packages = mkOpt (listOf path) [];
+    activationScripts = mkOpt attrs {};
   };
 
   config = {
@@ -68,7 +70,7 @@ with lib.my;
           file = mkAliasDefinitions options.home.file;
           # Necessary for home-manager to work with flakes, otherwise it will
           # look for a nixpkgs channel.
-          stateVersion = config.system.stateVersion;
+          stateVersion = mkAliasDefinitions options.home.stateVersion;
         };
         xdg = {
           configFile = mkAliasDefinitions options.home.configFile;
@@ -93,13 +95,15 @@ with lib.my;
         (mapAttrsToList (n: v: "export ${n}=\"${v}\"") config.env);
     fonts = linuxXorDarwin
       # Linux
-      {
-        packages = mkAliasDefinitions options.myfonts.packages;
-      }
+      {packages = mkAliasDefinitions options.myfonts.packages;}
       # Darwin
-      {
-        fonts = mkAliasDefinitions options.myfonts.packages;
-      };
+      {fonts = mkAliasDefinitions options.myfonts.packages;};
+
+    system = linuxXorDarwin
+      # Linux
+      {userActivationScripts = mkAliasDefinitions options.activationScripts;}
+      # Darwin
+      { activationScripts = mkAliasDefinitions options.activationScripts; };
 
   };
 }
