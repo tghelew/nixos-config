@@ -11,7 +11,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      gitAndTools.git-annex
+      #FIXME: failing on darwin gitAndTools.git-annex
       unstable.gitAndTools.gh
       gitAndTools.git-open
       gitAndTools.diff-so-fancy

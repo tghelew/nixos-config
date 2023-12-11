@@ -25,6 +25,11 @@ in
       inherit system;
       specialArgs = {inherit lib system inputs;};
       modules = [
+        {
+          nixpkgs.pkgs = pkgs;
+          networking.hostName = mkDefault (removeSuffix ".nix" (baseNameOf path));
+        }
+        (filterAttrs (n: v: !elem n [ "system" ]) attrs)
         ../hosts/darwin # default.nix
         (import path)
       ];

@@ -7,7 +7,7 @@ with lib;
 with lib.my;
 let inherit (inputs) agenix;
     os = linuxXorDarwin "linux" "darwin";
-    secretsDir = "${toString ../hosts/${os}}/${pkgs.system}/${config.networking.hostName}/secrets";
+    secretsDir = "${toString ../../hosts/${os}}/${pkgs.system}/${config.networking.hostName}/secrets";
     secretsFile = "${secretsDir}/secrets.nix";
 in {
   imports = [ (linuxXorDarwin agenix.nixosModules.age agenix.darwinModules.age) ];
@@ -19,9 +19,9 @@ in {
       then mapAttrs' (n: v: nameValuePair (removeSuffix ".age" n) {
         file = "${secretsDir}/${n}";
         owner = mkDefault config.user.name;
-        mode = optionals (v ? mode) v.mode;
-        symlink = optionals (v ? symlink) v.symlink;
-        path = optionals (v ? path) v.path;
+        mode = if (v ? mode) then v.mode else "600";
+        symlink = if (v ? symlink) then v.symlink else true;
+        path = if  (v ? path) then (toString v.path) else "${config.age.secretsDir}/${n}";
       }) (import secretsFile)
       else {};
     identityPaths =

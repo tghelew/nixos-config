@@ -34,7 +34,8 @@ in {
       (if cfg.photoshop.enable then [gimp] else []) ++
 
       # 3D modelling
-      (if cfg.threed.enable then [blender] else []);
+      # FIXME: Not working on M* Darwin disabling it for all darwin for now
+      (if (cfg.threed.enable && isLinux) then [blender] else []);
 
     home.configFile = {
       "GIMP/2.10" = mkIf cfg.photoshop.enable { source = "${configDir}/gimp"; recursive = true; };

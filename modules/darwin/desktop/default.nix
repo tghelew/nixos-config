@@ -11,8 +11,7 @@ in {
     ] ;
 
     fonts.fontDir.enable = true;
-    myfonts = {
-      packages = with pkgs; [
+    myfonts.packages = with pkgs; [
         symbola
         meslo-lgs-nf
         mononoki
@@ -20,13 +19,12 @@ in {
         fira-mono
         fira-code
       ];
-    };
 
 
     ## Apps/Services
 
     # Clean up leftovers, as much as we can
-    system.userActivationScripts.cleanupHome = ''
+    system.activationScripts.cleanupHome.text = ''
       pushd "${config.user.home}"
       #TODO: Add cleanup here
       popd

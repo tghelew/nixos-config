@@ -108,23 +108,25 @@ in {
         #Darwin
          {})
 
+    (mkIf (pkgs.stdenv.isDarwin || withXserver || withWayland) {
+      myfonts.packages = with pkgs; [
+        fira-code
+        fira-code-symbols
+        open-sans
+        jetbrains-mono
+        siji
+        font-awesome
+        material-design-icons
+        weather-icons
+      ];})
+
     (mkIf (withXserver || withWayland) {
       user.packages = with pkgs; [
         nordic
         paper-icon-theme # for rofi
       ];
-      myfonts = {
-        packages = with pkgs; [
-          fira-code
-          fira-code-symbols
-          open-sans
-          jetbrains-mono
-          siji
-          font-awesome
-          material-design-icons
-          weather-icons
-        ];
-      };
+
+
 
       # Other dotfiles
       home.configFile = with config.modules; mkMerge [
