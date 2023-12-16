@@ -65,6 +65,10 @@ if (( $+commands[fasd] )); then
   }
 fi
 
+if (( $+commands[kitten] )); then
+ alias ssh="kitten ssh"
+fi
+
 autoload -U zmv
 
 function take {
