@@ -63,6 +63,14 @@ in
       zsh.enable = true;
     };
 
+    services = {
+      ssh.enable = true;
+      sudo = {
+        enable = true;
+        noPass = true;
+      };
+    };
+
     theme.active = "nord";
 
   };

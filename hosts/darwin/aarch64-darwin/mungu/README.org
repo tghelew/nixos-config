@@ -12,8 +12,11 @@ My work laptop (MacBook Pro M1) in order to work and have fun with vm
  sh <(curl -L https://nixos.org/nix/install)
    #+end_src
 2. Clone this repository to ~$HOME/.config/~
-3. Run the following command
+3. Check that ~./secrets/secrets.nix~ has the appropriate public keys from the target machine
+4. Validate that in MacOS the user as read access to ~/etc/ssh/ssh_host_*_key~
+5. Run the following command
    #+begin_src sh
 cd ~/.config/nixos-config
-./bin/tnix rebuilt -t darwin -host <hostname>
+nix --enable-extra-features nix-command --enable-extra-features flakes develop
+./bin/tnix -o darwin rebuilt -host <hostname>
    #+end_src
