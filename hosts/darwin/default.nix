@@ -45,6 +45,9 @@
    services = {
      nix-daemon.enable = true;
    };
+
+   programs.nix-index.enable = true;
+
    environment.systemPackages = with pkgs; [
      git
      dig
@@ -53,6 +56,8 @@
      unzip
      # App stored application download
      mas
+     btop
+     dockutil
    ];
 
    documentation = {

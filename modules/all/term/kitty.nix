@@ -30,7 +30,7 @@ in {
 
     };
 
-    user.packages = with pkgs; [
+    environment.systemPackages = with pkgs; [
       kitty
     ] ++
       ( if pkgs.stdenv.isLinux  then (makeDesktopItem {

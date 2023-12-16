@@ -61,5 +61,8 @@ with lib.my;
         remapCapsLockToControl = true;
       };
     };
+    security = {
+      pam.enableSudoTouchIdAuth = true;
+    };
   };
 }
