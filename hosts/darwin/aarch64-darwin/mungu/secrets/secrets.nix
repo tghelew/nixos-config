@@ -9,28 +9,28 @@ in
   "id_admin.age" = {
     publicKeys = keys;
     mode = "600";
-    path = ~/.ssh/private/id_admin;
+    path = "~/.ssh/private/id_admin";
     symlink = false;
   };
 
   "id_github.age" = {
     publicKeys = keys;
     mode = "600";
-    path = ~/.ssh/private/id_github;
+    path = "~/.ssh/private/id_github";
     symlink = false;
   };
 
   "id_rootvm.age" = {
     publicKeys = keys;
     mode = "600";
-    path = ~/.ssh/private/id_rootvm;
+    path = "~/.ssh/private/id_rootvm";
     symlink = false;
   };
 
   "id_rsa.age"= {
     publicKeys = keys;
     mode = "600";
-    path = ~/.ssh/private/id_rsa;
+    path = "~/.ssh/private/id_rsa";
     symlink = false;
   };
 
