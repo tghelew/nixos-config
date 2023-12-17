@@ -26,6 +26,7 @@ in {
 
     env.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
     environment.systemPackages = with pkgs;[
+      gnupg
       pinentry-curses
     ];
 
@@ -62,12 +63,12 @@ in {
                   coreutils
                 ];
                 text = ''
-                  if [[ ! -d "${config.env.GNUPGHOME}" ]]; then
+                  if [[ ! -d "$GNUPGHOME ]]; then
                     umask 077
-                    mkdir -p "${config.env.GNUPGHOME}"
+                    mkdir -p "$GNUPGHOME"
                   else
-                      find "${config.env.GNUPGHOME}" -type d -exec chmod 700 {} \;
-                      find "${config.env.GNUPGHOME}" -type f -exec chmod 600 {} \;
+                      find "$GNUPGHOME" -type d -exec chmod 700 {} \;
+                      find "$GNUPGHOME" -type f -exec chmod 600 {} \;
                   fi
                   if [[ -r "${secretPath}"  ]]; then
                     gpg --import ${secretPath}
