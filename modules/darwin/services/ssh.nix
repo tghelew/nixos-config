@@ -6,8 +6,9 @@ let
   cfg = config.modules.services.ssh;
   configDir = config.nixos-config.configDir;
 in {
-  options.modules.services.ssh = {
+  options.modules.services.ssh = with types; {
     enable = mkBoolOpt false;
+    publicKeyFiles = mkOpt (listOf str) [];
   };
 
   config = mkIf cfg.enable {
@@ -18,5 +19,15 @@ in {
         "${configDir}/ssh/id_admin.pub"
       ]
       else [];
+
+      home.file =
+        {".ssh/config".source = "${configDir}/ssh/config";}
+        //
+        (genAttrs' cfg.publicKeyFiles
+          (p:
+            {
+              name = ".ssh/${builtins.baseNameOf p}";
+              value = {source = p;};
+            }));
   };
 }

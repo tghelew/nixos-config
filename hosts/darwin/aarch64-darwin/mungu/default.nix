@@ -1,5 +1,7 @@
 { pkgs, config, lib, inputs, ... }:
 
+with lib;
+with lib.my;
 let
   configDir = config.nixos-config.configDir;
 in
@@ -64,7 +66,12 @@ in
     };
 
     services = {
-      ssh.enable = true;
+      ssh = {
+        enable = true;
+        publicKeyFiles = mapAttrsToList (name: _:  "${configDir}/ssh/${name}")
+          (filterAttrs (name: value: (hasSuffix ".pub" name) && ( value == "regular"))
+            (builtins.readDir "${configDir}/ssh"));
+      };
       sudo = {
         enable = true;
         noPass = true;
@@ -75,8 +82,6 @@ in
 
   };
 
-  ## SSH config
-  home.file.".ssh/config" = {source = "${configDir}/ssh/config";};
   #gnupg
   home.configFile."gnupg/gpg.conf" = {source = "${configDir}/gnupg/gpg.conf";};
 

@@ -21,17 +21,17 @@ in {
         owner = mkDefault config.user.name;
         mode = if (v ? mode) then v.mode else "600";
         symlink = if (v ? symlink) then v.symlink else true;
-        path = if  (v ? path) then (toString v.path) else "${config.age.secretsDir}/${n}";
+        path = if  (v ? path) then
+                (replaceStrings ["~"] ["${config.user.home}"] (toString v.path))
+               else "${config.age.secretsDir}/${n}";
       }) (import secretsFile)
       else {};
     identityPaths =
       options.age.identityPaths.default ++ (filter pathExists [
         "${config.user.home}/.ssh/private/id_ed25519"
         "${config.user.home}/.ssh/private/id_rsa"
-        /etc/ssh/ssh_host_dsa_key
-        /etc/ssh/ssh_host_ecdsa_key
-        /etc/ssh/ssh_host_ed25519_key
-        /etc/ssh/ssh_host_rsa_key
+        "/etc/ssh/ssh_host_ed25519_key"
+        "/etc/ssh/ssh_host_rsa_key"
       ]);
   };
 }
