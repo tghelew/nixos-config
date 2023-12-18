@@ -24,7 +24,7 @@ in {
     ## Apps/Services
 
     # Clean up leftovers, as much as we can
-    system.activationScripts.cleanupHome.text = ''
+    system.userActivationScripts.cleanupHome = ''
       pushd "${config.user.home}"
       #TODO: Add cleanup here
       popd

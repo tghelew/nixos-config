@@ -33,13 +33,13 @@ in {
     environment.systemPackages = with pkgs; [
       kitty
     ] ++
-      ( if pkgs.stdenv.isLinux  then (makeDesktopItem {
+    ( if pkgs.stdenv.isLinux  then [(makeDesktopItem {
         name = "Kitty Single Instance";
         desktopName = "Kitty Single Instance Terminal";
         genericName = "Default terminal";
         icon = "utilities-terminal";
         exec = "${kitty} --single-instance";
         categories = [ "Development" "System" "Utility" ];
-      }) else []);
+    })] else []);
   };
 }

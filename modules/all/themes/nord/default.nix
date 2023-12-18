@@ -76,7 +76,7 @@ in {
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
         shell.tmux.theme = ./config/tmux;
-        desktop.browsers = mkIf (desktop.browser.default != null) {
+        desktop.browsers = mkIf (config.modules.desktop.browsers.default != null) {
           firefox.chromePath = ./config/firefox;
         };
       };

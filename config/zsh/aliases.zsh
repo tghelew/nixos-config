@@ -12,6 +12,7 @@ alias mkdir='mkdir -pv'
 alias wget='wget -c'
 alias path='echo -e ${PATH//:/\\n}'
 alias ports='netstat -tulanp'
+alias sports='sudo netstat -tulanp'
 
 alias mk=make
 alias gurl='curl --compressed'
@@ -41,12 +42,14 @@ alias rcpd='rcp --delete --delete-after'
 alias rcpu='rcp --chmod=go='
 alias rcpdu='rcpd --chmod=go='
 
-alias jc='journalctl -xe'
-alias jcu='journactl --user -xe'
-alias jcf='journalctl -f'
-alias sc=systemctl
-alias scu='systemctl --user'
-alias ssc='sudo systemctl'
+if (( $+commands[journalctl] )); then
+  alias jc='journalctl -xe'
+  alias jcu='journalctl --user -xe'
+  alias jcf='journalctl -f'
+  alias sc=systemctl
+  alias scu='systemctl --user'
+  alias ssc='sudo systemctl'
+fi
 
 if (( $+commands[eza] )); then
   alias eza="eza --group-directories-first --git";
@@ -80,23 +83,23 @@ function zman {
 }
 
 # Create a reminder with human-readable durations, e.g. 15m, 1h, 40s, etc
-function r {
-  local time=$1; shift
-  sched "$time" "notify-send --urgency=critical 'Reminder' '$@'";
-}; compdef r=sched
+if (( +commands[notify-send] )); then
+  function r {
+    local time=$1; shift
+    sched "$time" "notify-send --urgency=critical 'Reminder' '$@'";
+  }; compdef r=sched
+fi
 
 
 function alval {
   alias | grep -i $1 | fzf -i --info=inline
 }
 
-function wl-showkeys {
-  if (( $+commands[wev] )); then
-    wev -f wl_keyboard:key
-  else
-   >&2 echo "Program [wev] is missing make sure to install it"
-  fi
-}
+if (( $+commands[wev] )); then
+  function wl-showkeys {
+      wev -f wl_keyboard:key
+  }
+fi
 
 if (( $+commands[rg] )); then
   alias search=rg
@@ -110,3 +113,4 @@ alias -g L='| less -ei '
 
 
 #TODO: Add get aliases (using zstyle)?
+#TODO: Add Darwin Aliases
