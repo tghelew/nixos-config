@@ -88,14 +88,17 @@ in {
 
     #NOTE: This is not strictly repoducable as it follow the main branch wihtout hash!
     #WARNING: ssh must be installed and properly configure to fetch this private repository
-    activationScripts = mkIf (cfg.tlux.enable && pathExists cfg.tlux.repoPubKeyPath) {
-      symlinkEmacs.text =
+    system.userActivationScripts = mkIf (cfg.tlux.enable && pathExists cfg.tlux.repoPubKeyPath) {
+      symlinkEmacs =
       ''
+        echo "[SymLinkEmacs]"
         if [[ ! -h "$HOME/.emacs.d" ]]; then
+            echo "Setting emacs default folder."
             ln -s "${config.env.EMACSDIR}" "$HOME/.emacs.d"
+            echo "Done."
         fi
       '';
-      installTlux.text =
+      installTlux =
         let tluxScript =
               pkgs.writeShellApplication {
                 name = "installTluxEmacs";
@@ -104,10 +107,12 @@ in {
                   openssh
                 ];
                 text = ''
+                echo "[InstallTlux]"
                   if [[ ! -d "$XDG_CONFIG_HOME"/emacs && -f ${cfg.tlux.repoPubKeyPath} ]]; then
+                    echo "Setting up Tlux Emacs."
                     git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
                     git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
-                    echo -n "Tlux Configuration files installed! Do not forget to run: temacs install"
+                    echo "Tlux Configuration files installed! Do not forget to run: temacs install"
                   fi
                 '';
               };

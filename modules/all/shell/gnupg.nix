@@ -19,7 +19,7 @@ in {
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = pkgs.stdenv.isDarwin && !cfg.useTomb;
+        assertion = !pkgs.stdenv.isDarwin || !cfg.useTomb;
         message = "GnuPG: Tomb can only be used on Linux systems";
       }
     ];
@@ -43,8 +43,8 @@ in {
       '';
     };
 
-    activationScripts = {
-      setupGnuPG.text =
+    system.userActivationScripts = {
+      setupGnuPG =
         let
           secretPath =
             if cfg.secretKeysPath != null &&
@@ -52,7 +52,7 @@ in {
 
               config.age.secrets."${cfg.secretKeysPath}".path
 
-            else "";
+            else null;
 
           gpgScript =
               pkgs.writeShellApplication {
@@ -62,18 +62,33 @@ in {
                   findutils
                   coreutils
                 ];
-                text = ''
-                  if [[ ! -d "$GNUPGHOME ]]; then
-                    umask 077
-                    mkdir -p "$GNUPGHOME"
-                  else
-                      find "$GNUPGHOME" -type d -exec chmod 700 {} \;
-                      find "$GNUPGHOME" -type f -exec chmod 600 {} \;
-                  fi
-                  if [[ -r "${secretPath}"  ]]; then
-                    gpg --import ${secretPath}
-                  fi
-                '';
+                text = lib.concatMapStrings (s: s + "\n")
+                  [
+                    ''
+                    echo "[SetupGnuPG]"
+                    echo "Re-Setting GnuPG: ${config.env.GNUPGHOME} folder security."
+                    if [[ ! -d "${config.env.GNUPGHOME}" ]]; then
+                      umask 077
+                      mkdir -p "${config.env.GNUPGHOME}"
+                    else
+                        find "${config.env.GNUPGHOME}" -type d -exec chmod 700 {} \;
+                        find "${config.env.GNUPGHOME}" -type f -exec chmod 600 {} \;
+                    fi
+                    echo "Done"
+                  ''
+
+                    (if (secretPath != null) then
+                      ''
+                        if [[ -r "${secretPath}"  ]]; then
+                          echo "Trying to import GnuPG secret keys"
+                          gpg --import ${secretPath}
+                          echo  "Done"
+                        fi
+                      ''
+                      else
+                      ""
+                    )
+                  ];
               };
         in
         ''

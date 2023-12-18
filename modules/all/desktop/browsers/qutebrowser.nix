@@ -47,7 +47,7 @@ in {
     };
 
     # Install language dictionaries for spellcheck backends
-    activationScripts.qutebrowserInstallDicts.text =
+    system.userActivationScripts.qutebrowserInstallDicts =
       concatStringsSep "\\\n" (map (lang: ''
         if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -maxdepth 1 -type f  -name "${lang}*" 2>/dev/null | grep -q .; then
           ./${pkg}/share/qutebrowser/scripts/dictcli.py install ${lang}

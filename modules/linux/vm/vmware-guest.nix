@@ -13,9 +13,6 @@ let
   xf86inputvmmouse = pkgs.xorg.xf86inputvmmouse;
 in
 {
-  imports = [
-    (mkRenamedOptionModule [ "services" "vmwareGuest" ] [ "virtualisation" "vmware" "guest" ])
-  ];
 
   options.modules.vm.vmware.guest = {
     enable = mkEnableOption "VMWare Guest Support";

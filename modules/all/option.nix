@@ -39,7 +39,6 @@ with lib.my;
     };
 
     myfonts.packages = mkOpt (listOf path) [];
-    activationScripts = mkOpt attrs {};
   };
 
   config = {
@@ -98,12 +97,5 @@ with lib.my;
       {packages = mkAliasDefinitions options.myfonts.packages;}
       # Darwin
       {fonts = mkAliasDefinitions options.myfonts.packages;};
-
-    system = linuxXorDarwin
-      # Linux
-      {userActivationScripts = mkAliasDefinitions options.activationScripts;}
-      # Darwin
-      { activationScripts = mkAliasDefinitions options.activationScripts; };
-
   };
 }

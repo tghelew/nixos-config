@@ -776,7 +776,7 @@ def main():
     _global_parser.add_argument('-o', '--os',
                                 help="Name of the target system",
                                 action='store', choices=['linux', 'darwin'],
-                                default=f"{platform.system().lower}")
+                                default=f"{platform.system().lower()}")
 
     _global_parser.add_argument('-f', '--flake',
                                 help="Change target flake to URI", metavar="URI",
