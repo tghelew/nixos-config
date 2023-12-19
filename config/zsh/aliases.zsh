@@ -83,7 +83,7 @@ function zman {
 }
 
 # Create a reminder with human-readable durations, e.g. 15m, 1h, 40s, etc
-if (( +commands[notify-send] )); then
+if (( $+commands[notify-send] )); then
   function r {
     local time=$1; shift
     sched "$time" "notify-send --urgency=critical 'Reminder' '$@'";
@@ -111,6 +111,15 @@ fi
 alias -g G='| search '
 alias -g L='| less -ei '
 
+# NIX_PATH
+function nix-path {
+  if [[ $# !=  1 ]]; then
+    echo "nix-path require one parameter." >&2
+    return 1
+  fi
+  local pattern="${1//=/}="
+  env | grep -i "${pattern}" | tr ":" "\n" | awk -F'='  "/${pattern}/{print\$2}"
+}
 
 #TODO: Add get aliases (using zstyle)?
 #TODO: Add Darwin Aliases

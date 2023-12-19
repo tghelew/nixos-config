@@ -23,7 +23,7 @@ in {
         symlink = if (v ? symlink) then v.symlink else true;
         path = if  (v ? path) then
                 (replaceStrings ["~"] ["${config.user.home}"] (toString v.path))
-               else "${config.age.secretsDir}/${removeSuffix ".age" n}";
+               else ''${config.age.secretsDir}/${removeSuffix ".age" n}'';
       }) (import secretsFile)
       else {};
     identityPaths =
