@@ -6,7 +6,7 @@ let
   cfg = config.modules.shell.gnupg;
   pinentry = linuxXorDarwin
     "${pkgs.pinentry-gtk2}/bin/pinentry"
-    "${pkgs.pinentry_mac}/Contents/MacOS/pinentry-mac";
+    "${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac";
 in {
   options.modules.shell.gnupg = with types; {
     enable   = mkBoolOpt false;
@@ -25,10 +25,7 @@ in {
     ];
 
     env.GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
-    environment.systemPackages = with pkgs;[
-      gnupg
-      pinentry-curses
-    ];
+    environment.systemPackages = [pkgs.gnupg];
 
     programs.gnupg.agent.enable = true;
 
@@ -79,10 +76,12 @@ in {
 
                     (if (secretPath != null) then
                       ''
-                        if [[ -r "${secretPath}"  ]]; then
+                        if [[ -r "${secretPath}" && ! -f "${config.env.GNUPGHOME}/.nix-darwin" ]]; then
                           echo "Trying to import GnuPG secret keys"
+                          gpgconf --kill gpg-agent
                           gpg --import ${secretPath}
-                          echo  "Done"
+                          touch "${config.env.GNUPGHOME}/.nix-darwin"
+                          echo  "Done: Don't forget to trust added keys."
                         fi
                       ''
                       else
