@@ -16,12 +16,33 @@ in
     darwin = {
       system.enable = true;
       #TODO: homebrew.enable = false;
-
     };
 
     desktop = {
       #TODO yabai.enable = false;
 
+      dock = {
+        enable = true;
+        entries = [
+          { path = "/System/Applications/Home.app/"; }
+          { path = "/System/Applications/Launchpad.app/"; }
+          { path = "/System/Applications/Messages.app/"; }
+          { path = "/System/Applications/FaceTime.app/"; }
+          { path = "/System/Applications/Mail.app/"; }
+          { path = "/System/Applications/Reminders.app/"; }
+          { path = "/System/Applications/Notes.app/"; }
+          { path = "/Applications/Safari.app/"; }
+          { path = "/System/Applications/Music.app/"; }
+          { path = "/System/Applications/Podcasts.app/"; }
+          { path = "${pkgs.kitty}/Applications/kitty.app/"; }
+          { path = "${pkgs.emacs-unstable}/Applications/Emacs.app";}
+          # {
+          #   path = config.modules.editors.emacs.defaultEditorScript;
+          #   section = "others";
+          # }
+        ];
+
+      };
 
       media = {
         mpv.enable = true;
