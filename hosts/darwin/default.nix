@@ -58,6 +58,8 @@
      mas
      btop
      dockutil
+     # Spotlight killer ?
+     raycast
    ];
 
    documentation = {

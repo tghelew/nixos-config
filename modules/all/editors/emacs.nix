@@ -6,10 +6,29 @@ with lib;
 with lib.my;
 let cfg = config.modules.editors.emacs;
     configDir = config.nixos-config.configDir;
-    defaultEditorScript = with pkgs; writeShellScriptBin "default-editor"
-    ''
-     ${emacs-unstable}/bin/emacsclient "$@" -a ""
-    '';
+    defaultEditorScript = with pkgs; writeShellApplication {
+      name = "default-editor";
+      runtimeInputs = [pkgs.emacs-unstable];
+      text = ''
+        # Required parameters:
+        # @raycast.schemaVersion 1
+        # @raycast.title Run Emacs
+        # @raycast.mode silent
+        #
+        # Optional parameters:
+        # @raycast.packageName Emacs
+        # @raycast.icon ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
+        # @raycast.iconDark ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
+
+        if [[ $1 == "-t"  || $1 == "-nw" || $1 == "-tty" ]]; then
+          # Terminal mode
+          ${cfg.package}/bin/emacsclient -t "$@" -a ""
+        else
+          # GUI mode
+          ${cfg.package}/bin/emacsclient -c -n "$@" -a ""
+        fi
+        '';
+    };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
 in {
   options.modules.editors.emacs = {
@@ -17,6 +36,7 @@ in {
     defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/default-editor";
     useForEmail = mkBoolOpt false;
     package = mkOpt types.package pkgs.emacs-unstable;
+    autostart = mkBoolOpt pkgs.stdenv.isDarwin;
     tlux = rec {
       enable = mkBoolOpt false;
       repoUrl = mkOpt types.str "git@github.com:tghelew/emacs.d";
@@ -25,7 +45,13 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [{
+
+    assertions = [ {
+      assertion = ! cfg.autostart || pkgs.stdenv.isDarwin;
+      message = "Option ${cfg}.autostart is not yet supported on ${pkgs.stdenv.hostPlatform.system}";
+    } ];
+
     nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
 
     environment.systemPackages = with pkgs; [
@@ -126,5 +152,40 @@ in {
       substituters = ["https://nix-community.cachix.org"];	# Install cached version so rebuild should not be required
       trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
     };
-  };
+  }
+
+   (mkIf cfg.autostart {
+     home.services.emacs= {
+       enable = true;
+       config = {
+         enable = true;
+         EnvironmentVariables = {
+           PATH = config.env.PATH;
+           EMACSDIR = config.env.EMACSDIR;
+           TLUXDIR = config.env.TLUXDIR;
+           TLUXLOCALDIR = config.env.TLUXLOCALDIR;
+         };
+         KeepAlive = true;
+         ProgramArguments = [
+           "/bin/sh"
+           "-c"
+           ''
+         { osascript -e 'display notification \"Attempting to start Emacs...\" with title \"Emacs Launch\"';
+           /bin/wait4path ${pkgs.emacs-unstable}/bin/emacs && \
+           { ${pkgs.emacs-unstable}/bin/emacs --fg-daemon;
+             if [ $? -eq 0 ]; then
+               osascript -e 'display notification \"Emacs has started.\" with title \"Emacs Launch\"';
+             else
+               osascript -e 'display notification \"Failed to start Emacs.\" with title \"Emacs Launch\"' >&2;
+             fi;
+           }
+         } &> /tmp/emacs_launch.log
+        ''
+         ];
+         StandardErrorPath = "/tmp/emacs.err.log";
+         StandardOutPath = "/tmp/emacs.out.log";
+       };
+     };
+   })
+ ]);
 }
