@@ -16,6 +16,9 @@
   # nixpkgs/nixos/modules/system/boot/loader/systemd-boot/systemd-boot.nix
   boot.loader.systemd-boot.editor = false;
 
+  # Jump to interactive shell if failure during boot
+  boot.kernelParams = [ "boot.shell_on_fail" ];
+
   boot.kernel.sysctl = lib.mkIf pkgs.stdenv.isLinux {
     # The Magic SysRq key is a key combo that allows users connected to the
     # system console of a Linux kernel to perform some low-level commands.
