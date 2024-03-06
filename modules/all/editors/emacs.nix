@@ -7,8 +7,8 @@ with lib.my;
 let cfg = config.modules.editors.emacs;
     configDir = config.nixos-config.configDir;
     defaultEditorScript = with pkgs; writeShellApplication {
-      name = "default-editor";
-      runtimeInputs = [pkgs.emacs-unstable];
+      name = "myEmacs";
+      runtimeInputs = [];
       text = ''
         # Required parameters:
         # @raycast.schemaVersion 1
@@ -20,20 +20,21 @@ let cfg = config.modules.editors.emacs;
         # @raycast.icon ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
         # @raycast.iconDark ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
 
-        if [[ $1 == "-t"  || $1 == "-nw" || $1 == "-tty" ]]; then
+        _input=''${1-"_"}
+        _cmd='${cfg.package}/bin/emacsclient -c -n -a "" '
+        if [[ $_input == "-t"  || $_input == "-nw" || $_input == "-tty" ]]; then
           # Terminal mode
-          ${cfg.package}/bin/emacsclient -t "$@" -a ""
-        else
-          # GUI mode
-          ${cfg.package}/bin/emacsclient -c -n "$@" -a ""
+          _cmd='${cfg.package}/bin/emacsclient -t -a "" '
         fi
+        nohup "$_cmd" "$@" &> /dev/null & disown
+        exit 0
         '';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
-    defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/default-editor";
+    defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/myEmacs";
     useForEmail = mkBoolOpt false;
     package = mkOpt types.package pkgs.emacs-unstable;
     autostart = mkBoolOpt pkgs.stdenv.isDarwin;
@@ -55,9 +56,9 @@ in {
     nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
 
     environment.systemPackages = with pkgs; [
-      ## Emacs itself
       binutils       # native-comp needs 'as', provided by this
     ] ++
+      ## Emacs itself
       # 28.2 + native-comp
       (linuxXorDarwin [
         ((emacsPackagesFor cfg.package).emacsWithPackages
