@@ -4,8 +4,8 @@
   imports = ["${modulesPath}/installer/scan/not-detected.nix" ];
 
   boot = {
-    initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" "dm-raid"];
-    initrd.kernelModules = [ "dm-snapshot" "i915" "dm-raid"];
+    initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" "dm-raid" "raid1" ];
+    initrd.kernelModules = [ "dm-snapshot" "i915" "dm-raid" ];
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
