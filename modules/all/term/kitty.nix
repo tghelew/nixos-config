@@ -18,7 +18,7 @@ in {
   config = mkIf cfg.enable {
 
     env = {
-      KITTY_CONFIG_DIRECTORY = "XDG_CONFIG_HOME/kitty";
+      KITTY_CONFIG_DIRECTORY = "$XDG_CONFIG_DIR/kitty";
     };
 
     home.configFile = {
@@ -38,7 +38,7 @@ in {
         desktopName = "Kitty Single Instance Terminal";
         genericName = "Default terminal";
         icon = "utilities-terminal";
-        exec = "${kitty} --single-instance";
+        exec = "${kitty}/bin/kitty --single-instance";
         categories = [ "Development" "System" "Utility" ];
     })] else []);
   };

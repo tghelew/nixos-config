@@ -24,6 +24,7 @@ bold_italic_font auto
 #:     bold_italic_font Operator Mono Medium Italic
 
 #: Font size (in pts)
+#: TODO: maybe add specific font size for terminal
 font_size ${toString fonts.icons.size}
 
 

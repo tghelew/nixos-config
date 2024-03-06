@@ -64,7 +64,7 @@ if (( $+commands[fasd] )); then
   # fuzzy completion with 'zs' when called without args
   function zs {
     [ $# -gt 0 ] && z "$*" && return
-    cd "$(z -l 2>&1 | fzf --height 40% --reverse --info:inline --tac | sed 's/^[0-9,.]* *//')"
+    cd "$(z -l 2>&1 | fzf --height 40% --reverse --info=inline --tac | sed 's/^[0-9,.]* *//')"
   }
 fi
 
