@@ -19,7 +19,6 @@ let cfg = config.modules.editors.emacs;
         platforms = platforms.all;
       };
       text = ''
-        set -xv
         # Required parameters:
         # @raycast.schemaVersion 1
         # @raycast.title Run Emacs
@@ -30,8 +29,7 @@ let cfg = config.modules.editors.emacs;
         # @raycast.icon ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
         # @raycast.iconDark ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
 
-        _cmd="${cfg.package}/bin/emacsclient -cna ' '"
-        nohup "$_cmd" "$@" &> /dev/null
+        nohup ${cfg.package}/bin/emacsclient -cna ' ' "$@" &> /dev/null
         '';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
