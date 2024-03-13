@@ -15,7 +15,7 @@ in
     255.255.255.255   broadcasthost
 
     # Personal name
-    192.168.1.1   router.home
+    172.22.22.1   router.home
 
     # DNS Server & Soon mail server
     137.220.54.49 eshub
