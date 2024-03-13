@@ -22,10 +22,10 @@ in
 {
   options.modules.xdg = {
     enable = mkBoolOpt true;
-    cacheHome = mkOpt types.str xdgvariables.XDG_CACHE_HOME;
-    configHome = mkOpt types.str xdgvariables.XDG_CONFIG_HOME;
-    dataHome = mkOpt types.str xdgvariables.XDG_DATA_HOME;
-    binHome = mkOpt types.str xdgvariables.XDG_BIN_HOME;
+    cacheHome = mkOpt types.str xdgVariables.XDG_CACHE_HOME;
+    configHome = mkOpt types.str xdgVariables.XDG_CONFIG_HOME;
+    dataHome = mkOpt types.str xdgVariables.XDG_DATA_HOME;
+    binHome = mkOpt types.str xdgVariables.XDG_BIN_HOME;
   };
 
   config = mkIf cfg.enable {
