@@ -25,7 +25,6 @@ in
         enable = true;
         entries = [
           { path = "/System/Applications/Launchpad.app/"; }
-          { path = "/System/Applications/Home.app/"; }
           { path = "/System/Applications/Messages.app/"; }
           { path = "/System/Applications/FaceTime.app/"; }
           { path = "/System/Applications/Mail.app/"; }
@@ -39,7 +38,7 @@ in
             path = config.modules.editors.emacs.defaultEditor;
             section = "others";
           }
-          #TODO: Setup neovim
+          # TODO: Setup neovim
         ];
 
       };

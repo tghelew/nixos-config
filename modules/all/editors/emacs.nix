@@ -7,9 +7,20 @@ with lib.my;
 let cfg = config.modules.editors.emacs;
     configDir = config.nixos-config.configDir;
     defaultEditorScript = with pkgs; writeShellApplication {
-      name = "myEmacs";
+      name = "memacs";
       runtimeInputs = [];
+      meta = with lib; {
+        description = "A wrapper around emacsclient";
+        longDescription = ''
+              A wrapper around emacsclient that use more or less the same parameter as
+              the original emacsclient program to launch either a terminal or graphical emacs
+              client. If an emacs server is not already launch a new server will be created.
+        '';
+        license = licenses.mit;
+        platforms = platforms.all;
+      };
       text = ''
+        set -xv
         # Required parameters:
         # @raycast.schemaVersion 1
         # @raycast.title Run Emacs
@@ -20,21 +31,15 @@ let cfg = config.modules.editors.emacs;
         # @raycast.icon ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
         # @raycast.iconDark ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
 
-        _input=''${1-"_"}
-        _cmd='${cfg.package}/bin/emacsclient -c -n -a "" '
-        if [[ $_input == "-t"  || $_input == "-nw" || $_input == "-tty" ]]; then
-          # Terminal mode
-          _cmd='${cfg.package}/bin/emacsclient -t -a "" '
-        fi
+        _cmd="${cfg.package}/bin/emacsclient -c -n -a ' ' "
         nohup "$_cmd" "$@" &> /dev/null & disown
-        exit 0
         '';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
-    defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/myEmacs";
+    defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/memacs";
     useForEmail = mkBoolOpt false;
     package = mkOpt types.package pkgs.emacs-unstable;
     autostart = mkBoolOpt pkgs.stdenv.isDarwin;
@@ -65,6 +70,8 @@ in {
         (epkgs: [ epkgs.vterm ]))
       ] [cfg.package]) ++
       [
+        # MyEmacs
+        defaultEditorScript
         ## Doom dependencies
         git
         (ripgrep.override {withPCRE2 = true;})
@@ -180,7 +187,7 @@ in {
                osascript -e 'display notification \"Failed to start Emacs.\" with title \"Emacs Launch\"' >&2;
              fi;
            }
-         } &> /tmp/emacs_launch.log
+         }
         ''
          ];
          StandardErrorPath = "/tmp/emacs.err.log";
