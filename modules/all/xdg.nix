@@ -8,19 +8,31 @@
 with lib;
 with lib.my;
 let
+  cfg = config.modules.xdg;
   xdgVariables = {
       # These are the defaults, and xdg.enable does set them, but due to load
       # order, they're not set before environment.variables are set, which could
       # cause race conditions.
-      XDG_CACHE_HOME  = "$HOME/.cache";
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_DATA_HOME   = "$HOME/.local/share";
-      XDG_BIN_HOME    = "$HOME/.local/bin";
+    XDG_CACHE_HOME  = "${config.user.home}/.cache";
+    XDG_CONFIG_HOME = "${config.user.home}/.config";
+    XDG_DATA_HOME   = "${config.user.home}/.local/share";
+    XDG_BIN_HOME    = "${config.user.home}/.local/bin";
   };
 in
 {
-  home-manager.users.${config.user.name}.xdg.enable = true;
-  environment = linuxXorDarwin
-    {sessionVariables = xdgVariables;}
-    {variables = xdgVariables;};
+  options.modules.xdg = {
+    enable = mkBoolOpt true;
+    cacheHome = mkOpt types.str xdgvariables.XDG_CACHE_HOME;
+    configHome = mkOpt types.str xdgvariables.XDG_CONFIG_HOME;
+    dataHome = mkOpt types.str xdgvariables.XDG_DATA_HOME;
+    binHome = mkOpt types.str xdgvariables.XDG_BIN_HOME;
+  };
+
+  config = mkIf cfg.enable {
+    home-manager.users.${config.user.name}.xdg.enable = true;
+    environment = linuxXorDarwin
+      {sessionVariables = xdgVariables;}
+      {variables = xdgVariables;};
+  };
+
 }

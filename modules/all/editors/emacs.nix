@@ -12,8 +12,7 @@ let cfg = config.modules.editors.emacs;
       meta = with lib; {
         description = "A wrapper around emacsclient";
         longDescription = ''
-              A wrapper around emacsclient that use more or less the same parameter as
-              the original emacsclient program to launch either a terminal or graphical emacs
+              A wrapper around emacsclient to graphical emacs
               client. If an emacs server is not already launch a new server will be created.
         '';
         license = licenses.mit;
@@ -31,8 +30,8 @@ let cfg = config.modules.editors.emacs;
         # @raycast.icon ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
         # @raycast.iconDark ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
 
-        _cmd="${cfg.package}/bin/emacsclient -c -n -a ' ' "
-        nohup "$_cmd" "$@" &> /dev/null & disown
+        _cmd="${cfg.package}/bin/emacsclient -cna ' '"
+        nohup "$_cmd" "$@" &> /dev/null
         '';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
@@ -107,10 +106,10 @@ in {
       [mu isync ];
 
     env = {
-      PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
-      EMACSDIR = "$XDG_CONFIG_HOME/emacs/";
-      TLUXDIR = "$XDG_CONFIG_HOME/tlux/";
-      TLUXLOCALDIR = "$XDG_CONFIG_HOME/emacs/.local/";
+      PATH = [ "${config.modules.xdg.configHome}/emacs/bin" ];
+      EMACSDIR = "${config.modules.xdg.configHome}/emacs/";
+      TLUXDIR = "${config.modules.xdg.configHome}/tlux/";
+      TLUXLOCALDIR = "${config.modules.xdg.configHome}/emacs/.local/";
     };
 
     modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
@@ -163,7 +162,32 @@ in {
   }
 
    (mkIf cfg.autostart {
-     home.services.emacs= {
+     home.services.emacs= let
+       launchScript = pkgs.writeShellApplication {
+         name = "launchEmacs";
+         text = ''
+          _notify() {
+            local message="$1"
+            if hash osascript 2>/dev/null; then
+              osascript -e 'display notification "$message" with title "Emacs Daemon Launch"'
+            elif hash notify-send 2>dev/null; then
+              notify-send "Emacs Daemon Launch" "$message"
+            else
+              echo "No notification program can be found" 1>&2
+            fi
+          }
+
+          _notify "Attempting to start Emacs..."
+          ${cfg.package}/bin/emacs --fg-daemon
+          if [ $? -eq 0 ]; then
+            _notify "Emacs has started."
+          else
+            _notify "Failed to start Emacs."
+          fi
+         '';
+
+       };
+     in {
        enable = true;
        config = {
          enable = true;
@@ -174,24 +198,7 @@ in {
            TLUXLOCALDIR = config.env.TLUXLOCALDIR;
          };
          KeepAlive = true;
-         ProgramArguments = [
-           "/bin/sh"
-           "-c"
-           ''
-         { osascript -e 'display notification \"Attempting to start Emacs...\" with title \"Emacs Launch\"';
-           /bin/wait4path ${pkgs.emacs-unstable}/bin/emacs && \
-           { ${pkgs.emacs-unstable}/bin/emacs --fg-daemon;
-             if [ $? -eq 0 ]; then
-               osascript -e 'display notification \"Emacs has started.\" with title \"Emacs Launch\"';
-             else
-               osascript -e 'display notification \"Failed to start Emacs.\" with title \"Emacs Launch\"' >&2;
-             fi;
-           }
-         }
-        ''
-         ];
-         StandardErrorPath = "/tmp/emacs.err.log";
-         StandardOutPath = "/tmp/emacs.out.log";
+         ProgramArguments = ["${launchScript}/bin/launchEmacs"];
        };
      };
    })
