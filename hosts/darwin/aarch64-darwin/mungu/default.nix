@@ -34,10 +34,6 @@ in
           { path = "/System/Applications/Music.app/"; }
           { path = "/System/Applications/Podcasts.app/"; }
           { path = "${pkgs.kitty}/Applications/kitty.app/"; }
-          {
-            path = config.modules.editors.emacs.defaultEditor;
-            section = "others";
-          }
           # TODO: Setup neovim
         ];
 

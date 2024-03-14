@@ -18,19 +18,7 @@ let cfg = config.modules.editors.emacs;
         license = licenses.mit;
         platforms = platforms.all;
       };
-      text = ''
-        # Required parameters:
-        # @raycast.schemaVersion 1
-        # @raycast.title Run Emacs
-        # @raycast.mode silent
-        #
-        # Optional parameters:
-        # @raycast.packageName Emacs
-        # @raycast.icon ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
-        # @raycast.iconDark ${cfg.package}/Applications/Emacs.app/Contents/Resources/Emacs.icns
-
-        nohup ${cfg.package}/bin/emacsclient -cna ' ' "$@" &> /dev/null
-        '';
+      text = ''nohup ${cfg.package}/bin/emacsclient -cna ' ' "$@" &> /dev/null'';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
 in {
@@ -167,7 +155,7 @@ in {
           _notify() {
             local message="$1"
             if hash osascript 2>/dev/null; then
-              osascript -e 'display notification "$message" with title "Emacs Daemon Launch"'
+              osascript -e "display notification \"$message\" with title \"Emacs Daemon Launch\""
             elif hash notify-send 2>dev/null; then
               notify-send "Emacs Daemon Launch" "$message"
             else
@@ -176,8 +164,7 @@ in {
           }
 
           _notify "Attempting to start Emacs..."
-          ${cfg.package}/bin/emacs --fg-daemon
-          if [ $? -eq 0 ]; then
+          if ${cfg.package}/bin/emacs --fg-daemon; then
             _notify "Emacs has started."
           else
             _notify "Failed to start Emacs."
