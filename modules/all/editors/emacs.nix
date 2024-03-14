@@ -50,10 +50,17 @@ in {
     ] ++
       ## Emacs itself
       # 28.2 + native-comp
-      (linuxXorDarwin [
-        ((emacsPackagesFor cfg.package).emacsWithPackages
-        (epkgs: [ epkgs.vterm ]))
-      ] [cfg.package]) ++
+      (linuxXorDarwin
+        [
+          #Linux
+          ((emacsPackagesFor cfg.package).emacsWithPackages
+          (epkgs: [ epkgs.vterm ]))
+        ]
+        [
+          #Darwin
+          cfg.package
+          coreutils
+        ]) ++
       [
         # MyEmacs
         defaultEditorScript
