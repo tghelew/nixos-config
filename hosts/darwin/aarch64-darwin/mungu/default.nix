@@ -15,7 +15,14 @@ in
 
     darwin = {
       system.enable = true;
-      #TODO: homebrew.enable = false;
+      homebrew = {
+        enable = true;
+        masApps = {
+          # make sure to login to app store first!
+          "reMarkable Desktop" = 1276493162;
+          "NordVPN"            = 905953485;
+        };
+      };
     };
 
     desktop = {
@@ -26,6 +33,7 @@ in
         entries = [
           { path = "/System/Applications/Launchpad.app/"; }
           { path = "/System/Applications/Messages.app/"; }
+          { path = "${pkgs.slack}/Applications/slack.app"; }
           { path = "/System/Applications/FaceTime.app/"; }
           { path = "/System/Applications/Mail.app/"; }
           { path = "/System/Applications/Reminders.app/"; }
@@ -47,6 +55,10 @@ in
           photoshop.enable = true;
           illustrator.enable = true;
           threed.enable = true;
+        };
+        comms = {
+          enable = true;
+          slack.enable = true;
         };
       };
 
