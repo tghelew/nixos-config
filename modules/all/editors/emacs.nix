@@ -59,7 +59,7 @@ in {
         [
           #Darwin
           cfg.package
-          coreutils
+          coreutils-prefixed
         ]) ++
       [
         # MyEmacs

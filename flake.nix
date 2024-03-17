@@ -19,9 +19,28 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      darwin = {                                                           # MacOS Package Management
+      darwin = {                                                          # MacOS Package Management
         url = "github:lnl7/nix-darwin/master";
         inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      nix-homebrew = {                                                   # Homebrew Package management
+        url = "github:zhaofengli-wip/nix-homebrew";
+      };
+
+      homebrew-bundle = {
+        url = "github:homebrew/homebrew-bundle";
+        flake = false;
+      };
+
+      homebrew-core = {
+        url = "github:homebrew/homebrew-core";
+        flake = false;
+      };
+
+      homebrew-cask = {
+        url = "github:homebrew/homebrew-cask";
+        flake = false;
       };
 
       emacs-overlay = {                                                   # Emacs Overlays
