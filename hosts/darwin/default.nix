@@ -2,9 +2,13 @@
  with lib;
  with lib.my;
  {
-   imports = [inputs.home-manager.darwinModules.home-manager ]
-             ++ (mapModulesRec' (toString ../../modules/all) import)
-             ++ (mapModulesRec' (toString ../../modules/darwin) import);
+   imports =
+     [
+       inputs.home-manager.darwinModules.home-manager
+       inputs.nix-homebrew.darwinModules.nix-homebrew
+     ]
+     ++ (mapModulesRec' (toString ../../modules/all) import)
+     ++ (mapModulesRec' (toString ../../modules/darwin) import);
 
    environment.variables.NIXOS_CONFIG = config.nixos-config.dir;
    environment.variables.NIXOS_CONFIG_BIN = config.nixos-config.binDir;
@@ -56,6 +60,7 @@
      unzip
      # App stored application download
      mas
+
      btop
      dockutil
      # Spotlight killer ?
