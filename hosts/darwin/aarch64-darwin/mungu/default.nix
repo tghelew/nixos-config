@@ -38,6 +38,7 @@ in
           { path = "/System/Applications/Mail.app/"; }
           { path = "/System/Applications/Reminders.app/"; }
           { path = "/System/Applications/Notes.app/"; }
+          { path = "/System/Applications/reMarkable.app/"; }
           { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/"; }
           { path = "/System/Applications/Music.app/"; }
           { path = "/System/Applications/Podcasts.app/"; }
