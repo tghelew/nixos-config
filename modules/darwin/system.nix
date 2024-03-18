@@ -25,6 +25,8 @@ with lib.my;
           ApplePressAndHoldEnabled = false;
           AppleEnableMouseSwipeNavigateWithScrolls = true;
           AppleEnableSwipeNavigateWithScrolls = true;
+          NSNavPanelExpandedStateForSaveMode = true;
+          NSNavPanelExpandedStateForSaveMode2  = true;
 
           # 120, 90, 60, 30, 12, 6, 2
           KeyRepeat = 2;

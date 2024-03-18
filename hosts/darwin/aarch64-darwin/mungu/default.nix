@@ -36,10 +36,11 @@ in
           { path = "${pkgs.slack}/Applications/slack.app"; }
           { path = "/System/Applications/FaceTime.app/"; }
           { path = "/System/Applications/Mail.app/"; }
+          { path = "/System/Applications/Calendar.app/"; }
           { path = "/System/Applications/Reminders.app/"; }
           { path = "/System/Applications/Notes.app/"; }
-          { path = "/System/Applications/reMarkable.app/"; }
-          { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/"; }
+          { path = "/Applications/Safari.app/"; }
+          { path = "/Applications/reMarkable.app/"; }
           { path = "/System/Applications/Music.app/"; }
           { path = "/System/Applications/Podcasts.app/"; }
           { path = "${pkgs.kitty}/Applications/kitty.app/"; }
@@ -47,6 +48,8 @@ in
         ];
 
       };
+
+      karabiner.enable = true;
 
       media = {
         mpv.enable = true;
