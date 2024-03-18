@@ -20,21 +20,23 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
    ~~* adapt to emacs 29~~
    ~~* change prompt when in vterm~~
  * ~~Add multimedia keybinding in Hyprland~~
- * Setup _pass_
+ * ~~Setup _pass_~~
  * ~~Configure Waybar with _nord_ theme~~
  * ~~Setup a scratch terminal with tmux~~
  * ~~Setup a Calc scratch terminal~~
  * ~~Setup kitty as the default terminal~~
- * Update MacOS configuration (_yabi_)
+ * Update MacOS configuration (_yabai_)
  * ~~Setup mpv keybindings~~
  * ~~waybar: include windows/workspace counter (using hyrctl activeworkspace)~~
  * mpv: include script youtube-download ? 
  * desktop: add xdg-mime association. 
- * add zig modules
+ * ~~add zig modules~~
  * fix rofi script hyprwindows when title contains ```quote```
  * Implement hide window using special workspace (named hidden)
  * Use GDM with fingerprint? 
  * ~~include python tools configuration files (pylint)~~
+ * ~~MacOS add karabiner~~
+ * Add Xcode as development environment
  
 
 
