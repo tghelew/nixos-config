@@ -134,10 +134,10 @@ in {
                 ];
                 text = ''
                 echo "[InstallTlux]"
-                  if [[ ! -d "$XDG_CONFIG_HOME"/emacs && -f ${cfg.tlux.repoPubKeyPath} ]]; then
+                  if [[ ! -d "${config.env.EMACSDIR}" && -f ${cfg.tlux.repoPubKeyPath} ]]; then
                     echo "Setting up Tlux Emacs."
-                    git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "$XDG_CONFIG_HOME/emacs"
-                    git clone "${cfg.tlux.configRepoUrl}" "$XDG_CONFIG_HOME/tlux"
+                    git clone --depth=1 --single-branch "${cfg.tlux.repoUrl}" "${config.env.EMACSDIR}"
+                    git clone "${cfg.tlux.configRepoUrl}" "${config.env.TLUXDIR}"
                     echo "Tlux Configuration files installed! Do not forget to run: temacs install"
                   fi
                 '';
