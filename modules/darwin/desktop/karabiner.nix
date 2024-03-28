@@ -37,14 +37,14 @@ in
                   echo "[KarabinerConfig]"
                   if [[ ! -d "${xdgConfigHome}/karabiner-origin" && ! -d "${cfg.karabinerDir}/.git" ]]; then
                     echo "[KarabinerConfig]: Backup original karabiner config"
-                    mv "${xdgConfigHome}/karabiner" "${xdg.configHome}/karabiner-origin"
+                    mv "${xdgConfigHome}/karabiner" "${xdgConfigHome}/karabiner-origin"
                   fi
                   if [[ ! -d "${cfg.karabinerDir}" && -f ${cfg.repoPubKeyPath} ]]; then
                     echo "[KarabinerConfig]: Cloning Config"
-                    git clone --depth=1 --single-branch "${cfg.repoUrl}" "${cfg.karbinerConfig}"
+                    git clone --depth=1 --single-branch "${cfg.repoUrl}" "${cfg.karabinerDir}"
                   fi
                   echo "[KarabinerConfig]: Trying to relaunch the service"
-                  if launchctl kickstart -k gui/`id -u`/org.pqrs.karabiner.karabiner_console_user_server >/dev/null 2>&1; then
+                  if launchctl kickstart -k gui/"$(id -u)"/org.pqrs.karabiner.karabiner_console_user_server >/dev/null 2>&1; then
                     echo "[KarabinerConfig]: service sucessfully launched"
                   else
                     echo "[KarabinerConfig]: Failed to launch service"
