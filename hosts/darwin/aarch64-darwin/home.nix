@@ -20,6 +20,8 @@ in
     # DNS Server & Soon mail server
     137.220.54.49 eshub
     46.23.94.97   eshua
+    # OpenBSD amsterdam host servers
+    server11.openbsd.amsterdam  eshua.obsdams
 
     #Block garbage
     ${(readFile blocklist)}
