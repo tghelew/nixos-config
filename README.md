@@ -25,7 +25,6 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * ~~Setup a scratch terminal with tmux~~
  * ~~Setup a Calc scratch terminal~~
  * ~~Setup kitty as the default terminal~~
- * Update MacOS configuration (_yabai_)
  * ~~Setup mpv keybindings~~
  * ~~waybar: include windows/workspace counter (using hyrctl activeworkspace)~~
  * mpv: include script youtube-download ? 
