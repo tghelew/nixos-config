@@ -39,10 +39,9 @@ in
           { path = "/System/Applications/Calendar.app/"; }
           { path = "/System/Applications/Reminders.app/"; }
           { path = "/System/Applications/Notes.app/"; }
-          { path = "/Applications/Safari.app/"; }
+          { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/"; }
           { path = "/Applications/reMarkable.app/"; }
           { path = "/System/Applications/Music.app/"; }
-          { path = "/System/Applications/Podcasts.app/"; }
           { path = "${pkgs.kitty}/Applications/kitty.app/"; }
           # TODO: Setup neovim
         ];

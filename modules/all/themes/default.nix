@@ -52,6 +52,12 @@ in {
         size = mkOpt int 10;
 
       };
+
+      highres = {
+        name = mkOpt str "Icons";
+        size = mkOpt int 10;
+
+      };
     };
 
     colors = {
