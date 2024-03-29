@@ -18,10 +18,12 @@ in
     172.22.22.1   router.home
 
     # DNS Server & Soon mail server
-    137.220.54.49 eshub
-    46.23.94.97   eshua
+    137.220.54.49 eshua
+    46.23.94.97   eshub
+    46.23.93.235  eshuc
     # OpenBSD amsterdam host servers
-    server11.openbsd.amsterdam  eshua.obsdams
+    server11.openbsd.amsterdam  eshub.obsdams
+    server22.openbsd.amsterdam  eshuc.obsdams
 
     #Block garbage
     ${(readFile blocklist)}
