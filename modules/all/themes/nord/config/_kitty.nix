@@ -5,7 +5,7 @@
 #: individual font faces and even specify special fonts for particular
 #: characters.
 
-font_family      ${fonts.icons.name}
+font_family      ${fonts.highres.name}
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -25,7 +25,7 @@ bold_italic_font auto
 
 #: Font size (in pts)
 #: TODO: maybe add specific font size for terminal
-font_size ${toString fonts.icons.size}
+font_size ${toString fonts.highres.size}
 
 
 # force_ltr no
