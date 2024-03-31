@@ -2,6 +2,7 @@
 
 alias ta='tmux attach'
 alias tl='tmux ls'
+alias tn='tmux new -A -s'
 
 if [[ -n $TMUX ]]; then # From inside tmux
   alias tf='tmux find-window'
