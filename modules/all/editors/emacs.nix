@@ -47,18 +47,16 @@ in {
 
     environment.systemPackages = with pkgs; [
       binutils       # native-comp needs 'as', provided by this
-    ] ++
       ## Emacs itself
-      # 28.2 + native-comp
+      ((emacsPackagesFor cfg.package).emacsWithPackages
+      (epkgs: [ epkgs.vterm ]))
+    ] ++
       (linuxXorDarwin
         [
           #Linux
-          ((emacsPackagesFor cfg.package).emacsWithPackages
-          (epkgs: [ epkgs.vterm ]))
         ]
         [
           #Darwin
-          cfg.package
           coreutils-prefixed
         ]) ++
       [
