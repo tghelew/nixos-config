@@ -24,7 +24,7 @@ let cfg = config.modules.editors.emacs;
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
-    defaultEditor = mkOpt types.str "${defaultEditorScript}/bin/memacs";
+    defaultEditor = mkOpt types.str "${cfg.package}/bin/emacsclient -tna '' ";
     useForEmail = mkBoolOpt false;
     package = mkOpt types.package pkgs.emacs-unstable;
     autostart = mkBoolOpt pkgs.stdenv.isDarwin;
