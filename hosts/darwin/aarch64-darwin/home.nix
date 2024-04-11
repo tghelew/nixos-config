@@ -18,9 +18,11 @@ in
     172.22.22.1   router.home
 
     # DNS Server & Soon mail server
-    137.220.54.49 eshua
+    93.177.66.222 eshua
     46.23.94.97   eshub
-    46.23.93.235  eshuc
+    46.23.93.235  echuc
+    #To delete
+    137.220.54.49 obsd
     # OpenBSD amsterdam host servers
     server11.openbsd.amsterdam  eshub.obsdams
     server22.openbsd.amsterdam  eshuc.obsdams
