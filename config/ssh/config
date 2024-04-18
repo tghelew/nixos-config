@@ -1,5 +1,6 @@
 #.ssh client config file
 PubkeyAcceptedKeyTypes +ssh-rsa
+VerifyHostKeyDNS ask
 
 Host github*
     HostName github.com

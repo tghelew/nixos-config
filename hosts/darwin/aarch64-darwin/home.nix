@@ -20,7 +20,7 @@ in
     # DNS Server & Soon mail server
     93.177.66.222 eshua
     46.23.94.97   eshub
-    46.23.93.235  echuc
+    46.23.93.235  eshuc
     #To delete
     137.220.54.49 obsd
     # OpenBSD amsterdam host servers
