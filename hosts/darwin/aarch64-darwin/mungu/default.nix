@@ -22,18 +22,19 @@ in
           "reMarkable Desktop" = 1276493162;
           "NordVPN"            = 905953485;
         };
+        casks = [
+          "libreoffice"
+          "libreoffice-language-pack"
+        ];
       };
     };
 
     desktop = {
-      #TODO yabai.enable = false;
-
       dock = {
         enable = true;
         entries = [
           { path = "/System/Applications/Launchpad.app/"; }
           { path = "/System/Applications/Messages.app/"; }
-          { path = "${pkgs.slack}/Applications/slack.app"; }
           { path = "/System/Applications/FaceTime.app/"; }
           { path = "/System/Applications/Mail.app/"; }
           { path = "/System/Applications/Calendar.app/"; }
@@ -41,6 +42,7 @@ in
           { path = "/System/Applications/Notes.app/"; }
           { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/"; }
           { path = "/Applications/reMarkable.app/"; }
+          { path = "/Applications/LibreOffice.app/"; }
           { path = "/System/Applications/Music.app/"; }
           { path = "${pkgs.kitty}/Applications/kitty.app/"; }
           # TODO: Setup neovim
