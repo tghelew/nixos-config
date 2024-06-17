@@ -13,7 +13,7 @@ in {
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      (mkIf cfg.slack.enable slack)
+
     ];
 
   };

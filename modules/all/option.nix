@@ -93,10 +93,7 @@ with lib.my;
     environment.extraInit =
       concatStringsSep "\n"
         (mapAttrsToList (n: v: "export ${n}=\"${v}\"") config.env);
-    fonts = linuxXorDarwin
-      # Linux
-      {packages = mkAliasDefinitions options.myfonts.packages;}
-      # Darwin
-      {fonts = mkAliasDefinitions options.myfonts.packages;};
+
+    fonts.packages = mkAliasDefinitions options.myfonts.packages;
   };
 }
