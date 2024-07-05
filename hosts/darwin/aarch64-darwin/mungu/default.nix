@@ -25,6 +25,7 @@ in
         casks = [
           "libreoffice"
           "libreoffice-language-pack"
+          "microsoft-teams"
         ];
       };
     };
