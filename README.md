@@ -36,6 +36,13 @@ the _framework_ of  [_Henrick Lissner's_ dotfiles](https://github.com/hlissner/d
  * ~~include python tools configuration files (pylint)~~
  * ~~MacOS add karabiner~~
  * Add Xcode as development environment
+ * setup edge & vmware packages
+ 
+ ---
+ 
+ # Installation
+ **TODO**
+ 
  
 
 
