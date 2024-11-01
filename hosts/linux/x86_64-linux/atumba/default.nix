@@ -60,8 +60,17 @@ in
       zsh.enable    = true;
     };
     services = {
-      ssh.enable = true;
-      docker.enable = true;
+      ssh = {
+        enable = true;
+        publicKeyFiles = mapAttrsToList (name: _:  "${configDir}/ssh/${name}")
+          (filterAttrs (name: value: (hasSuffix ".pub" name) && ( value == "regular"))
+            (builtins.readDir "${configDir}/ssh"));
+      };
+      sudo = {
+        enable = true;
+        noPass = true;
+      };
+      docker.enable = false;
     };
     theme.active = "nord";
   };
@@ -70,8 +79,6 @@ in
   hardware.opengl.enable = true;
   time.timeZone = "Europe/Zurich";
 
-  ## SSH config
-  home.file.".ssh/config" = {source = "${configDir}/ssh/config";};
   #gnupg
   home.configFile."gnupg/gpg.conf" = {source = "${configDir}/gnupg/gpg.conf";};
 

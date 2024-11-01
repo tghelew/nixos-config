@@ -2,9 +2,9 @@
 
 with lib;
 with lib.my;
-let cfg = config.modules.services.ssh;
+let cfg = config.modules.services.openssh;
 in {
-  options.modules.services.ssh = {
+  options.modules.services.openssh = {
     enable = mkBoolOpt false;
     passwordAuthentication = mkBoolOpt false;
     ports = with types; mkOption {
