@@ -5,13 +5,17 @@ with lib;
 let blocklist = fetchurl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts;
 in {
   networking.extraHosts = ''
+    # Personal name
     172.22.22.1   router.home
 
-    # DNS Server & Soon mail server
-    137.220.54.49 eshub
-    46.23.94.97   eshua
+    # DNS Server & mail server
+    93.177.66.222 eshua
+    46.23.94.97   eshub
+    46.23.93.235  eshuc
 
-    # Hosts
+    # OpenBSD amsterdam host servers
+    server11.openbsd.amsterdam  eshub.obsdams
+    server22.openbsd.amsterdam  eshuc.obsdams
     # Block garbage
     ${optionalString (config.services.xserver.enable
       # Make sure to add additional WM DM

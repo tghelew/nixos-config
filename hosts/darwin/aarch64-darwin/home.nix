@@ -7,7 +7,6 @@ in
 {
   environment.etc.hosts = {
     enable = true;
-    copy = true;
     text = ''
     # Default DNS
     127.0.0.1     localhost

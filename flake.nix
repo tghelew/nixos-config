@@ -94,11 +94,11 @@
           lib = (libFor system);
           pkgs = (pkgsFor system);
         in
-          if (! lib.my.isDirNixEmpty ./packages) then
-            lib.my.mapModules ./packages/all (p: pkgs.callPackage p {}) //
-            lib.mkIf pkgs.stdenv.isLinux (lib.my.mapModules ./packages/linux (p: pkgs.callPackage p {})) //
-            lib.mkIf pkgs.stdenv.isDarwin (lib.my.mapModules ./packages/darwin (p: pkgs.callPackage p {}))
-          else
+          # if (! lib.my.isDirNixEmpty ./packages) then
+          #   lib.my.mapModules ./packages/all (p: pkgs.callPackage p {}) //
+          #   lib.mkIf pkgs.stdenv.isLinux (lib.my.mapModules ./packages/linux (p: pkgs.callPackage p {})) //
+          #   lib.mkIf pkgs.stdenv.isDarwin (lib.my.mapModules ./packages/darwin (p: pkgs.callPackage p {}))
+          # else
             {};
 
       myNixOSModules = forSystems (system:

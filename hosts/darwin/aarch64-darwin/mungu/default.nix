@@ -19,13 +19,16 @@ in
         enable = true;
         masApps = {
           # make sure to login to app store first!
-          "reMarkable Desktop" = 1276493162;
-          "NordVPN"            = 905953485;
+          "reMarkable Desktop"              = 1276493162;
+          "NordVPN"                         = 905953485;
+          "Yubico Authenticator"            = 1497506650;
         };
         casks = [
           "libreoffice"
           "libreoffice-language-pack"
           "microsoft-teams"
+          "yubico-yubikey-manager"
+          "vmware-fusion"
         ];
       };
     };
@@ -41,6 +44,7 @@ in
           { path = "/System/Applications/Calendar.app/"; }
           { path = "/System/Applications/Reminders.app/"; }
           { path = "/System/Applications/Notes.app/"; }
+          { path = "/System/Applications/System Settings.app/"; }
           { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/"; }
           { path = "/Applications/reMarkable.app/"; }
           { path = "/Applications/LibreOffice.app/"; }
@@ -64,7 +68,7 @@ in
         };
         comms = {
           enable = true;
-          slack.enable = true;
+          slack.enable = false;
         };
       };
 
@@ -83,8 +87,6 @@ in
       emacs.enable = true;
       emacs.useForEmail = false;
       emacs.tlux.enable = true;
-      vim.enable = true;
-      default = editors.emacs.defaultEditor;
     };
 
     shell = {

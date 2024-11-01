@@ -1,11 +1,11 @@
 #+TITLE: Atumba
-#+DATE:  August 11, 2023
+#+DATE:  Friday, 01 Nov. 2024
 
 * Overview
-My Linux laptop (Lenovo T540P) in order to do linux stuff...
+My Linux laptop (Lenovo T480) in order to do linux stuff...
 
 * Specs
-/Lenovo T540P/
+/Lenovo T480/
 
 * Installation
 ** TBD - Full Disk encryption with detached header
