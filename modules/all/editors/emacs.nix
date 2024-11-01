@@ -21,12 +21,14 @@ let cfg = config.modules.editors.emacs;
       text = ''nohup ${cfg.package}/bin/emacsclient -cna ' ' "$@" &> /dev/null'';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
+    emacspkgs = pkgs.emacs;
+
 in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
     defaultEditor = mkOpt types.str "${cfg.package}/bin/emacsclient -tna '' ";
-    useForEmail = mkBoolOpt false;
     package = mkOpt types.package pkgs.emacs-unstable;
+    useForEmail = mkBoolOpt false;
     autostart = mkBoolOpt pkgs.stdenv.isDarwin;
     tlux = rec {
       enable = mkBoolOpt false;
@@ -45,18 +47,21 @@ in {
 
     nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
 
-    environment.systemPackages = with pkgs; [
+
+   environment.systemPackages = with pkgs; [
+
       binutils       # native-comp needs 'as', provided by this
-      ## Emacs itself
-      ((emacsPackagesFor cfg.package).emacsWithPackages
-      (epkgs: [ epkgs.vterm ]))
+    ## Emacs itself
     ] ++
       (linuxXorDarwin
         [
           #Linux
+          ((emacsPackagesFor cfg.package).emacsWithPackages
+            (epkgs: [ epkgs.vterm ]))
         ]
         [
           #Darwin
+          cfg.package
           coreutils-prefixed
         ]) ++
       [
