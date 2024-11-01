@@ -1,5 +1,5 @@
-#!/usr/bin/env zsh
-set -euo pipefail
+#!/usr/bin/env nix-shell
+#! nix-shell -i zsh -p zsh git
 # Deploy and install this nixos system.
 
 zparseopts -E -F -D -- -flake=flake \
