@@ -27,7 +27,7 @@ in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
     defaultEditor = mkOpt types.str "${cfg.package}/bin/emacsclient -tna '' ";
-    package = mkOpt types.package pkgs.emacs;
+    package = mkOpt types.package pkgs.emacs-unstable;
     useForEmail = mkBoolOpt false;
     autostart = mkBoolOpt pkgs.stdenv.isDarwin;
     tlux = rec {
@@ -52,8 +52,8 @@ in {
 
       binutils       # native-comp needs 'as', provided by this
     ## Emacs itself
-    cfg.package
-    emacsPackages.vterm
+    ((emacsPackagesFor cfg.package).emacsWithPackages
+      (epkgs: [ epkgs.vterm ]))
     ] ++
       (linuxXorDarwin
         [
@@ -61,6 +61,7 @@ in {
         ]
         [
           #Darwin
+          cfg.package
           coreutils-prefixed
         ]) ++
       [
