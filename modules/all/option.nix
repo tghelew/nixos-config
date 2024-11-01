@@ -13,6 +13,9 @@ with lib.my;
             "/mnt/etc/nixos-config"
             "/etc/nixos-config"
             "${config.user.home}/.config/nixos-config"
+            "/mnt/etc/dotfiles"
+            "/etc/dotfiles"
+            "${config.user.home}/.config/dotfiles"
           ]));
       binDir     = mkOpt path "${config.nixos-config.dir}/bin";
       configDir  = mkOpt path "${config.nixos-config.dir}/config";
