@@ -1,5 +1,8 @@
 { pkgs, config, lib, inputs, ... }:
 
+with lib;
+with lib.my;
+
 let
   configDir = config.nixos-config.configDir;
 in
