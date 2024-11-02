@@ -61,7 +61,6 @@ in {
         ]
         [
           #Darwin
-          cfg.package
           coreutils-prefixed
         ]) ++
       [
