@@ -9,8 +9,8 @@
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
-        device = "/dev/disk/by-partuuid/c2fa9935-c5d1-4169-b14f-2cd0eBac60e2";
-        header = "/dev/disk/by-partuuid/02c9d592-c445-4a4a-8666-8ed15edc68b2";
+        device = "/dev/disk/by-partuuid/c2fd9935-c5d1-4169-b14f-2cd0e8ac60e2";
+        header = "/dev/disk/by-partuuid/7fc9ec92-4619-4041-a260-6b4a27c81311";
         allowDiscards = true;
         preLVM = true;
       };
@@ -68,7 +68,7 @@
 
   # Storage
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5edbbb0c-786a-4c6d-86bf-97d5ffc80cf5";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
@@ -88,7 +88,7 @@
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/803297e1-a23d-405d-b237-1dcf4e2c5040"; } ];
+    [ { device = "/dev/disk/by-uuid/1ab43476-f100-4f00-a3f8-8cd68f58c152"; } ];
 
   #Misc
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
