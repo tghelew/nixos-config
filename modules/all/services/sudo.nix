@@ -1,4 +1,4 @@
-{ options, config, lib, ... }:
+{ options, config, lib, pkgs,... }:
 
 with lib;
 with lib.my;
@@ -13,7 +13,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.etc = {
+    environment.etc = linuxXorDarwin 
+    #linux
+    {}
+    #Darwin
+     {
       "sudoers.d/01_keep_terminfo".text = ''
         Defaults:root,%wheel env_keep+=TERMINFO_DIRS
         Defaults:root,%wheel env_keep+=TERMINFO
@@ -23,5 +27,14 @@ in {
       '';
       "sudoers.d/99_extra_config".text = if (cfg.extraConfig != null) then cfg.extraConfig else '''' ;
     };
+    security.sudo = mkIf pkgs.stdenv.isLinux {
+      enable = true;
+      wheelNeedsPassword = true;
+      configFile = ''
+        Defaults:root,%wheel env_keep+=TERMINFO_DIRS
+        Defaults:root,%wheel env_keep+=TERMINFO
+        ${config.user.name}   ALL = (ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
+      '';
+    }; 
   };
 }

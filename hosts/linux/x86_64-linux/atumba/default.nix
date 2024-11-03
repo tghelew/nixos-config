@@ -23,7 +23,7 @@ in
         default = "qutebrowser";
         brave.enable = false;
         firefox.enable = true;
-        qutebrowser.enable = true;
+        qutebrowser.enable = false;
       };
       media = {
         documents.enable = true;
@@ -41,12 +41,12 @@ in
     };
     dev = {
       enable = true;
-      rust.enable = true;
+      rust.enable = false;
       python.enable = true;
     };
     editors = {
       emacs.enable = true;
-      emacs.useForEmail = true;
+      emacs.useForEmail = false;
       emacs.tlux.enable = true;
       vim.enable = true;
       default = editors.emacs.defaultEditor;
@@ -58,7 +58,6 @@ in
         enable = true;
         useTomb = true;
       };
-      #NOTE: Do I need tmux locally ?
       tmux.enable   = true;
       zsh.enable    = true;
     };
@@ -74,6 +73,7 @@ in
         noPass = true;
       };
       docker.enable = false;
+      openssh.enable = true;
     };
     theme.active = "nord";
   };

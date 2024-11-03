@@ -22,11 +22,11 @@ in {
           };
           fonts = {
             sans.name = "Fira Sans";
-            sans.size = 10;
+            sans.size = 7;
             mono.name = "Fira Code";
-            mono.size = 12;
+            mono.size = 7;
             icons.name = "Fira Code Nerd Font";
-            icons.size = 8;
+            icons.size = 7;
             highres.name = "Fira Code Nerd Font";
             highres.size = 10;
           };
