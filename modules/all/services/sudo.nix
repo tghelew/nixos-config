@@ -31,9 +31,7 @@ in {
       enable = true;
       wheelNeedsPassword = true;
       configFile = ''
-        Defaults:root,%wheel env_keep+=TERMINFO_DIRS
-        Defaults:root,%wheel env_keep+=TERMINFO
-        ${config.user.name}   ALL = (ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
+        ${config.user.name}   ALL=(ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
       '';
     }; 
   };

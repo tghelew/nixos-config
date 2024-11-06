@@ -28,7 +28,7 @@ in {
             icons.name = "Fira Code Nerd Font";
             icons.size = 7;
             highres.name = "Fira Code Nerd Font";
-            highres.size = 10;
+            highres.size = 7;
           };
           colors = {
             black         = "#3b4252";

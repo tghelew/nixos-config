@@ -48,15 +48,13 @@
   # Modules
   modules.hardware = {
     audio.enable = true;
+    xkb.enable = true;
     fs = {
       enable = true;
       ssd.enable = true;
       automount.enable = true;
     };
     sensors.enable = true;
-    xkb.enable = true;
-
-
     network = {
       enable = true;
       applet = true;

@@ -51,6 +51,11 @@ in
       vim.enable = true;
       default = editors.emacs.defaultEditor;
     };
+    hardware = {
+      bluetooth = {
+        enable = true;
+      };
+    };
     shell = {
       direnv.enable = true;
       git.enable    = true;

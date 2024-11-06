@@ -74,7 +74,7 @@ in {
     };
 
     programs.waybar = {
-      enable = false;
+      enable = true;
       package = pkgs.waybar;
     };
 
