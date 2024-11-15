@@ -15,7 +15,7 @@ in
 
     darwin = {
       system.enable = true;
-      homebrew = {
+homebrew = {
         enable = true;
         masApps = {
           # make sure to login to app store first!
@@ -29,7 +29,8 @@ in
           "microsoft-teams"
           "yubico-yubikey-manager"
           "vmware-fusion"
-          "kitty"
+        ] ++ mkIf config.module.desktop.term.kitty.enable [
+           "kitty"
         ];
       };
     };
