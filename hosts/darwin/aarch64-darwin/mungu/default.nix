@@ -29,6 +29,7 @@ in
           "microsoft-teams"
           "yubico-yubikey-manager"
           "vmware-fusion"
+          "kitty"
         ];
       };
     };
@@ -49,7 +50,8 @@ in
           { path = "/Applications/reMarkable.app/"; }
           { path = "/Applications/LibreOffice.app/"; }
           { path = "/System/Applications/Music.app/"; }
-          { path = "${pkgs.kitty}/Applications/kitty.app/"; }
+          { path = "/Applications/kitty.app/"; }
+
           # TODO: Setup neovim
         ];
 
