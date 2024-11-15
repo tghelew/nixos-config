@@ -1,0 +1,25 @@
+{ options, config, lib, pkgs,... }:
+
+with lib;
+with lib.my;
+let
+  cfg = config.modules.services.sudo;
+  configDir = config.nixos-config.configDir;
+in {
+  options.modules.services.sudo = {
+    enable = mkBoolOpt false;
+    noPass = mkBoolOpt false;
+    extraConfig = with types; mkOpt (nullOr str) null;
+  };
+
+  config = mkIf cfg.enable {
+      security.sudo = {
+         enable = true;
+         wheelNeedsPassword = true;
+         configFile = ''
+        ${config.user.name}   ALL=(ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
+        '';
+         extracConfig = mkIf cfg.extraConfig != null cfg.extraconfig;
+      };
+  };
+}
