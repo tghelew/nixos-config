@@ -23,7 +23,7 @@ in
         default = "qutebrowser";
         brave.enable = false;
         firefox.enable = true;
-        qutebrowser.enable = false;
+        qutebrowser.enable = true;
       };
       media = {
         documents.enable = true;
@@ -80,7 +80,11 @@ in
       docker.enable = false;
       openssh.enable = true;
     };
-    theme.active = "nord";
+    theme = {
+     active = "nord";
+     lowResSize = 5;
+     highResSize = 5;
+    };
   };
 
   ## Local config
