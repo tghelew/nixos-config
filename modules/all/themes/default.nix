@@ -21,6 +21,14 @@ in {
         variable. Themes can also be hot-swapped with 'hey theme $THEME'.
       '';
     };
+    highResSize = mkOption {
+      type = nullOr int;
+      default = null;
+    };
+    lowResSize = mkOption {
+      type = nullOr int;
+      default = null;
+    };
 
     wallpapers = mkOpt (either path null) null;
 
@@ -55,7 +63,21 @@ in {
 
       highres = {
         name = mkOpt str "Icons";
-        size = mkOpt int 7;
+        size = mkOption {
+          type = int;
+          default = 12;
+          apply = v: if (cfg.highResSize != null) then cfg.highResSize else v;
+        };
+
+      };
+
+      lowres = {
+        name = mkOpt str "Icons";
+        size = mkOption {
+          type = int;
+          default = 12;
+          apply = v: if (cfg.lowResSize != null) then cfg.lowResSize else v;
+        };
 
       };
     };
