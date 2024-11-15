@@ -117,8 +117,8 @@ in
 
     theme = {
       active = "nord";
-      highres = 12;
-      lowres = 7;
+      highResSize = 12;
+      lowResSize = 7;
     };
   };
 
