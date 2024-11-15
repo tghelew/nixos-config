@@ -40,22 +40,22 @@ in {
     fonts = {
       mono = {
         name = mkOpt str "Monospace";
-        size = mkOpt int 10;
+        size = mkOpt int 7;
       };
       sans = {
         name = mkOpt str "Sans";
-        size = mkOpt int 10;
+        size = mkOpt int 7;
       };
 
       icons = {
         name = mkOpt str "Icons";
-        size = mkOpt int 10;
+        size = mkOpt int 7;
 
       };
 
       highres = {
         name = mkOpt str "Icons";
-        size = mkOpt int 10;
+        size = mkOpt int 7;
 
       };
     };

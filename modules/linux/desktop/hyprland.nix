@@ -42,7 +42,7 @@ in {
         swaylock-effects
         swayidle
         dunst
-        unstable.swww
+        swww
         libnotify
         wtype
       ];
@@ -65,34 +65,26 @@ in {
     };
 
 
-    # Sudo: I hate entering my password
-    security.sudo = {
-     enable = true;
-     execWheelOnly = true;
-     wheelNeedsPassword = false;
-    };
-
-
     programs.hyprland = {
       enable = true;
       xwayland = {
         enable = true;
       };
-      package = pkgs.unstable.hyprland;
+      package = pkgs.hyprland;
     };
 
     programs.waybar = {
       enable = true;
-      package = pkgs.unstable.waybar;
+      package = pkgs.waybar;
     };
 
-    modules.theme.onReload.hyprland = "${pkgs.unstable.hyprland}/bin/hyprctl reload";
-    modules.theme.onReload.waybar = "${pkgs.procps}/bin/pkill -SIGUSR2 waybar >/dev/null 2>&1";
+    modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
+    # modules.theme.onReload.waybar = "${pkgs.procps}/bin/pkill -SIGUSR2 waybar >/dev/null 2>&1";
 
     xdg.portal = {
       enable = true;
       extraPortals = [ pkgs.xdg-desktop-portal-gtk];
-                       #pkgs.unstable.xdg-desktop-portal-hyprland ];
+                       #pkgs.xdg-desktop-portal-hyprland ];
     };
 
     systemd.sleep.extraConfig = ''
@@ -144,7 +136,7 @@ in {
 
       Service = {
         Type = "simple";
-        ExecStart = "${pkgs.unstable.swww}/bin/swww-daemon";
+        ExecStart = "${pkgs.swww}/bin/swww-daemon";
       };
 
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
