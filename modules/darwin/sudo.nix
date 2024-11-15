@@ -24,15 +24,5 @@ in {
       '';
       "sudoers.d/99_extra_config".text = if (cfg.extraConfig != null) then cfg.extraConfig else '''' ;
     };
-<<<<<<< HEAD:modules/darwin/sudo.nix
-=======
-    security.sudo = mkIf pkgs.stdenv.isLinux {
-      enable = true;
-      wheelNeedsPassword = true;
-      configFile = ''
-        ${config.user.name} ALL=(ALL) ${if cfg.noPass then "NOPASSWD: " else ""}ALL
-      '';
-    }; 
->>>>>>> origin/main:modules/all/services/sudo.nix
   };
 }

@@ -115,8 +115,11 @@ in
       };
     };
 
-    theme.active = "nord";
-
+    theme = {
+      active = "nord";
+      highres = 12;
+      lowres = 7;
+    };
   };
 
   #gnupg
