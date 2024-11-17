@@ -45,6 +45,7 @@ in {
         swww
         libnotify
         wtype
+        hypersome
       ];
     };
 
