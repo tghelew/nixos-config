@@ -7,7 +7,7 @@ let
   cfg = config.modules.services.yubikey;
   configDir = config.nixos-config.configDir;
 in {
-  options.modules.services.yubi = {
+  options.modules.services.yubikey = {
     enable = mkBoolOpt false;
   };
 
@@ -26,6 +26,7 @@ in {
   environment.systemPackages = with pkgs; [
     pam_u2f
     yubikey-personalisation
+    pamtester
   ];
 
 

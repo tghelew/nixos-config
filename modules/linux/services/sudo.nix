@@ -19,7 +19,7 @@ in {
          configFile = ''
         ${config.user.name}   ALL=(ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
         '';
-         extracConfig = mkIf cfg.extraConfig != null cfg.extraconfig;
+         extraConfig = if isNull cfg.extraConfig then "" else cfg.extraconfig;
       };
   };
 }

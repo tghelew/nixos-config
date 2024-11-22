@@ -12,7 +12,6 @@ in {
   config = mkIf cfg.enable {
     hardware.bluetooth.enable = true;
     services.blueman.enable = true;
-
-    users.users.${config.user.name}.extraGoups = [ "lp" ];
+    user.extraGroups = ["lp"];
   };
 }
