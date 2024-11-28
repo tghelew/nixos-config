@@ -35,6 +35,7 @@ in {
       libsForQt5.qtstyleplugin-kvantum # SVG-based Qt5 theme engine plus a config tool and extra theme
       xdg-utils
       brightnessctl
+      usbutils
     ] ++ optionals withXserver [
       feh       # image viewer
       xclip

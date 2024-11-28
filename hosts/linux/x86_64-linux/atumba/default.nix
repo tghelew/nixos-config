@@ -15,7 +15,10 @@ in
   ## Modules
   modules = with config.modules;{
     desktop = {
-      hypr.enable = true;
+      hypr = {
+        enable = true;
+        hyprsome = true;
+      };
       apps = {
         rofi.enable = true;
       };
@@ -76,6 +79,10 @@ in
       sudo = {
         enable = true;
         noPass = true;
+      };
+      yubikey = {
+        enable = true;
+        yubiid = 29509934;
       };
       docker.enable = false;
       openssh.enable = true;

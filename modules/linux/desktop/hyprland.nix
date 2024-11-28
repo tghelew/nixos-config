@@ -10,6 +10,7 @@ in {
 
   options.modules.desktop.hypr = {
     enable = mkBoolOpt false;
+    hyprsome = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
@@ -45,8 +46,7 @@ in {
         swww
         libnotify
         wtype
-        hypersome
-      ];
+      ];# ++ [ mkIf cfg.hyprsome internal.hyprsome ];
     };
 
     # This is required!

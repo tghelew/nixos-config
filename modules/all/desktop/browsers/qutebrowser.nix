@@ -48,10 +48,24 @@ in {
 
     # Install language dictionaries for spellcheck backends
     system.userActivationScripts.qutebrowserInstallDicts =
-      concatStringsSep "\n" (map (lang: ''
+      let setupDicts =
+      pkgs.writeShellApplication {
+      	name="installquteBrowserDicts";
+        runtimeInputs = with pkgs; [
+            which
+            nixVersions.nix_2_23
+            gnugrep
+            findutils
+      ];
+	text = concatStringsSep "\n" (map (lang: 
+        ''
         if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -maxdepth 1 -type f  -name "${lang}*" 2>/dev/null | grep -q .; then
-          .${pkg}/share/qutebrowser/scripts/dictcli.py install ${lang}
+		 $(find "$(nix-store --query --outputs "$(which qutebrowser)")" -iname '*dictcli.py*' | head -1) install "${lang}"
         fi;
-      '') cfg.dicts);
+        '') cfg.dicts);
+	
+      };
+      in 
+      "${setupDicts}/bin/installquteBrowserDicts";
   };
 }

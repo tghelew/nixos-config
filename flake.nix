@@ -68,8 +68,17 @@
         config.allowUnfree = true;  # forgive me Stallman senpai
         overlays = extraOverlays ++ (pkgs.lib.attrValues self.overlays.${system});
       };
+
+      internal = system: pkgs: lib: if (! lib.my.isDirNixEmpty ./packages) then
+            lib.my.mapModules ./packages/all (p: pkgs.callPackage p {}) //
+            lib.mkIf pkgs.stdenv.isLinux (lib.my.mapModules ./packages/linux (p: pkgs.callPackage p {})) //
+            lib.mkIf pkgs.stdenv.isDarwin (lib.my.mapModules ./packages/darwin (p: pkgs.callPackage p {}))
+          else
+            {};
+
       pkgsFor  = system:  mkPkgs nixpkgs system [ self.overlays.${system}.default ];
       pkgsFor' = system:  mkPkgs nixpkgs-unstable system [];
+      pkgsFor'' = system: lib: mkPkgs nixpkgs system [(internal system nixpkgs lib)];
 
       libFor = system:
         let
@@ -85,21 +94,9 @@
         default =
           final: prev: {
             unstable = pkgsFor' system;
-            my = self.packages.${system};
+            internal = pkgsFor'' system (libFor system);
           };
       } // ((libFor system).my.mapModules ./overlays import);
-
-      package = system:
-        let
-          lib = (libFor system);
-          pkgs = (pkgsFor system);
-        in
-          if (! lib.my.isDirNixEmpty ./packages) then
-            lib.my.mapModules ./packages/all (p: pkgs.callPackage p {}) //
-            lib.mkIf pkgs.stdenv.isLinux (lib.my.mapModules ./packages/linux (p: pkgs.callPackage p {})) //
-            lib.mkIf pkgs.stdenv.isDarwin (lib.my.mapModules ./packages/darwin (p: pkgs.callPackage p {}))
-          else
-            {};
 
       myNixOSModules = forSystems (system:
         let
@@ -141,13 +138,19 @@
           };
         };
 
+      mypkgs = system:
+        let
+          lib = (libFor system);
+          pkgs = (pkgsFor'' system (libFor system));
+
+       in
+         pkgs;
+
     in
     {
       lib = forAllSystems libFor;
 
       overlays = forAllSystems overlay;
-
-      packages = forAllSystems package;
 
       nixosModules =
         { nixos-config = import ./hosts/linux; } // myNixOSModules;

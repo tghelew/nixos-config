@@ -27,7 +27,7 @@ in {
   options.modules.editors.emacs = {
     enable = mkBoolOpt false;
     defaultEditor = mkOpt types.str "${cfg.package}/bin/emacsclient -tna '' ";
-    package = mkOpt types.package pkgs.emacs-unstable;
+    package = mkOpt types.package pkgs.emacs;
     useForEmail = mkBoolOpt false;
     autostart = mkBoolOpt pkgs.stdenv.isDarwin;
     tlux = rec {
