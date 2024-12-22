@@ -54,6 +54,7 @@
       enable = true;
       ssd.enable = true;
       zfs.enable = true
+      zfs.autoSnapshot = true
       automount.enable = true;
     };
     sensors.enable = true;

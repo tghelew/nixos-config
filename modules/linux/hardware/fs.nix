@@ -7,6 +7,7 @@ in {
   options.modules.hardware.fs = {
     enable = mkBoolOpt false;
     zfs.enable = mkBoolOpt false;
+    zfs.autoSnapshot = mkBoolOpt false;
     ssd.enable = mkBoolOpt false;
     automount.enable = mkBoolOpt false;
   };
@@ -35,6 +36,7 @@ in {
         boot.supportedFilesystems = [ "zfs" ];
         boot.zfs.devNodes = "/dev/disk/by-partuuid";
         services.zfs.autoScrub.enable = true;
+        services.zfs.autoSnapshot.enable = cfg.zfs.autoSnapshot;
       }
 
       (mkIf cfg.ssd.enable {
