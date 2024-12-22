@@ -18,7 +18,7 @@ let cfg = config.modules.editors.emacs;
         license = licenses.mit;
         platforms = platforms.all;
       };
-      text = ''nohup ${cfg.package}/bin/emacsclient -cna ' ' "$@" &> /dev/null'';
+      text = ''nohup ${cfg.package}/bin/emacsclient -rcna ' ' "$@" &> /dev/null'';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
     emacspkgs = pkgs.emacs;

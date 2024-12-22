@@ -30,13 +30,13 @@ if [[ ! -d "$flake" ]]; then
 fi
 
 
+mkdir -p "${dest}"
+echo -n "copying dotfiles... "
+cp -RLvf "${flake}" "${dest}"
+
 export USER="${user}"
 nixos-install \
     --impure \
     --show-trace \
     --root "$root" \
     --flake "${flake}#${host}"
-
-mkdir -p "${dest}"
-echo -n "copying dotfiles... "
-cp -RLvf "${flake}" "${dest}"
