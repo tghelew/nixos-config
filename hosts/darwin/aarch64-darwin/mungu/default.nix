@@ -29,6 +29,7 @@ in
           "microsoft-teams"
           "yubico-yubikey-manager"
           "vmware-fusion"
+          "obsidian"
         ];
       };
     };
@@ -48,6 +49,7 @@ in
           { path = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/"; }
           { path = "/Applications/reMarkable.app/"; }
           { path = "/Applications/LibreOffice.app/"; }
+          { path = "/Applications/Obsidian.app/"; }
           { path = "/System/Applications/Music.app/"; }
           { path = "/Applications/kitty.app/"; }
 
@@ -56,7 +58,8 @@ in
 
       };
 
-      karabiner.enable = true;
+      karabiner.enable = false;
+      aerospace.enable = true;
 
       media = {
         mpv.enable = true;

@@ -12,7 +12,7 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
   environment.systemPackages = with pkgs; [
-    nixFlakes
+    nixVersion.stable
     zsh
     git
   ];

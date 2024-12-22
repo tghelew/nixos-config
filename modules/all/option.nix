@@ -86,9 +86,12 @@ with lib.my;
 
     users.users.${config.user.name} = mkAliasDefinitions options.user;
 
-    nix.settings = let users = [ "root" config.user.name ]; in {
-      trusted-users = users;
-      allowed-users = users;
+    nix = {
+      settings = let users = [ "root" config.user.name ]; in {
+        trusted-users = users;
+        allowed-users = users;
+      };
+      optimise.automatic = true;
     };
 
     env.PATH = [ "$NIXOS_CONFIG_BIN" "$XDG_BIN_HOME" "$PATH" ];

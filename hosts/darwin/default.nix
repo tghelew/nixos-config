@@ -19,7 +19,7 @@
          nixPathInputs  = mapAttrsToList (n: v: "${n}=${v}") filteredInputs;
          registryInputs = mapAttrs (_: v: { flake = v; }) filteredInputs;
      in {
-       package = pkgs.nixFlakes;
+       package = pkgs.nixVersions.stable;
        extraOptions = "experimental-features = nix-command flakes";
        nixPath = nixPathInputs ++ [
          "nixpkgs-overlays=${config.nixos-config.dir}/overlays"
@@ -33,7 +33,7 @@
          trusted-public-keys = [
            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
          ];
-         auto-optimise-store = true;
+         # optimise = true ;
        };
 
        gc = {
