@@ -9,8 +9,8 @@ zparseopts -E -F -D -- -flake=flake \
                        -root=root || exit 1
 
 local root="${root[2]:-/mnt}"
-local flake="${flake[2]:-/etc/nixos-config}"
-local host="${host[2]:-$HOST}"
+local flake="${flake[2]:-$/etc/nixos-config}"
+local host="${host[2]}"
 local user="${user[2]:-thierry}"
 local dest="${dest[2]:-$root/etc/dotfiles}"
 
