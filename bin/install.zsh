@@ -2,17 +2,17 @@
 #! nix-shell -i zsh -p zsh git
 # Deploy and install this nixos system.
 
-zparseopts -E -F -D -- -flake=flake \
-                       -user=user \
-                       -host=host \
-                       -dest=dest \
-                       -root=root || exit 1
+zparseopts -E -F -D -- -flake:=aflake \
+                       -user::=auser \
+                       -host:=ahost \
+                       -dest::=adest \
+                       -root::=aroot || exit 1
 
-local root="${root[2]:-/mnt}"
-local flake="${flake[2]:-$/etc/nixos-config}"
-local host="${host[2]}"
-local user="${user[2]:-thierry}"
-local dest="${dest[2]:-$root/etc/dotfiles}"
+local root="${aroot[2]:-/mnt}"
+local flake="${aflake[2]:-$/etc/nixos-config}"
+local host="${ahost[2]}"
+local user="${auser[2]:-thierry}"
+local dest="${adest[2]:-$root/etc/dotfiles}"
 
 if [[ "$USER" == nixos ]]; then
   >&2 echo "Error: not in the nixos installer"
