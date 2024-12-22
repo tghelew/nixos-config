@@ -11,7 +11,7 @@
     initrd.luks.devices = {
       crypted = {
         device = "/dev/disk/by-partuuid/a7d54264-ee6e-4d14-bea1-abc08a32f687";
-        header = "/dev/disk/by-partuuid/7580c946-6929-42c7-aa05-e83375348e42";
+        header = "/dev/disk/by-partuuid/0a139090-c68e-44a8-8293-6ca6d359d089";
         allowDiscards = true;
         preLVM = true;
       };
