@@ -29,9 +29,6 @@ if [[ ! -d "$flake" ]]; then
   git clone --recursive "$url" "$flake"
 fi
 
-mkdir -p "${dest}"
-echo "copying dotfiles"
-cp -RLvf "${flake}" "${dest}"
 
 export USER="${user}"
 nixos-install \
@@ -39,3 +36,7 @@ nixos-install \
     --show-trace \
     --root "$root" \
     --flake "${flake}#${host}"
+
+mkdir -p "${dest}"
+echo -n "copying dotfiles... "
+cp -RLvf "${flake}" "${dest}"
