@@ -4,7 +4,7 @@
   imports = ["${modulesPath}/installer/scan/not-detected.nix" ];
 
   boot = {
-    };
+
     initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc"];
     initrd.kernelModules = ["i915"];
     initrd.luks.reusePassphrases = true;
@@ -33,6 +33,7 @@
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
   };
 
+
   # GPU
   environment.variables = {
     VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
@@ -53,8 +54,8 @@
     fs = {
       enable = true;
       ssd.enable = true;
-      zfs.enable = true
-      zfs.autoSnapshot = true
+      zfs.enable = true;
+      zfs.autoSnapshot = true;
       automount.enable = true;
     };
     sensors.enable = true;
