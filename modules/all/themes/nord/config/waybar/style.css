@@ -1,8 +1,8 @@
 { colors, fonts, ... }:
 ''
 * {
-  font-family: ${fonts.mono.name}, Material Icons, FontAwesome, Weather Icons;
-  font-size: 11px;
+  font-family: ${fonts.mono.name}, Symbols Nerd Font Mono,Material Design Icons, Weather Icons, "Font Awesome 6 Free";
+  font-size: 14px;
 }
 
 window#waybar {

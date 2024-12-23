@@ -17,7 +17,7 @@ in {
          enable = true;
          wheelNeedsPassword = true;
          configFile = ''
-        ${config.user.name}   ALL=(ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
+        ${config.user.name}   ALL = (ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
         '';
          extraConfig = if isNull cfg.extraConfig then "" else cfg.extraconfig;
       };

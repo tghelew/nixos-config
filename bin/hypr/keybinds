@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+# Apply the proper keybind base on the keyboard type : Internal, External
+# Hyprland configuration file configure the keybinds from:
+# $XDG_CONFIG_HOME/hypr/keybinds.conf which is  a symlink from $XDG_CONFIG_HOME/hypr/rc.d
+# Option:
+# --type    The type of keybinds to apply which support only Internal and External
+# Note: hyprland is reloaded after the change.
+
+local keyboard=${1:-External}
+keyboard=${keyboard:l}
+if [[ "${keyboard}" != "internal" && "$keyboard" != "external" ]]; then
+   >&2 "Only Internal or External is supported"
+   exit 1
+fi
+
+[[ -r "$XDG_CONFIG_HOME"/hypr/rc.d/$keyboard.conf ]] && {
+    ln -sf "${XDG_CONFIG_HOME}/hypr/rc.d/$keyboard.conf" "${XDG_CONFIG_HOME}/hypr/keybinds.conf"
+    if (( $+command[hyprctl] )); then
+       hyprctl reload
+    fi
+}

@@ -17,6 +17,7 @@
   ];
 
   modules-center = [
+    "custom/keyboard"
     "clock"
     "hyprland/submap"
   ];
@@ -32,7 +33,7 @@
   ];
 
   "hyprland/submap" = {
-    format = " {}";
+    format = " {}";
     max-length = 15;
     tooltip = false;
   };
@@ -42,18 +43,16 @@
     format = "{icon}";
     show-special = true;
     format-icons =  {
-      default = "";
-      persistent = "";
-      active = "";
-      urgent = "";
-      special = "";
+      default = "󰍹";
+      persistent = "󱎴";
+      active = "󱋆";
+      urgent = "󰍺";
+      special = "󱧐";
     };
     persistent_workspaces = {
       "1" = ["eDP-1"];
-      "2" = ["eDP-1"];
-      "3" = ["eDP-1"];
-      "4" = ["eDP-1"];
-      "5" = ["eDP-1"];
+      "2" = ["DP-4"];
+      "3" = ["DP-4"];
     };
   };
 
@@ -98,18 +97,18 @@
   network = {
     interval = 5;
     format-wifi = "{icon} {signalStrength}%";
-    format-disconnected = "";
-    formart-ethernet = " {ifname}";
-    format-icons = [""];
+    format-disconnected = "󰲛";
+    formart-ethernet = " {ifname}";
+    format-icons = ["󰖩"];
     tooltip-format-wifi = "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
-    tooltip-format-ethernet =  " {ipaddr}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+    tooltip-format-ethernet =  " {ipaddr}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
 
   };
 
   bluetooth = {
-    format = "";
-    format-on = "";
-    format-off = "";
+    format = "󰂯";
+    format-on = "";
+    format-off = "󰂲";
     format-disabled = "";
     format-connected = "";
     tooltip-format = " {status}  {num_connections}";
@@ -132,13 +131,13 @@
       ""
       ""
     ];
-      charging = [""];
+      charging = ["󰚥"];
     };
   };
 
   backlight = {
     format = "{icon} {percent}%";
-    format-icons = ["" "" "" "" "" "" ""];
+    format-icons = ["󰃚" "󰃛" "󰃜" "󰃝" "󰃞" "󰃟" "󰃠"];
   };
 
   "custom/power" = {
@@ -151,9 +150,9 @@
   "custom/windows" = {
     interval = 2;
     return-type = "json";
-    format = "󰍹 {icon}";
+    format = "󱋆 {icon}";
     format-icons = {
-     "0"= "󰅚";
+     "0"= "";
      "1"= "󰲡";
      "2"= "󰲣";
      "3"= "󰲥";
@@ -166,6 +165,18 @@
   };
     tooltip = false;
     exec =  "hyprctl -j activeworkspace | jq --unbuffered --compact-output '{alt:.windows}'";
+  };
+
+  "custom/keyboard" = {
+    interval = 5;
+    return-type = "json";
+    format = " {icon} ";
+    format-icons = {
+     "External"= "󰌌";
+     "Internal"= "";
+  };
+    tooltip = false;
+    exec =  "$NIOS_CONFIG/bin/getKeyboard";
   };
 
   tray = {

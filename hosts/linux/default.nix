@@ -43,7 +43,7 @@ with lib.my;
       };
     };
   system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.11";
   home.stateVersion = config.system.stateVersion;
 
   ## Some reasonable, global defaults

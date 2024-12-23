@@ -80,7 +80,6 @@ in {
     };
 
     modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
-    # modules.theme.onReload.waybar = "${pkgs.procps}/bin/pkill -SIGUSR2 waybar >/dev/null 2>&1";
 
     xdg.portal = {
       enable = true;

@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+# Get List of Currently connected keyboard.
+# We are looking for external keyboard with name pass in paramete
+# Option:
+# --pattern the pattern keyboard name to look for
+#           can be added multiple time. If the pattern is found
+#           the program return "External" otherwise "Internal"
+# --config  if the keybindins should be chanded as well
+#
+
+zparseopts -E -D -F -- -pattern+:=apattern\
+                     -config::=aconfig || exit 1
+
+local pattern
+local config
+local type
+pattern=${apattern[2]:-".*lily.*|.*corne.*|.*ergo.*"}
+[[ -n ${aconfig[1]} ]] && config="y" || config="n"
+
+if (( $+commands[hyprctl] )); then
+    local keyboard=$(hyprctl -j devices | jq -cr ".keyboards | .[].name | match(\"$pattern\"; \"gi\")")
+fi
+
+local keyboard_type="Internal"
+[[ -n $keyboard ]] && keyboard_type="External"
+
+echo $keyboard_type
+
+[[ $config == "y" ]] && ${NIXOS_CONFIG:-/etc/dotfiles}/bin/hypr/keybinds $keyboard_type

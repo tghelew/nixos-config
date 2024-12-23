@@ -67,7 +67,7 @@ in
   };
 
   ## Local config
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   time.timeZone = "Europe/Zurich";
 
   ## SSH config
