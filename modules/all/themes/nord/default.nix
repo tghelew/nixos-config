@@ -14,7 +14,7 @@ in {
     {
      modules = {
         theme = {
-          wallpapers = mkDefault ./config/wallpaper;
+          wallpapers = true;
           gtk = {
             theme = "Nordic";
             iconTheme = "Paper";
@@ -75,6 +75,7 @@ in {
 
         # The file needs to start with an underscore to prevent it to load automatically
         desktop.term.theme = "${themesDir}/${cfg.active}/config/_${config.modules.desktop.term.default}.nix";
+        desktop.filemanager.theme = "${themesDir}/${cfg.active}/config/_${config.modules.desktop.filemanager.default}.nix";
 
         shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
         shell.tmux.theme = ./config/tmux;
@@ -148,32 +149,6 @@ in {
           "dunst/dunstrc".text = import ./config/dunstrc theme;
           "hypr/rc.d/theme.conf".text = import ./config/hypr/theme.conf theme;
           "mpv/theme.conf".text = import ./config/mpv/theme.conf theme;
-          "swaylock/config".text = with theme; ''
-            # Swaylock - Effect
-            screenshots
-            grace=5
-            fade-in=0.2
-            effect-blur=7x5
-            effect-vignette=0.5:0.5
-
-            # Swaylock
-            #indicator
-            daemonize
-            indicator-radius=100
-            indicator-thickness=10
-            font=${fonts.sans.name}
-            font-size=${toString fonts.sans.size}
-            color=${builtins.replaceStrings ["#"] [""] colors.types.bg}
-            ring-color=${builtins.replaceStrings ["#"] [""] colors.grey}
-            key-hl-color=${builtins.replaceStrings ["#"] [""] colors.green}
-            text-color=${builtins.replaceStrings ["#"] [""] colors.dimwhite}
-            inside-color=${builtins.replaceStrings ["#"] [""] colors.dimblue}
-            inside-clear-color=${builtins.replaceStrings ["#"] [""] colors.dimwhite}
-            inside-wrong-color=${builtins.replaceStrings ["#"] [""] colors.red}
-            inside-ver-color=${builtins.replaceStrings ["#"] [""] colors.blue}
-            separator-color=${builtins.replaceStrings ["#"] [""] colors.black}
-
-          '';
 
         })
         (mkIf desktop.media.graphics.illustrator.enable {

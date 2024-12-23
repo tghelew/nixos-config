@@ -28,7 +28,7 @@ in {
         name = "scratch-calc";
         desktopName = "Calculator";
         icon = "calc";
-        exec = ''scratch "${tmux}/bin/tmux new-session -As calc -n calc qalc"'';
+        exec = ''scratch "${tmux}/bin/tmux new-session -As calc -n calc ${libqalculate}/bin/qalc"'';
         categories = [ "Development" ];
       })
       qgnomeplatform        # QPlatformTheme for a better Qt application inclusion in GNOME

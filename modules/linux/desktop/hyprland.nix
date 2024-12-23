@@ -5,6 +5,8 @@ with lib.my;
 let
   cfg = config.modules.desktop.hypr;
   configDir = config.nixos-config.configDir;
+  binDir = config.nixos-config.binDir;
+  dataHome = config.modules.xdg.dataHome;
 
 in {
 
@@ -39,12 +41,14 @@ in {
       };
 
       systemPackages = with pkgs; [
-        #NOTE: Check ./default.nix
-        swaylock-effects
-        swayidle
         dunst
         swww
         libnotify
+        hyprpaper
+        hypridle
+        hyprpaper
+        hyprlock
+        hyprpicker
         wtype
       ];# ++ [ mkIf cfg.hyprsome internal.hyprsome ];
     };
@@ -110,42 +114,36 @@ in {
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
 
-    # Swayidle service
-    home.services.swayidle = {
+    home.services.hyprpaper = {
       Unit = {
-        Description = "Idle manager for Wayland";
-        Documentation = "man:swayidle(1)";
+        Description = "Randomly Choose a wallpaper";
+        Documentation = "wallpicker --help";
         PartOf = [ "graphical.target" ];
       };
 
       Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.swayidle}/bin/swayidle -w";
+        Type = "oneshot";
+        ExecStart = "${binDir}/hypr/wallpicker -p ${dataHome}/wallpapers";
       };
 
       Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
-
-    # SWWW service
-    home.services.swww = {
-      Unit = {
-        Description = "Wallpaper manager for Wayland";
-        Documentation = "man:swww(1)";
-        PartOf = [ "graphical.target" ];
+    systemd.user.timers = {
+    hyprpaper = {
+      description = "Hyprpaper rotation schedule";
+      timerConfig = {
+        OnBootSec=1;
+        Unit = "hyprpaper";
+        OnCalendar = "30min";
       };
-
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.swww}/bin/swww-daemon";
-      };
-
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
     };
-
+  };
     home.configFile = {
       "hypr/hyprland.conf".text = import "${configDir}/hypr/hyprland.conf" { inherit config pkgs; };
       "hypr/rc.d" = {source = "${configDir}/hypr/rc.d"; recursive = true;};
-      "swayidle/config".text = import "${configDir}/swayidle/config" {inherit pkgs;};
+      # "hypr/hyprpaper.conf".source = "${configDir}/hypr/hyprpaper.conf";
+      "hypr/hyprlock.conf".source = "${configDir}/hypr/hyprlock.conf";
+      "hypr/hypridle.conf".source = "${configDir}/hypr/hypridle.conf";
     };
   };
 }

@@ -38,6 +38,10 @@ in
       vm = {
         qemu.enable = true;
       };
+      filemanager = {
+        default = "yazi";
+        yazi.enable = true;
+      };
     };
     dev = {
       enable = true;
@@ -81,6 +85,7 @@ in
       openssh.enable = true;
     };
     theme = {
+     wallpapers = true;
      active = "nord";
      lowResSize = 5;
      highResSize = 5;

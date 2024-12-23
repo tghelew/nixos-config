@@ -4,7 +4,7 @@
 rofi_command="rofi -theme theme/powermenu.rasi"
 logout_comd="hyprctl dispatch exit"
 suspend_cmd="systemctl suspend"
-lock_cmd="swaylock"
+lock_cmd="hyprlock"
 reboot_cmd="sudo reboot"
 shutdown_cmd="poweroff"
 

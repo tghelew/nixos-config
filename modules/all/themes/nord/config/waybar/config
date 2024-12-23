@@ -169,14 +169,14 @@
 
   "custom/keyboard" = {
     interval = 5;
-    return-type = "json";
+    return-type = "string";
     format = " {icon} ";
     format-icons = {
      "External"= "󰌌";
      "Internal"= "";
   };
     tooltip = false;
-    exec =  "$NIOS_CONFIG/bin/getKeyboard";
+    exec =  "$NIXOS_CONFIG_BIN/hypr/getKeyboard --pattern ''";
   };
 
   tray = {

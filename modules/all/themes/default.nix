@@ -6,6 +6,7 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.theme;
+  themesDir = config.nixos-config.themesDir;
   withXserver = pkgs.stdenv.isLinux && config.services.xserver.enable;
   withWayland = pkgs.stdenv.isLinux &&
                 (config.programs.hyprland.enable || config.programs.sway.enable);
@@ -30,12 +31,8 @@ in {
       default = null;
     };
 
-    wallpapers = mkOpt (either path null) null;
-
-    loginWallpaper = mkOpt (either path null)
-      (if cfg.wallpapers != null
-       then toFilteredImage cfg.wallpapers "-gaussian-blur 0x2 -modulate 70 -level 5%"
-       else null);
+    wallpapers = mkBoolOpt false;
+    loginWallpaper = mkBoolOpt false;
 
     gtk = {
       theme = mkOpt str "";
@@ -232,7 +229,7 @@ in {
     #Darwin
     {})
 
-    (mkIf (cfg.wallpapers != null)
+    (mkIf (cfg.wallpapers )
       # Set the wallpapers ourselves so we don't need .background-image and/or
       # .fehbg polluting $HOME
       # NOTE: This is not activiated with wayland
@@ -254,6 +251,13 @@ in {
                | ${pkgs.coreutils-full}/bin/tail -1)
                ${pkgs.coreutils-full}/bin/ln -sf $img $XDG_DATA_HOME/wallpapers/current
              fi
+             # Create login image.
+            loginWallpaper=${if cfg.loginWallpaper then
+              toFilteredImage "$XDG_DATA_HOME/wallpapers/curent" "-gaussian-blur 0x2 -modulate 70 -level 5%"
+             else ""}
+             if [ -n $loginWallpaper ]; then
+               ${pkgs.coreutils-full}/bin/ln -sf $loginWallpaper $XDG_DATA_HOME/wallpapers/current-login
+             fi
            '';
        in {
          modules.theme.onReload.wallpaper = if withXserver then commandX else commandW;
@@ -263,9 +267,9 @@ in {
     #   services.xserver.displayManager.lightdm.background = cfg.loginWallpaper;
     # })
 
-    (mkIf (cfg.wallpapers != null) {
+    (mkIf (cfg.wallpapers && cfg.active != null) {
       home.dataFile = {
-           "wallpapers" = {source = cfg.wallpapers; recursive = true;};
+        "wallpapers" = {source ="${themesDir}/${cfg.active}/config/wallpaper" ; recursive = true;};
       };})
 
     (mkIf (cfg.onReload != {})

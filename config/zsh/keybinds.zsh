@@ -9,6 +9,8 @@ bindkey '\eOA' history-substring-search-up
 bindkey '\e[B' history-substring-search-down
 bindkey '\eOB' history-substring-search-down
 
+#TODO: sudo or doas last command
+
 # C-z to toggle current process (background/foreground)
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
@@ -31,6 +33,19 @@ if (( $+commands[fasd] )); then
   bindkey -M viins '^x^f' fasd-complete-f  # C-x C-f to do fasd-complete-f (only files)
   bindkey -M viins '^x^d' fasd-complete-d  # C-x C-d to do fasd-complete-d (only directories)
 fi
+
+# yazi
+if (( $+commands[yazi] )); then
+  function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
+fi
+
 
 # Completing words in buffer in tmux
 if [ -n "$TMUX" ]; then

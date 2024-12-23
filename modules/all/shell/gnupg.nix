@@ -5,7 +5,7 @@ with lib.my;
 let
   cfg = config.modules.shell.gnupg;
   pinentry = linuxXorDarwin
-    "${pkgs.pinentry-gtk2}/bin/pinentry"
+    "${pkgs.pinentry-qt}/bin/pinentry"
     "${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac";
 in {
   options.modules.shell.gnupg = with types; {
