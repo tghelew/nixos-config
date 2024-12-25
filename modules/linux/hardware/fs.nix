@@ -34,7 +34,7 @@ in {
       {
         boot.loader.grub.copyKernels = true;
         boot.supportedFilesystems = [ "zfs" ];
-        boot.zfs.devNodes = "/dev/mapper /dev/disk/by-id";
+        boot.zfs.devNodes = "/dev/mapper";
         services.zfs.autoScrub.enable = true;
         services.zfs.autoSnapshot.enable = cfg.zfs.autoSnapshot;
       }

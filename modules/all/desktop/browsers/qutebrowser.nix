@@ -60,7 +60,7 @@ in {
 	text = concatStringsSep "\n" (map (lang: 
         ''
         if ! find "$XDG_DATA_HOME/qutebrowser/qtwebengine_dictionaries" -maxdepth 1 -type f  -name "${lang}*" 2>/dev/null | grep -q .; then
-		 $(find "$(nix-store --query --outputs "$(which qutebrowser)")" -iname '*dictcli.py*' | head -1) install "${lang}"
+		 $(find "${pkg}" -iname '*dictcli.py*' | head -1) install "${lang}"
         fi;
         '') cfg.dicts);
 	

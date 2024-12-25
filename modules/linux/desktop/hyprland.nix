@@ -54,7 +54,7 @@ in {
     };
 
     # This is required!
-    security.pam.services.swaylock = {
+    security.pam.services.hyprlock = {
       text = ''auth include login '';
     };
 
@@ -132,7 +132,7 @@ in {
     hyprpaper = {
       description = "Hyprpaper rotation schedule";
       timerConfig = {
-        OnBootSec=1;
+        OnBootSec=5;
         Unit = "hyprpaper";
         OnCalendar = "30min";
       };
