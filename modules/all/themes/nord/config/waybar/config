@@ -169,7 +169,7 @@
 
   "custom/keyboard" = {
     interval = 5;
-    return-type = "string";
+    return-type = "json";
     format = " {icon} ";
     format-icons = {
      "External"= "󰌌";

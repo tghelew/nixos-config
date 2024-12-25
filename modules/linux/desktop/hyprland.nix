@@ -141,7 +141,7 @@ in {
     home.configFile = {
       "hypr/hyprland.conf".text = import "${configDir}/hypr/hyprland.conf" { inherit config pkgs; };
       "hypr/rc.d" = {source = "${configDir}/hypr/rc.d"; recursive = true;};
-      # "hypr/hyprpaper.conf".source = "${configDir}/hypr/hyprpaper.conf";
+      "hypr/hyprpaper.conf".source = "${configDir}/hypr/hyprpaper.conf";
       "hypr/hyprlock.conf".source = "${configDir}/hypr/hyprlock.conf";
       "hypr/hypridle.conf".source = "${configDir}/hypr/hypridle.conf";
     };

@@ -49,10 +49,7 @@ local _walldir="$awalldir[-1]"
 
 #--- program can finally start
 
-[ -f "$_walldir/current" ] && rm -f "$_walldir/current" || {
-   >&2 echo "Folder $_walldir does not have a current wallpaper"
-   exit 3
-}
+[ -f "$_walldir/current" ] && rm -f "$_walldir/current"
 
 local img=$(find "$_walldir" -type f -o -type l | sort -R | tail -1)
 ln -sf $img "$_walldir"/current

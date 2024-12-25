@@ -20,7 +20,7 @@ in {
         Defaults:root,%wheel env_keep+=TERMINFO
       '';
       "sudoers.d/02_allow_users".text = ''
-        ${config.user.name}   ALL = (ALL) ${if cfg.noPass then "NOPASSWD:" else ""}ALL
+        ${config.user.name}   ALL = ${if cfg.noPass then "NOPASSWD:" else ""} ALL
       '';
       "sudoers.d/99_extra_config".text = if (cfg.extraConfig != null) then cfg.extraConfig else '''' ;
     };
