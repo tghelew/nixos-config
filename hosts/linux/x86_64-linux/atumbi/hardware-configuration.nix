@@ -5,8 +5,8 @@
 
   boot = {
 
-    initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc"];
-    initrd.kernelModules = ["i915"];
+    initrd.availableKernelModules = [ "bluetooth" "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc"];
+    initrd.kernelModules = ["i915" "bluetooth"];
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {

@@ -22,9 +22,9 @@ base0E = "#b48ead"
 base0F = "#5e81ac"
 
 # set fonts
-c.fonts.default_size = "8pt"
-c.fonts.web.size.default = 12
-c.fonts.web.size.default_fixed = 10
+c.fonts.default_size = "12pt"
+c.fonts.web.size.default = 14
+c.fonts.web.size.default_fixed = 12
 
 # zoom
 c.zoom.default = 90

@@ -44,11 +44,11 @@ in {
         dunst
         swww
         libnotify
-        hyprpaper
-        hypridle
-        hyprpaper
-        hyprlock
-        hyprpicker
+        unstable.hyprpaper
+        unstable.hypridle
+        unstable.hyprpaper
+        unstable.hyprlock
+        unstable.hyprpicker
         wtype
       ];# ++ [ mkIf cfg.hyprsome internal.hyprsome ];
     };
@@ -75,12 +75,12 @@ in {
       xwayland = {
         enable = true;
       };
-      package = pkgs.hyprland;
+      package = pkgs.unstable.hyprland;
     };
 
     programs.waybar = {
       enable = true;
-      package = pkgs.waybar;
+      package = pkgs.unstable.waybar;
     };
 
     modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";

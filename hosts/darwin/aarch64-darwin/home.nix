@@ -13,19 +13,24 @@ in
     ::1           localhost
     255.255.255.255   broadcasthost
 
-    # Personal name
-    172.22.22.1   router.home
 
-    # DNS Server & Soon mail server
+   ################################################################################
+    172.22.22.1   ghelew.home gateway router
+    10.22.22.1    internet fritz
+
+    # DNS Server & mail server
     93.177.66.222 eshua
     46.23.94.97   eshub
     46.23.93.235  eshuc
-    #To delete
-    137.220.54.49 obsd
+
+    # Services and Backup FreeBSD
+    172.22.22.5   tumba git blog backup
+
     # OpenBSD amsterdam host servers
     server11.openbsd.amsterdam  eshub.obsdams
     server22.openbsd.amsterdam  eshuc.obsdams
 
+   ################################################################################
     #Block garbage
     ${(readFile blocklist)}
     '';
