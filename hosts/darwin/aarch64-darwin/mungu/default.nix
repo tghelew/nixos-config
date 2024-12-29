@@ -58,6 +58,10 @@ in
 
       };
 
+      filemanager = {
+       yazi.enable = true;
+      };
+
       karabiner.enable = false;
       aerospace.enable = true;
 

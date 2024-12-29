@@ -22,8 +22,8 @@ in {
     zoxide
     imagemagick
     wl-clipboard
+    yazi
   ];
-    programs.yazi.enable = true;
 
     home.configFile = {
       "yazi/yazi.toml"= {source = "${configDir}/yazi/yazi.toml";};
