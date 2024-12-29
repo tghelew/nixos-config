@@ -17,6 +17,10 @@ in {
     # Services and Backup FreeBSD
     172.22.22.5   tumba git blog backup
 
+    # Laptop
+    172.22.22.6   atumbi
+    172.22.22.7   mungu
+
     # OpenBSD amsterdam host servers
     server11.openbsd.amsterdam  eshub.obsdams
     server22.openbsd.amsterdam  eshuc.obsdams
