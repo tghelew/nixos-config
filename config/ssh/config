@@ -9,13 +9,6 @@ Host github*
     Port 22
     Protocol 2
 
-Host git*
-     Hostname git.ghelew.net
-     User root
-     Identityfile ~/.ssh/private/id_admin
-     Port 2203
-     Protocol 2
-
 Host imana* emby*
      User root
      Identityfile ~/.ssh/private/id_admin
