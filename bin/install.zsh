@@ -30,9 +30,14 @@ if [[ ! -d "$flake" ]]; then
 fi
 
 
+
 mkdir -p "${dest}"
-echo -n "copying dotfiles... "
-cp -RLvf "${flake}" "${dest}"
+if [[ -f "${dest}/.envrc" ]]; then
+  echo -n "dotfiles already present"
+else
+  echo -n "copying dotfiles... "
+  cp -RLvf "${flake}" "${dest}"
+fi
 
 export USER="${user}"
 nixos-install \

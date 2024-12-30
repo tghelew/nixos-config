@@ -77,7 +77,7 @@ in
           (filterAttrs (name: value: (hasSuffix ".pub" name) && ( value == "regular"))
             (builtins.readDir "${configDir}/ssh"));
       };
-      sudo = {
+      doas = {
         enable = true;
         noPass = true;
       };

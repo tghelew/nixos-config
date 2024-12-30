@@ -10,7 +10,7 @@
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
-        device = "/dev/disk/by-partuuid/a7d54264-ee6e-4d14-bea1-abc08a32f687";
+        device = "/dev/disk/by-partuuid/19812e5f-d7bc-4525-8c79-0190f29da6d6";
         header = "/dev/disk/by-partuuid/0a139090-c68e-44a8-8293-6ca6d359d089";
         allowDiscards = true;
         preLVM = true;
@@ -72,22 +72,22 @@
 
   # Storage
   fileSystems."/" =
-    { device = "zpool/root";
+    { device = "zroot/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "zpool/home";
+    { device = "zroot/home";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "zpool/nix";
+    { device = "zroot/nix";
       fsType = "zfs";
     };
 
   fileSystems."/var" =
-    { device = "zpool/var";
+    { device = "zroot/var";
       fsType = "zfs";
     };
 
