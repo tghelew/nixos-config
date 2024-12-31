@@ -24,7 +24,7 @@ in
     46.23.93.235  eshuc
 
     # Services and Backup FreeBSD
-    172.22.22.5   tumba git blog backup
+    172.22.22.5   tumba tumba.ghelew.ch git.ghelew.ch blog.ghelew.ch backup.ghelew.ch
 
     # OpenBSD amsterdam host servers
     server11.openbsd.amsterdam  eshub.obsdams

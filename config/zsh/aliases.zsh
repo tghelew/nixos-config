@@ -4,7 +4,11 @@ alias ....='cd ../../..'
 
 alias q=exit
 alias c=clear
-alias _='sudo '
+if (( $+commands[doas] )); then
+  alias _='doas '
+else
+  alias _='sudo '
+fi
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
