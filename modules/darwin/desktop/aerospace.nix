@@ -18,10 +18,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    assertions = [ {
-      assertion =  karabiner.enable == false;
-      message = "I don't think it's a good idea to mix both Karabiner and Aerospace";
-    } ];
     services = {
       aerospace= {
         enable = true;
@@ -94,24 +90,24 @@ in
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
             # You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
-            cmd-enter = ''exec-and-forget osascript -e '
-                            tell application "Kitty"
-                                do script
-                                activate
-                            end tell'
+            cmd-enter = ''exec-and-forget open /Application/kitty.app'
             '';
             # Meh Key= cmd-ctrl-alt-shift --> Moving to workspace, binding mode
             # Meuh= ctrl-alt-shift --> Default for command in workspace
             #
             # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-            cmd-ctrl-alt-shift-slash = "layout tiles horizontal vertical";
-            cmd-ctrl-alt-shift-comma = "layout accordion horizontal vertical";
+            cmd-slash = "layout tiles horizontal vertical";
+            cmd-comma = "layout accordion horizontal vertical";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#focus
             ctrl-alt-shift-h = "move left";
+            alt-h            = "move left";
             ctrl-alt-shift-j = "move down";
+            alt-j            = "move down";
             ctrl-alt-shift-k = "move up";
+            alt-k            = "move up";
             ctrl-alt-shift-l = "move right";
+            alt-l            = "move right";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#move
             cmd-h = "focus left";
@@ -130,9 +126,22 @@ in
             ctrl-alt-shift-7 = "workspace 7";
             ctrl-alt-shift-8 = "workspace 8";
             ctrl-alt-shift-9 = "workspace 9";
-            ctrl-alt-shift-c = "workspace C";
+            ctrl-alt-shift-e = "workspace E";
             ctrl-alt-shift-w = "workspace W";
             ctrl-alt-shift-t = "workspace T";
+
+            alt-1 = "workspace 1";
+            alt-2 = "workspace 2";
+            alt-3 = "workspace 3";
+            alt-4 = "workspace 4";
+            alt-5 = "workspace 5";
+            alt-6 = "workspace 6";
+            alt-7 = "workspace 7";
+            alt-8 = "workspace 8";
+            alt-9 = "workspace 9";
+            alt-e = "workspace E";
+            alt-w = "workspace W";
+            alt-t = "workspace T";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
             cmd-ctrl-alt-shift-1 = "move-node-to-workspace 1";
@@ -144,21 +153,37 @@ in
             cmd-ctrl-alt-shift-7 = "move-node-to-workspace 7";
             cmd-ctrl-alt-shift-8 = "move-node-to-workspace 8";
             cmd-ctrl-alt-shift-9 = "move-node-to-workspace 9";
-            cmd-ctrl-alt-shift-c = "move-node-to-workspace C";
+            cmd-ctrl-alt-shift-e = "move-node-to-workspace E";
             cmd-ctrl-alt-shift-w = "move-node-to-workspace W";
             cmd-ctrl-alt-shift-t = "move-node-to-workspace T";
 
+            alt-shift-1 = "move-node-to-workspace 1";
+            alt-shift-2 = "move-node-to-workspace 2";
+            alt-shift-3 = "move-node-to-workspace 3";
+            alt-shift-4 = "move-node-to-workspace 4";
+            alt-shift-5 = "move-node-to-workspace 5";
+            alt-shift-6 = "move-node-to-workspace 6";
+            alt-shift-7 = "move-node-to-workspace 7";
+            alt-shift-8 = "move-node-to-workspace 8";
+            alt-shift-9 = "move-node-to-workspace 9";
+            alt-shift-e = "move-node-to-workspace E";
+            alt-shift-w = "move-node-to-workspace W";
+            alt-shift-t = "move-node-to-workspace T";
+
             # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
             cmd-ctrl-alt-shift-tab = "workspace-back-and-forth";
+            cmd-shift-tab = "workspace-back-and-forth";
             # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
             #alt-shift-tab = "move-workspace-to-monitor --wrap-around next"
 
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#resize
             cmd-ctrl-alt-shift-r = "mode resize";
+            cmd-r = "mode resize";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#mode
             cmd-ctrl-alt-shift-semicolon = "mode service";
+            cmd-semicolon = "mode service";
 
           };
           mode.service.binding = {
@@ -176,15 +201,25 @@ in
             cmd-ctrl-alt-shift-k = ["join-with up" "mode main"];
             cmd-ctrl-alt-shift-l = ["join-with right" "mode main"];
 
+            cmd-h = ["join-with left" "mode main"];
+            cmd-j = ["join-with down" "mode main"];
+            cmd-k = ["join-with up" "mode main"];
+            cmd-l = ["join-with right" "mode main"];
+
             down = "volume down";
             up = "volume up";
             shift-down = ["volume set 0" "mode main"];
 
           };
+
           mode.resize.binding = {
             ctrl-alt-shift-h = "resize smart -50";
             ctrl-alt-shift-l = "resize smart +50";
             ctrl-alt-shift-q = "mode main";
+
+            cmd-h = "resize smart -50";
+            cmd-l = "resize smart +50";
+            cmd-q = "mode main";
           };
 
         };

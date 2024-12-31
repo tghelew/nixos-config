@@ -23,16 +23,17 @@ in {
     imagemagick
     wl-clipboard
     yazi
+    zoxide
   ];
 
     home.configFile = {
       "yazi/yazi.toml"= {source = "${configDir}/yazi/yazi.toml";};
       "yazi/keymap.toml" = {source = "${configDir}/yazi/keymap.toml";};
-      "yazi/theme.toml".text = "
+      "yazi/theme.toml".text = ''
         [flavor]
-         dark=default
-         light=default ";
-
+         dark="default"
+         light="default"
+      '';
       "yazi/flavor/default.yazi"= mkIf (cfgFilemanager.theme != null) {
         text = import cfgFilemanager.theme config.modules.theme;
        };

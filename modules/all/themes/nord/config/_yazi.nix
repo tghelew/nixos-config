@@ -43,15 +43,15 @@ syntect_theme = ""
 [mode]
 
 normal_main = { bg = "${colors.blue}", bold = true }
-normal_alt  = { fg = ${colors.blue}", bg = ${colors.grey}" }
+normal_alt  = { fg = "${colors.blue}", bg = "${colors.grey}" }
 
 # Select mode
-select_main = { bg = ${colors.red}", bold = true }
-select_alt  = { fg = ${colors.red}", bg = ${colors.grey}" }
+select_main = { bg = "${colors.red}", bold = true }
+select_alt  = { fg = "${colors.red}", bg = "${colors.grey}" }
 
 # Unset mode
-unset_main = { bg = ${colors.red}", bold = true }
-unset_alt  = { fg = ${colors.red}", bg = ${colors.grey}" }
+unset_main = { bg = "${colors.red}", bold = true }
+unset_alt  = { fg = "${colors.red}", bg = "${colors.grey}" }
 
 # : }}}
 
@@ -64,7 +64,7 @@ separator_close = ""
 
 # Progress
 progress_label  = { bold = true }
-progress_normal = { fg = ${colors.blue}", bg = "${colors.black}" }
+progress_normal = { fg = "${colors.blue}", bg = "${colors.black}" }
 progress_error  = { fg = "${colors.red}", bg = "${colors.black}" }
 
 # Permissions
@@ -155,7 +155,7 @@ separator_style = { fg = "${colors.dimgrey}" }
 
 [help]
 on      = { fg = "${colors.cyan}" }
-run     = { fg = "magenta" }
+run     = { fg = "${colors.magenta}" }
 desc    = {}
 hovered = { reversed = true, bold = true }
 footer  = { fg = "${colors.black}", bg = "${colors.white}" }
@@ -237,7 +237,7 @@ files = [
 	{ name = ".babelrc", text = "", fg = "#cbcb41" },
 	{ name = ".bash_profile", text = "", fg = "#89e051" },
 	{ name = ".bashrc", text = "", fg = "#89e051" },
-	{ name = ".dockerignore", text = "󰡨", fg = "#458ee6" },
+	{ name = ".dockerignore", text = "", fg = "#458ee6" },
 	{ name = ".ds_store", text = "", fg = "#41535b" },
 	{ name = ".editorconfig", text = "", fg = "#fff2f2" },
 	{ name = ".env", text = "", fg = "#faf743" },

@@ -12,7 +12,7 @@ with lib.my;
   };
 
   config = mkIf cfg.enable {
-    home.stateVersion = "23.11";
+    home.stateVersion = "24.11";
     system = {
       stateVersion = 4;
       defaults = {

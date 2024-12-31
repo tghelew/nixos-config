@@ -59,7 +59,8 @@ in
       };
 
       filemanager = {
-       yazi.enable = true;
+        default = "yazi";
+        yazi.enable = true;
       };
 
       karabiner.enable = false;
