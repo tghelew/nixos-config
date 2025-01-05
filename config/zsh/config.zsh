@@ -19,6 +19,14 @@ if (( $+commands[fd] )); then
   export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 fi
 
+if (( $+commands[emacs] )); then
+  exort EDITOR='emacsclient -tna " " '
+elif (( $+commands[nvim] )); then
+  export EDITOR=nvim
+else
+  export EDITOR=vi
+fi
+
 
 ## ZSH configuration
 # Treat these characters as part of a word.

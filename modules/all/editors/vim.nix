@@ -16,7 +16,6 @@ in {
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
       editorconfig-core-c
-      #TODO: setup neovim configuration using kickstart
       unstable.neovim
     ];
 

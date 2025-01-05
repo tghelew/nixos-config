@@ -23,6 +23,12 @@ in
           "NordVPN"                         = 905953485;
           "Yubico Authenticator"            = 1497506650;
         };
+        brews = [
+          "mpv"
+          # TODO: linsk
+          "qemu"
+          "lazygit"
+        ];
         casks = [
           "libreoffice"
           "libreoffice-language-pack"
@@ -93,7 +99,8 @@ in
     };
 
     editors = {
-      emacs.enable = true;
+      emacs.enable = false;
+      vim.enable = true;
     };
 
     shell = {
