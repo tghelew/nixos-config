@@ -6,6 +6,7 @@ with lib;
 with lib.my;
 let cfg = config.modules.editors.emacs;
     configDir = config.nixos-config.configDir;
+    cfgParent = config.modules.editors;
     defaultEditorScript = with pkgs; writeShellApplication {
       name = "memacs";
       runtimeInputs = [];

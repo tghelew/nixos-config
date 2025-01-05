@@ -23,7 +23,7 @@ in {
         bear
         gdb
         cmake
-        llvmPackages.libcxx
+        llvmPackages.libcxxClang
       ];
     })
   ];
