@@ -57,6 +57,7 @@ in
           { path = "/Applications/LibreOffice.app/"; }
           { path = "/Applications/Obsidian.app/"; }
           { path = "/System/Applications/Music.app/"; }
+          { path = "/Applications/ghostty.app/"; }
           { path = "/Applications/kitty.app/"; }
 
           # TODO: Setup neovim
@@ -88,8 +89,8 @@ in
       };
 
       term  = {
-        default = "kitty";
-        kitty.enable = true;
+        default = "ghostty";
+        ghostty.enable = true;
       };
     };
 
@@ -100,6 +101,7 @@ in
 
     editors = {
       emacs.enable = false;
+      default = "memacs -t ";
       vim.enable = true;
     };
 
