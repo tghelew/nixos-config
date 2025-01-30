@@ -58,16 +58,10 @@ in
      lowResSize = 5;
      highResSize = 5;
     };
-  };
-
   ## Local config
   hardware.graphics.enable = false;
   time.timeZone = "Europe/Zurich";
 
   #gnupg
   home.configFile."gnupg/gpg.conf" = {source = "${configDir}/gnupg/gpg.conf";};
-
-  ## Personal backups
-  #TODO: Backups to tomb
-
 }
