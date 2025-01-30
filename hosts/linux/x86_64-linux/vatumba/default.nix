@@ -14,11 +14,6 @@ in
 
   ## Modules
   modules = with config.modules;{
-      filemanager = {
-        default = "yazi";
-        yazi.enable = true;
-      };
-    };
     dev = {
       enable = true;
       python.enable = true;
@@ -27,6 +22,11 @@ in
       emacs.enable = true;
       vim.enable = true;
       default = editors.emacs.defaultEditor;
+    };
+    hardware = {
+      bluetooth = {
+        enable = false;
+      };
     };
     shell = {
       direnv.enable = true;
@@ -58,6 +58,8 @@ in
      lowResSize = 5;
      highResSize = 5;
     };
+  };
+
   ## Local config
   hardware.graphics.enable = false;
   time.timeZone = "Europe/Zurich";
