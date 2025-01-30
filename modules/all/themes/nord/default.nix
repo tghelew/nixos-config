@@ -14,7 +14,7 @@ in {
     {
      modules = {
         theme = {
-          wallpapers = true;
+          wallpapers = lib.mkDefault true;
           gtk = {
             theme = "Nordic";
             iconTheme = "Paper";
