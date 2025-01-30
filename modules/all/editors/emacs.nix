@@ -28,6 +28,7 @@ in {
     enable = mkBoolOpt false;
     defaultEditor = mkOpt types.str "${cfg.package}/bin/emacsclient -ta '' ";
     package = mkOpt types.package pkgs.emacs;
+    useForEmail = mkBoolOpt false;
     autostart = mkBoolOpt pkgs.stdenv.isDarwin;
   };
 
