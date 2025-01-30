@@ -1,0 +1,15 @@
+#+TITLE: Atumbi
+#+DATE:  Friday, 22 Nov. 202j4
+
+* Overview
+My Linux VM unning on FreeBSD bhyve...
+* Specs
+ - 2 CPU, 2GB RAM + 2G swap
+* Installation
+** TBD - Partition
+#+BEGIN_SRC sh
+#+END_SRC
+
+** TBD -  Mount drives
+#+BEGIN_SRC sh
+#+END_SRC

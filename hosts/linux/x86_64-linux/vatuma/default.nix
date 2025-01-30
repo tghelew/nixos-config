@@ -1,5 +1,8 @@
 { pkgs, config, lib, inputs, ... }:
 
+with lib;
+with lib.my;
+
 let
   configDir = config.nixos-config.configDir;
 in
@@ -11,40 +14,17 @@ in
 
   ## Modules
   modules = with config.modules;{
-    desktop = {
-      hypr.enable = true;
-      apps = {
-        rofi.enable = true;
-      };
-      browsers = {
-        default = "qutebrowser";
-        brave.enable = false;
-        firefox.enable = true;
-        qutebrowser.enable = true;
-      };
-      media = {
-        documents.enable = false;
-        graphics.enable = true;
-        mpv.enable = true;
-        recording.enable = false;
-      };
-      term = {
-        default = "kitty";
-        kitty.enable = true;
-      };
-      vm = {
-        qemu.enable = false;
+      filemanager = {
+        default = "yazi";
+        yazi.enable = true;
       };
     };
     dev = {
       enable = true;
-      rust.enable = true;
       python.enable = true;
     };
     editors = {
       emacs.enable = true;
-      emacs.useForEmail = false;
-      emacs.tlux.enable = true;
       vim.enable = true;
       default = editors.emacs.defaultEditor;
     };
@@ -55,23 +35,35 @@ in
         enable = true;
         useTomb = true;
       };
-      #NOTE: Do I need tmux locally ?
       tmux.enable   = true;
       zsh.enable    = true;
     };
     services = {
-      ssh.enable = true;
+      ssh = {
+        enable = true;
+        publicKeyFiles = mapAttrsToList (name: _:  "${configDir}/ssh/${name}")
+          (filterAttrs (name: value: (hasSuffix ".pub" name) && ( value == "regular"))
+            (builtins.readDir "${configDir}/ssh"));
+      };
+      doas = {
+        enable = true;
+        noPass = true;
+      };
       docker.enable = false;
+      openssh.enable = true;
     };
-    theme.active = "nord";
+    theme = {
+     wallpapers = false;
+     active = "nord";
+     lowResSize = 5;
+     highResSize = 5;
+    };
   };
 
   ## Local config
-  hardware.graphics.enable = true;
+  hardware.graphics.enable = false;
   time.timeZone = "Europe/Zurich";
 
-  ## SSH config
-  home.file.".ssh/config" = {source = "${configDir}/ssh/config";};
   #gnupg
   home.configFile."gnupg/gpg.conf" = {source = "${configDir}/gnupg/gpg.conf";};
 

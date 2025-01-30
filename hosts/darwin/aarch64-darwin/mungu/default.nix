@@ -94,8 +94,6 @@ in
 
     editors = {
       emacs.enable = true;
-      emacs.useForEmail = false;
-      emacs.tlux.enable = true;
     };
 
     shell = {
