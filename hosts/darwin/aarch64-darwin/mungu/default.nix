@@ -36,6 +36,8 @@ in
           "yubico-yubikey-manager"
           "vmware-fusion"
           "obsidian"
+          "ghostty"
+          "google-chrome"
         ];
       };
     };
@@ -57,10 +59,8 @@ in
           { path = "/Applications/LibreOffice.app/"; }
           { path = "/Applications/Obsidian.app/"; }
           { path = "/System/Applications/Music.app/"; }
-          { path = "/Applications/ghostty.app/"; }
-          { path = "/Applications/kitty.app/"; }
-
-          # TODO: Setup neovim
+          { path = "/Applications/Ghostty.app/"; }
+          { path = "/Applications/Nix Apps/Kitty.app/"; }
         ];
 
       };
@@ -89,8 +89,8 @@ in
       };
 
       term  = {
-        default = "ghostty";
-        ghostty.enable = true;
+        default = "kitty";
+        kitty.enable = true;
       };
     };
 
@@ -100,8 +100,9 @@ in
     };
 
     editors = {
-      emacs.enable = false;
-      default = "memacs -t ";
+      default = "memacst";
+      emacs.enable = true;
+      emacs.useForEmail = false;
       vim.enable = true;
     };
 

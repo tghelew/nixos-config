@@ -1,11 +1,10 @@
-# modules/desktop/term/ghostty.nix
+# modules/all/desktop/term/ghostty.nix
 #
-
-{ options, config, lib, pkgs, ... }:
+{ options, config, inputs, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
-let
+let inherit (inputs) ghostty;
   cfg = config.modules.desktop.term.ghostty;
   cfgTerm = config.modules.desktop.term;
   configDir = config.nixos-config.configDir;
@@ -27,9 +26,9 @@ in {
     home.configFile = {
     };
 
-    environment = mkIf pkgs.stdenv.isLinux {
-      systemPackages = with pkgs.unstable; [
-        ghostty
+    environment = {
+      systemPackages = with pkgs; [
+        ghostty.packages.${system}.default
       ];
     };
   };

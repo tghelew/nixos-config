@@ -19,8 +19,8 @@ if (( $+commands[fd] )); then
   export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 fi
 
-if (( $+commands[emacs] )); then
-  exort EDITOR='emacsclient -tna " " '
+if (( $+commands[memacst] )); then
+  export EDITOR='memacst '
 elif (( $+commands[nvim] )); then
   export EDITOR=nvim
 else
