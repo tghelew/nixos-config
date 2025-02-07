@@ -19,7 +19,22 @@ let cfg = config.modules.editors.emacs;
         license = licenses.mit;
         platforms = platforms.all;
       };
-      text = ''nohup ${cfg.package}/bin/emacsclient -rna ' ' "$@" &> /dev/null'';
+      text = ''nohup ${cfg.package}/bin/emacsclient -nr -a ' ' "$@" &> /dev/null'';
+    };
+
+    defaultTerminalEditorScript = with pkgs; writeShellApplication {
+      name = "memacst";
+      runtimeInputs = [];
+      meta = with lib; {
+        description = "A wrapper around emacsclient for EDITOR";
+        longDescription = ''
+              A wrapper around emacsclient to terminal emacs
+              client. If an emacs server is not already launch a new server will be created.
+        '';
+        license = licenses.mit;
+        platforms = platforms.all;
+      };
+      text = ''${cfg.package}/bin/emacsclient -a ' ' -nw -r'';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
     emacspkgs = pkgs.emacs;
@@ -61,6 +76,7 @@ in {
       [
         # MyEmacs
         defaultEditorScript
+        defaultTerminalEditorScript
         ## Doom dependencies
         git
         (ripgrep.override {withPCRE2 = true;})
@@ -109,7 +125,6 @@ in {
 
     #NOTE: This is not strictly repoducable as it follow the main branch wihtout hash!
     #WARNING: ssh must be installed and properly configure to fetch this private repository
-
     nix.settings = {
       substituters = ["https://nix-community.cachix.org"];	# Install cached version so rebuild should not be required
       trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
