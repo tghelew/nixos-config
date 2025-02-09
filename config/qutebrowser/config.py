@@ -5,22 +5,22 @@ import glob
 config.load_autoconfig()
 
 ## General config
-c.content.default_encoding = 'utf-8'
+c.content.default_encoding = "utf-8"
 c.content.javascript.enabled = True
 c.content.local_storage = True
 c.content.plugins = True
 
-c.editor.encoding = 'utf-8'
+c.editor.encoding = "utf-8"
 
 ## Security & privacy
-c.content.autoplay = False   # don't autoplay videos
+c.content.autoplay = False  # don't autoplay videos
 
 ## Adblocking
 # Use (superior) Brave adblock if available, or fall back to host blocking
 c.content.blocking.method = "auto"
 c.content.blocking.hosts.lists = [
-    'https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts',
-    'https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext'
+    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+    "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext",
     # 'https://www.malwaredomainlist.com/hostslist/hosts.txt',
     # 'http://someonewhocares.org/hosts/hosts',
     # 'http://winhelp2002.mvps.org/hosts.zip',
@@ -29,45 +29,52 @@ c.content.blocking.hosts.lists = [
 # c.content.blocking.whitelist = []
 
 ## Options
-c.downloads.position = 'bottom'
+c.downloads.position = "bottom"
 c.downloads.location.directory = os.path.expanduser("~/downloads")
 c.downloads.location.prompt = False
 c.input.insert_mode.auto_leave = True
 c.input.insert_mode.auto_load = False
 c.input.links_included_in_focus_chain = False
-c.new_instance_open_target = 'tab-silent'
+c.new_instance_open_target = "tab-silent"
 c.prompt.filebrowser = False
 c.prompt.radius = 0
-c.spellcheck.languages = ['en-US']
+c.spellcheck.languages = ["en-US"]
 c.session.lazy_restore = True
-c.tabs.show = 'multiple'
-c.tabs.title.format = '{audio}{index}:{current_title} - {host}'
-c.tabs.title.format_pinned = '{index}'
-c.window.title_format = '{host} - qutebrowser'
+c.tabs.show = "multiple"
+c.tabs.title.format = "{audio}{index}:{current_title} - {host}"
+c.tabs.title.format_pinned = "{index}"
+c.window.title_format = "{host} - qutebrowser"
 
 
 #
 ## Keybindings
 
 # Universal Emacsien C-g alias for Escape
-config.bind('<Ctrl-g>', 'clear-keychain ;; search ;; fullscreen --leave')
-for mode in ['caret', 'command', 'hint', 'insert', 'passthrough', 'prompt', 'register']:
-    config.bind('<Ctrl-g>', 'mode-leave', mode=mode)
+config.bind("<Ctrl-g>", "clear-keychain ;; search ;; fullscreen --leave")
+for mode in ["caret", "command", "hint", "insert", "passthrough", "prompt", "register"]:
+    config.bind("<Ctrl-g>", "mode-leave", mode=mode)
 
 # ...
-config.bind('zz', 'close')
-config.bind('tm', 'tab-mute')
-config.bind('wi', 'devtools bottom')
-config.bind(';;', 'hint inputs --first')  # easier to reach than ;t
-config.bind(';v', 'hint links spawn mpv --ytdl-format="best[height<=1080]" {hint-url}')
-config.bind(';V', 'hint links spawn mpv {hint-url}')
+config.bind("zz", "close")
+config.bind("tm", "tab-mute")
+config.bind("wi", "devtools bottom")
+config.bind(";;", "hint inputs --first")  # easier to reach than ;t
+config.bind(";V", 'hint links spawn mpv --ytdl-format="best[height<=1080]" {hint-url}')
+config.bind(";v", "hint links spawn mpv {hint-url}")
 
 # Use external editor
-c.editor.command = ['emacsclient', '-c', '-F', '((name . "qutebrowser-editor"))', '+{line}:{column}', '{}']
+c.editor.command = [
+    "emacsclient",
+    "-c",
+    "-F",
+    '((name . "qutebrowser-editor"))',
+    "+{line}:{column}",
+    "{}",
+]
 # Though we set it, I use the more specialzied emacs-everywhere instead
-config.bind('<Ctrl+E>',    'edit-text', mode='insert')
-config.bind('<Ctrl+E>',    'hint inputs --first ;; edit-text', mode='normal')
-config.bind('<Shift+Ins>', 'fake-key <Ctrl+V>', mode='insert')
+config.bind("<Ctrl+E>", "edit-text", mode="insert")
+config.bind("<Ctrl+E>", "hint inputs --first ;; edit-text", mode="normal")
+config.bind("<Shift+Ins>", "fake-key <Ctrl+V>", mode="insert")
 
 ## Ex-commands
 
@@ -268,8 +275,8 @@ config.bind('<Shift+Ins>', 'fake-key <Ctrl+V>', mode='insert')
 # config.bind('<Ctrl-D>', 'completion-item-del', mode='command')
 # config.bind('<Ctrl-E>', 'rl-end-of-line', mode='command')
 # config.bind('<Ctrl-F>', 'rl-forward-char', mode='command')
-config.bind('<Ctrl-B>', 'rl-backward-word', mode='command')
-config.bind('<Ctrl-F>', 'rl-forward-word', mode='command')
+config.bind("<Ctrl-B>", "rl-backward-word", mode="command")
+config.bind("<Ctrl-F>", "rl-forward-word", mode="command")
 # config.bind('<Ctrl-H>', 'rl-backward-delete-char', mode='command')
 # config.bind('<Ctrl-K>', 'rl-kill-line', mode='command')
 # config.bind('<Ctrl-N>', 'command-history-next', mode='command')
@@ -308,14 +315,14 @@ config.bind('<Ctrl-F>', 'rl-forward-word', mode='command')
 # config.bind('<Alt-D>', 'rl-kill-word', mode='prompt')
 # config.bind('<Alt-F>', 'rl-forward-word', mode='prompt')
 # config.bind('<Ctrl-?>', 'rl-delete-char', mode='prompt')
-config.bind('<Ctrl-O>', 'rl-beginning-of-line', mode='prompt')
-config.bind('<Ctrl-B>', 'rl-backward-char', mode='prompt')
-config.bind('<Ctrl-E>', 'rl-end-of-line', mode='prompt')
-config.bind('<Ctrl-F>', 'rl-forward-char', mode='prompt')
-config.bind('<Ctrl-Shift-B>', 'rl-backward-word', mode='prompt')
-config.bind('<Ctrl-Shift-F>', 'rl-forward-word', mode='prompt')
-config.bind('<Ctrl-H>', 'rl-backward-delete-char', mode='prompt')
-config.bind('<Ctrl-K>', 'rl-kill-line', mode='prompt')
+config.bind("<Ctrl-O>", "rl-beginning-of-line", mode="prompt")
+config.bind("<Ctrl-B>", "rl-backward-char", mode="prompt")
+config.bind("<Ctrl-E>", "rl-end-of-line", mode="prompt")
+config.bind("<Ctrl-F>", "rl-forward-char", mode="prompt")
+config.bind("<Ctrl-Shift-B>", "rl-backward-word", mode="prompt")
+config.bind("<Ctrl-Shift-F>", "rl-forward-word", mode="prompt")
+config.bind("<Ctrl-H>", "rl-backward-delete-char", mode="prompt")
+config.bind("<Ctrl-K>", "rl-kill-line", mode="prompt")
 # config.bind('<Ctrl-U>', 'rl-unix-line-discard', mode='prompt')
 # config.bind('<Ctrl-W>', 'rl-unix-word-rubout', mode='prompt')
 # config.bind('<Ctrl-X>', 'prompt-open-download', mode='prompt')
@@ -333,9 +340,11 @@ config.bind('<Ctrl-K>', 'rl-kill-line', mode='prompt')
 # config.bind('<Escape>', 'leave-mode', mode='register')
 
 ## Per-domain settings
-c.content.user_stylesheets = glob.glob(os.path.expanduser('~/.local/share/qutebrowser/userstyles.css'))
+c.content.user_stylesheets = glob.glob(
+    os.path.expanduser("~/.local/share/qutebrowser/userstyles.css")
+)
 
 
 ## Load theme
-for path in glob.glob(os.path.expanduser('~/.config/qutebrowser/extra/*.py')):
+for path in glob.glob(os.path.expanduser("~/.config/qutebrowser/extra/*.py")):
     config.source(path)

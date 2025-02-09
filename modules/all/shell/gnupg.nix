@@ -10,7 +10,7 @@ let
 in {
   options.modules.shell.gnupg = with types; {
     enable   = mkBoolOpt false;
-    cacheTTL = mkOpt int 7200;  # 2hr
+    cacheTTL = mkOpt int 14800;  # 8hr
     useTomb = mkBoolOpt true;
     secretKeysPath = mkOpt (nullOr str) null;
   };
