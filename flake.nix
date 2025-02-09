@@ -49,7 +49,6 @@
 
       ghostty = {
         url = "github:ghostty-org/ghostty";
-        inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
       agenix = {                                                          # Secret management in Nix Store
         url =  "github:ryantm/agenix";

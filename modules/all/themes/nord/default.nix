@@ -5,6 +5,7 @@
 with lib;
 with lib.my;
 let cfg = config.modules.theme;
+    desktop = config.modules.desktop;
     themesDir = config.nixos-config.themesDir;
     withXserver = pkgs.stdenv.isLinux && config.services.xserver.enable;
     withWayland = pkgs.stdenv.isLinux && config.modules.desktop.hypr.enable;
@@ -77,7 +78,11 @@ in {
         desktop.term.theme = "${themesDir}/${cfg.active}/config/_${config.modules.desktop.term.default}.nix";
         desktop.filemanager.theme = "${themesDir}/${cfg.active}/config/_${config.modules.desktop.filemanager.default}.nix";
 
-        shell.zsh.rcFiles  = [ ./config/zsh/prompt.zsh ];
+        shell.zsh.rcInit=''
+          [[ $TERM == "linux" ]] && source ${./config/zsh/prompt.zsh}
+          [[ $TERM != "linux" ]] && source ${./config/zsh/xprompt.zsh}
+        '';
+        # shell.zsh.rcFiles  = [ (if desktop.hypr.enable then ./config/zsh/xprompt.zsh else ./config/zsh/prompt.zsh) ];
         shell.tmux.theme = ./config/tmux;
         desktop.browsers = mkIf (config.modules.desktop.browsers.default != null) {
           firefox.chromePath = ./config/firefox;

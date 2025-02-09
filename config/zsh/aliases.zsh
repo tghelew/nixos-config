@@ -16,13 +16,13 @@ alias mkdir='mkdir -pv'
 alias wget='wget -c'
 alias path='echo -e ${PATH//:/\\n}'
 alias ports='netstat -tulanp'
-alias sports='sudo netstat -tulanp'
+alias sports='_ netstat -tulanp'
 
 alias mk=make
 alias gurl='curl --compressed'
 
-alias shutdown='sudo shutdown'
-alias reboot='sudo reboot'
+alias shutdown='_ shutdown'
+alias reboot='_ reboot'
 
 # An rsync that respects gitignore
 rcp() {
@@ -55,7 +55,7 @@ if (( $+commands[journalctl] )); then
   alias jcf='journalctl -f'
   alias sc=systemctl
   alias scu='systemctl --user'
-  alias ssc='sudo systemctl'
+  alias ssc='_ systemctl'
 fi
 
 if (( $+commands[eza] )); then

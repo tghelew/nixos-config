@@ -5,6 +5,7 @@ with lib.my;
 let cfg = config.modules.desktop;
     withXserver = config.services.xserver.enable;
     withWayland = cfg.hypr.enable;
+    binDir = config.nixos-config.binDir;
 in {
   config = mkIf (withXserver || withWayland) {
     assertions = [
@@ -24,13 +25,6 @@ in {
 
     user.packages = with pkgs; [
       libqalculate  # calculator cli w/ currency conversion
-      (makeDesktopItem {
-        name = "scratch-calc";
-        desktopName = "Calculator";
-        icon = "calc";
-        exec = ''scratch "${tmux}/bin/tmux new-session -As calc -n calc ${libqalculate}/bin/qalc"'';
-        categories = [ "Development" ];
-      })
       qgnomeplatform        # QPlatformTheme for a better Qt application inclusion in GNOME
       libsForQt5.qtstyleplugin-kvantum # SVG-based Qt5 theme engine plus a config tool and extra theme
       xdg-utils

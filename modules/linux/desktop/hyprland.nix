@@ -44,11 +44,11 @@ in {
         dunst
         swww
         libnotify
-        unstable.hyprpaper
-        unstable.hypridle
-        unstable.hyprpaper
-        unstable.hyprlock
-        unstable.hyprpicker
+        hyprpaper
+        hypridle
+        hyprpaper
+        hyprlock
+        hyprpicker
         wtype
       ];# ++ [ mkIf cfg.hyprsome internal.hyprsome ];
     };
@@ -75,7 +75,6 @@ in {
       xwayland = {
         enable = true;
       };
-      package = pkgs.unstable.hyprland;
     };
 
     programs.waybar = {

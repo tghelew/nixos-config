@@ -10,13 +10,13 @@
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
-        device = "/dev/disk/by-partuuid/19812e5f-d7bc-4525-8c79-0190f29da6d6";
+        device = "/dev/disk/by-partuuid/09b23c8e-a1d5-46a4-b3a1-525c5776eaf5";
         header = "/dev/disk/by-partuuid/0a139090-c68e-44a8-8293-6ca6d359d089";
         allowDiscards = true;
         preLVM = true;
       };
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "i915"];
     extraModulePackages = [];
     kernelParams = [
       # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
@@ -42,9 +42,9 @@
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
-      (if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then vaapiIntel else intel-vaapi-driver)
+      intel-vaapi-driver
       libvdpau-va-gl
-      intel-media-driver
+      intel-media-sdk
     ];
   };
   # Modules
@@ -72,22 +72,22 @@
 
   # Storage
   fileSystems."/" =
-    { device = "zroot/root";
+    { device = "rpool/system/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "zroot/home";
+    { device = "rpool/users/home";
       fsType = "zfs";
     };
 
   fileSystems."/nix" =
-    { device = "zroot/nix";
+    { device = "rpool/local/nix";
       fsType = "zfs";
     };
 
   fileSystems."/var" =
-    { device = "zroot/var";
+    { device = "rpool/system/var";
       fsType = "zfs";
     };
 

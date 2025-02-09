@@ -189,7 +189,7 @@ def run_shell(*args, sudo=False, noerror=False) -> int:
         raise TnixException("Missing argument to shell command")
 
     if sudo:
-        args = ['sudo'] + list(args)
+      args = ['sudo'] + list(args)
 
     if _global_args and _global_args[0].dryrun:
         print(f'{args}\n')
