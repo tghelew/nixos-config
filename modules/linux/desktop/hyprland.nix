@@ -42,7 +42,7 @@ in {
 
       systemPackages = with pkgs; [
         dunst
-        swww
+        copyq
         libnotify
         hyprpaper
         hypridle
