@@ -1,6 +1,4 @@
 { config, options, lib, pkgs, ... }:
-#TODO: Haskell
-#FIXME: properly support xdg
 with lib;
 with lib.my;
 let cfg = config.modules.dev;
@@ -11,8 +9,10 @@ in {
 
   config = mkIf cfg.enable {
    environment.systemPackages = with pkgs; [
-     gdb
      lldb
-   ];
+   ] ++
+   (linuxXorDarwin
+     [gdb]
+     []);
   };
 }

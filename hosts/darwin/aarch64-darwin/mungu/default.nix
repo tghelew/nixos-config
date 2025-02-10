@@ -60,7 +60,7 @@ in
           { path = "/Applications/Obsidian.app/"; }
           { path = "/System/Applications/Music.app/"; }
           { path = "/Applications/Ghostty.app/"; }
-          { path = "/Applications/Nix Apps/Kitty.app/"; }
+          { path = "/Applications/Kitty.app/"; }
         ];
 
       };

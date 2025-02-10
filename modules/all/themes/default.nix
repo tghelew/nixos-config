@@ -251,13 +251,6 @@ in {
                | ${pkgs.coreutils-full}/bin/tail -1)
                ${pkgs.coreutils-full}/bin/ln -sf $img $XDG_DATA_HOME/wallpapers/current
              fi
-             # Create login image.
-            loginWallpaper=${if cfg.loginWallpaper then
-              toFilteredImage "$XDG_DATA_HOME/wallpapers/curent" "-gaussian-blur 0x2 -modulate 70 -level 5%"
-             else ""}
-             if [ -n $loginWallpaper ]; then
-               ${pkgs.coreutils-full}/bin/ln -sf $loginWallpaper $XDG_DATA_HOME/wallpapers/current-login
-             fi
            '';
        in {
          modules.theme.onReload.wallpaper = if withXserver then commandX else commandW;
