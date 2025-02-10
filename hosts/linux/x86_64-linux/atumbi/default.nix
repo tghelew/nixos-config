@@ -80,6 +80,10 @@ in
         enable = true;
         noPass = true;
       };
+      sudo = {
+        enable = true;
+        noPass = true;
+      };
       docker.enable = false;
       openssh.enable = true;
     };

@@ -24,6 +24,5 @@ fi
 local keyboard_type="Internal"
 [[ -n $keyboard ]] && keyboard_type="External"
 
-echo "{'alt':\"$keyboard_type\"}"
-
 [[ $config == "y" ]] && ${NIXOS_CONFIG:-/etc/dotfiles}/bin/hypr/keybinds $keyboard_type
+echo "{\"alt\":\"$keyboard_type\"}"

@@ -33,6 +33,10 @@
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
   };
 
+  # acpi
+  environment.systemPackages = with pkgs; [
+    acpi
+  ];
 
   # GPU
   environment.variables = {
@@ -63,6 +67,8 @@
       enable = true;
       applet = true;
     };
+    # not supported
+    fprint.enable = false;
   };
 
   # CPU

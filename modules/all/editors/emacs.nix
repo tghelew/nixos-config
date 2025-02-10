@@ -19,7 +19,7 @@ let cfg = config.modules.editors.emacs;
         license = licenses.mit;
         platforms = platforms.all;
       };
-      text = ''nohup ${cfg.package}/bin/emacsclient -nr -a ' ' "$@" &> /dev/null'';
+      text = ''nohup ${cfg.package}/bin/emacsclient -ncr -a ' ' "$@" &> /dev/null'';
     };
 
     defaultTerminalEditorScript = with pkgs; writeShellApplication {
@@ -34,7 +34,7 @@ let cfg = config.modules.editors.emacs;
         license = licenses.mit;
         platforms = platforms.all;
       };
-      text = ''${cfg.package}/bin/emacsclient -a ' ' -nw -r'';
+      text = ''${cfg.package}/bin/emacsclient -a ' ' -nw -c'';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
     emacspkgs = pkgs.emacs;
