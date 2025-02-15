@@ -26,7 +26,10 @@ in
         qutebrowser.enable = true;
       };
       media = {
-        documents.enable = true;
+        documents = {
+          enable = true;
+          pdf.enable = true;
+        };
         graphics.enable = true;
         mpv.enable = true;
         recording.enable = true;
