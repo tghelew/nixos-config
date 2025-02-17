@@ -22,8 +22,7 @@ in {
     zoxide
     imagemagick
     wl-clipboard
-    yazi
-    zoxide
+    unstable.yazi
   ];
 
     home.configFile = {
@@ -34,7 +33,7 @@ in {
          dark="default"
          light="default"
       '';
-      "yazi/flavor/default.yazi"= mkIf (cfgFilemanager.theme != null) {
+      "yazi/flavors/default.yazi/flavor.toml"= mkIf (cfgFilemanager.theme != null) {
         text = import cfgFilemanager.theme config.modules.theme;
        };
     };

@@ -34,7 +34,7 @@ let cfg = config.modules.editors.emacs;
         license = licenses.mit;
         platforms = platforms.all;
       };
-      text = ''${cfg.package}/bin/emacsclient -a ' ' -nw -c'';
+      text = ''${cfg.package}/bin/emacsclient -a ' ' -nw -c "$@"'';
     };
     os = if pkgs.stdenv.isDarwin then "darwin" else "linux";
     emacspkgs = pkgs.emacs;

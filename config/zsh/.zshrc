@@ -47,7 +47,12 @@ if [[ $TERM != dumb ]]; then
   # If you have host-local configuration, put it here
   _source $ZDOTDIR/local.zshrc
 
-  _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
+  if (( $+commands[fasd] )); then
+    _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
+  elif (( $+commands[zoxide] )); then
+    eval "$(zoxide init zsh)"
+  fi
+
   autopair-init
   # make sure current folder is defined as title
   precmd () {print -Pn "\e]0;%\y: %~\a"}

@@ -8,8 +8,10 @@ export ZVM_INIT_MODE=sourcing
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 # fasd
-export _FASD_DATA="$XDG_CACHE_HOME/fasd"
-export _FASD_VIMINFO="$XDG_CACHE_HOME/viminfo"
+if (( $+commands[fasd] )); then
+  export _FASD_DATA="$XDG_CACHE_HOME/fasd"
+  export _FASD_VIMINFO="$XDG_CACHE_HOME/viminfo"
+fi
 
 # fzf
 if (( $+commands[fd] )); then
@@ -20,7 +22,7 @@ if (( $+commands[fd] )); then
 fi
 
 if (( $+commands[memacst] )); then
-  export EDITOR='memacst '
+  export EDITOR='memacst'
 elif (( $+commands[nvim] )); then
   export EDITOR=nvim
 else

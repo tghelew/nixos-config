@@ -51,7 +51,7 @@ in {
         nix-zsh-completions
         bat
         eza
-        fasd
+        zoxide
         fd
         fzf
         jq

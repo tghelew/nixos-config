@@ -43,8 +43,6 @@ rcp() {
     "$@"
 }; compdef rcp=rsync
 
-#TODO ssh launching attaching to tmux session
-
 alias rcpd='rcp --delete --delete-after'
 alias rcpu='rcp --chmod=go='
 alias rcpdu='rcpd --chmod=go='
