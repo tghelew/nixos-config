@@ -87,7 +87,7 @@ in
         enable = true;
         noPass = true;
       };
-      docker.enable = false;
+      docker.enable = true;
       openssh.enable = true;
     };
     theme = {

@@ -126,5 +126,7 @@ function nix-path {
   env | grep -i "${pattern}" | tr ":" "\n" | awk -F'='  "/${pattern}/{print\$2}"
 }
 
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -r -n | head"
+
 #TODO: Add get aliases (using zstyle)?
 #TODO: Add Darwin Aliases

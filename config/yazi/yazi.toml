@@ -20,6 +20,8 @@ rules = [
 	{ name = "*/", use = [ "edit", "open", "reveal" ] },
 	# Text
 	{ mime = "text/*", use = [ "edit", "reveal" ] },
+	# pdf
+	{ mime = "application/pdf", use = [ "pdf" ] },
 	# Image
 	{ mime = "image/*", use = [ "open", "reveal" ] },
 	# Media
@@ -48,6 +50,9 @@ play = [
 	{ run = 'mpv "$@"', orphan = true, for = "unix" },
 ]
 edit = [
+	{ run = "$EDITOR $@", block = true, for = "unix" },
+]
+code = [
 	{ run = "$EDITOR $@", block = true, for = "unix" },
 ]
 open = [

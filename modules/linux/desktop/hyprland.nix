@@ -57,8 +57,13 @@ in {
     security.pam.services.hyprlock = {
       text = ''auth include login '';
     };
+    # services.displayManager.sddm = {
+    #   enable = true;
+    #   wayland.enable = true;
+    #   autoNumlock = true;
+    # };
+    #login manager (greetd)
 
-    ##login manager (greetd)
     services.greetd = {
       enable = true;
       settings = {
@@ -68,6 +73,7 @@ in {
         };
       };
     };
+
 
 
     programs.hyprland = {

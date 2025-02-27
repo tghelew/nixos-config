@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+if $(acpi -a | grep -qv 'on-line'); then
+    systemctl syspend
+else
+    notify-send --urgency=normal 'Not suspending as machine is not on battery'
+fi

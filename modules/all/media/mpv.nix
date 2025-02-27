@@ -20,6 +20,7 @@ in {
 
     home.configFile = {
       "mpv" = {source = "${configDir}/mpv"; recursive = true;};
+      "yt-dl" = {source = "${configDir}/yt-dl"; recursive = true;};
     };
 
   };
