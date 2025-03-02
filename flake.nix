@@ -54,6 +54,10 @@
         url =  "github:ryantm/agenix";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      hyprpanel = {
+          url = "github:Jas-SinghFSU/HyprPanel";
+          inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable, darwin, ... }:

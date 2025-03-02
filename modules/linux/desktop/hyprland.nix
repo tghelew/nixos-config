@@ -41,7 +41,6 @@ in {
       };
 
       systemPackages = with pkgs; [
-        dunst
         copyq
         libnotify
         hyprpaper
@@ -83,11 +82,6 @@ in {
       };
     };
 
-    programs.waybar = {
-      enable = true;
-      package = pkgs.unstable.waybar;
-    };
-
     modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
 
     xdg.portal = {
@@ -102,22 +96,6 @@ in {
     AllowSuspendThenHibernate=no
     AllowHybridSleep=yes
   '';
-
-    # Dunst service
-    home.services.dunst = {
-      Unit = {
-        Description = "Notification manager working with Wayland";
-        Documentation = "man:dunst(1)";
-        PartOf = [ "graphical.target" ];
-      };
-
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.dunst}/bin/dunst";
-      };
-
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
-    };
 
     home.services.hyprpaper = {
       Unit = {

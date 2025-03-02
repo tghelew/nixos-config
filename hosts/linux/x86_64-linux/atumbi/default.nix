@@ -16,6 +16,7 @@ in
   modules = with config.modules;{
     desktop = {
       hypr.enable = true;
+      hyprpanel.enable = true;
       apps = {
         rofi.enable = true;
       };
@@ -73,6 +74,10 @@ in
       zsh.enable    = true;
     };
     services = {
+      backup = {
+        enable = true;
+        frequency = null;
+      };
       ssh = {
         enable = true;
         publicKeyFiles = mapAttrsToList (name: _:  "${configDir}/ssh/${name}")

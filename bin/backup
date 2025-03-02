@@ -1,0 +1,24 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i zsh -p coreutils-full  rsync
+# backup home and data directory to obsd serveri
+
+set -euo pipefail
+
+_server1=s11vm22@wingman1.openbsd.amsterdam
+_server2=thierry@tumba.ghelew.ch
+
+_hostname=$(hostname)
+
+typeset server=($_server1 $_server2)
+# backup projects folder and data folder
+_rcp(){
+    rsync -azPJ --include=.git/ --filter=':- .gitignore' --filter=":- $XDG_CONFIG_HOME/git/ignore" "$@"
+}
+
+for s in ${server[@]};do
+    ssh $s mkdir -p backup/machine/$_hostname
+    _rcp /home/thierry/projects $s:~/backup/machine/$_hostname/
+    if [[ -d /data ]];then
+        _rcp /data $s:~/backup/machine/$_hostname/
+    fi
+done
