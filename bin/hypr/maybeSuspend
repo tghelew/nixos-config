@@ -2,5 +2,5 @@
 if $(acpi -a | grep -qv 'on-line'); then
     systemctl syspend
 else
-    notify-send --urgency=normal 'Not suspending as machine is not on battery'
+    notify-send --urgency=normal 'Not suspending: On AC '
 fi

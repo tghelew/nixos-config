@@ -14,7 +14,7 @@ zparseopts -E -D -F -- -pattern+:=apattern\
 local pattern
 local config
 local type
-pattern=${apattern[2]:-".*lily.*|.*corne.*|.*ergo.*"}
+pattern=${apattern[2]:-".*zsa.*|.*lily.*|.*corne.*|.*ergo.*"}
 [[ -n ${aconfig[1]} ]] && config="y" || config="n"
 
 if (( $+commands[hyprctl] )); then
