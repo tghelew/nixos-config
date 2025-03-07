@@ -18,7 +18,8 @@ _rcp(){
 for s in ${server[@]};do
     ssh $s mkdir -p backup/machine/$_hostname
     _rcp /home/thierry/projects $s:~/backup/machine/$_hostname/
+    _rcp /home/thierry/documents $s:~/backup/machine/$_hostname/
     if [[ -d /data ]];then
-        _rcp /data $s:~/backup/machine/$_hostname/
+        _rcp --exclude '_safe.tomb' /data $s:~/backup/machine/$_hostname/
     fi
 done
