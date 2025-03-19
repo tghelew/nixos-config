@@ -31,6 +31,7 @@
 
     # Refuse ICMP echo requests on my desktop/laptop;
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   # acpi

@@ -15,7 +15,7 @@ in {
   config = mkIf cfg.enable {
       security.sudo = {
          enable = true;
-         wheelNeedsPassword = true;
+         wheelNeedsPassword = false;
          configFile = ''
          ${config.user.name}   ALL = ${if cfg.noPass then "NOPASSWD:" else ""} ALL
         '';

@@ -40,7 +40,7 @@ in
         kitty.enable = true;
       };
       vm = {
-        qemu.enable = true;
+        virtualbox.enable = true;
       };
       filemanager = {
         default = "yazi";
@@ -49,7 +49,8 @@ in
     };
     dev = {
       enable = true;
-      rust.enable = false;
+      zig.enable = true;
+      rust.enable = true;
       python.enable = true;
     };
     editors = {

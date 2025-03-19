@@ -21,6 +21,9 @@ in {
     172.22.22.6   atumbi
     172.22.22.7   mungu
 
+    # vm - freebsd
+    172.22.22.44  watumbi
+
     # OpenBSD amsterdam host servers
     server11.openbsd.amsterdam  eshub.obsdams
     server22.openbsd.amsterdam  eshuc.obsdams

@@ -20,7 +20,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      user.packages = [ pkgs.rustup ];
+      user.packages = [ pkgs.rustup  pkgs.gcc pkgs.cmake];
       # output the location of bin files and add them into $PATH
       # FIXME: properly support xdg
       env.RUSTUP_HOME = "$XDG_DATA_HOME/rustup";

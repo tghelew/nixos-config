@@ -13,6 +13,7 @@ in {
       qemu
       virt-manager
       libvirt
+      remmina
     ];
   };
 }
