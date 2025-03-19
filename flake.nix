@@ -73,6 +73,7 @@
       mkPkgs = pkgs: system: extraOverlays: import pkgs {
         inherit system;
         config.allowUnfree = true;  # forgive me Stallman senpai
+        config.allowBroken = true;  # forgive me machine
         overlays = extraOverlays ++ (pkgs.lib.attrValues self.overlays.${system});
       };
 
