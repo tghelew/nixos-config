@@ -6,7 +6,7 @@
   boot = {
 
     initrd.availableKernelModules = [ "bluetooth" "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc"];
-    initrd.kernelModules = ["i915" "bluetooth"];
+    initrd.kernelModules = ["i915" "bluetooth" "nouveau"];
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
@@ -16,7 +16,7 @@
         preLVM = true;
       };
     };
-    kernelModules = [ "kvm-intel" "i915"];
+    kernelModules = [ "kvm-intel" "i915" "nouveau"];
     extraModulePackages = [];
     kernelParams = [
       # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
@@ -31,7 +31,8 @@
 
     # Refuse ICMP echo requests on my desktop/laptop;
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
-    kernelPackages = pkgs.linuxPackages_latest;
+    # Kernel : zfs failed to build with latest
+    kernelPackages = pkgs.linuxPackages_6_13;
   };
 
   # acpi
@@ -44,13 +45,53 @@
     VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (lib.mkDefault "va_gl");
   };
 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-vaapi-driver
-      libvdpau-va-gl
-      intel-media-sdk
-    ];
+  hardware = {
+
+    nvidia = {
+       # Modesetting is required.
+      modesetting.enable = true;
+
+      # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+      # Enable this if you have graphical corruption issues or application crashes after waking
+      # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+      # of just the bare essentials.
+      powerManagement.enable = false;
+
+      # Fine-grained power management. Turns off GPU when not in use.
+      # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+      powerManagement.finegrained = false;
+
+      # Use the NVidia open source kernel module (not to be confused with the
+      # independent third-party "nouveau" open source driver).
+      # Support is limited to the Turing and later architectures. Full list of
+      # supported GPUs is at:
+      # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
+      # Only available from driver 515.43.04+
+      open = false;
+
+      # Enable the Nvidia settings menu,
+    # accessible via `nvidia-settings`.
+      nvidiaSettings = true;
+
+      # Optionally, you may need to select the appropriate driver version for your specific GPU.
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_370;
+
+      prime = {
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+        sync.enable = true;
+
+
+      };
+    };
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-vaapi-driver
+        libvdpau-va-gl
+        intel-media-sdk
+      ];
+    };
   };
   # Modules
   modules.hardware = {

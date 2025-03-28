@@ -50,7 +50,6 @@ in
     editors = {
       emacs.enable = true;
       emacs.useForEmail = false;
-      emacs.tlux.enable = true;
       vim.enable = true;
       default = editors.emacs.defaultEditor;
     };

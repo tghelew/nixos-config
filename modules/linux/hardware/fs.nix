@@ -15,7 +15,6 @@ in {
   config = mkIf cfg.enable (mkMerge [
     {
       programs.udevil.enable = true;
-
       # Support for more filesystems, mostly to support external drives
       environment.systemPackages = with pkgs; [
         sshfs
@@ -35,6 +34,7 @@ in {
         boot.loader.grub.copyKernels = true;
         boot.supportedFilesystems = [ "zfs" ];
         boot.zfs.devNodes = "/dev/mapper";
+        boot.zfs.package = pkgs.zfs;
         services.zfs.autoScrub.enable = true;
         services.zfs.autoSnapshot.enable = cfg.zfs.autoSnapshot;
       }

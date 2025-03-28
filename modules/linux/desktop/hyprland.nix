@@ -18,26 +18,17 @@ in {
   config = mkIf cfg.enable {
 
     environment = {
-    #   loginShellInit = ''
-    #   # Will automatically open Hyprland when logged into tty1
-    #   if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-    #     exec ${hypr-exec}
-    #   fi
-    # '';
 
       variables = {
         XDG_CURRENT_DESKTOP="Hyprland";
         XDG_SESSION_TYPE="wayland";
         XDG_SESSION_DESKTOP="Hyprland";
+
       };
       sessionVariables = {
-
-        QT_QPA_PLATFORM = "wayland";
-        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        GDK_BACKEND = "wayland";
-        WLR_NO_HARDWARE_CURSORS = "1";
         MOZ_ENABLE_WAYLAND = "1";
-        _JAVA_AWT_WM_NONREPARENTING = "1";
+        ELECTRON_OZONE_PLATFORM_HINT = "auto";
+        NIXOS_OZONE_WL = "1";
       };
 
       systemPackages = with pkgs; [
@@ -45,7 +36,6 @@ in {
         libnotify
         hyprpaper
         hypridle
-        hyprpaper
         hyprlock
         hyprpicker
         wtype
@@ -61,34 +51,48 @@ in {
     #   wayland.enable = true;
     #   autoNumlock = true;
     # };
+
     #login manager (greetd)
 
     services.greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'dbus-launch Hyprland' " ;
-          user = "${config.user.name}";
+          # command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'dbus-launch Hyprland' " ;
+          command = toString (pkgs.writeShellScript "hyprland-wrapper" ''
+          trap 'systemctl --user stop hyprland-session.target; sleep 1' EXIT
+          exec Hyprland >/dev/null
+          '');
+          user =config.user.name;
         };
       };
     };
 
-
+    # hardware.graphics = {
+    #   package = pkgs.mesa;
+    #   package32 = pkgs.pkgsi686Linux.mesa;
+    # };
 
     programs.hyprland = {
       enable = true;
+      package = pkgs.hyprland;
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
       xwayland = {
         enable = true;
       };
     };
 
-    modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
-
-    xdg.portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk];
-                       #pkgs.xdg-desktop-portal-hyprland ];
+     systemd.user.targets.hyprland-session = {
+      unitConfig = {
+        Description = "Hyprland compositor session";
+        Documentation = [ "man:systemd.special(7)" ];
+        BindsTo = [ "graphical-session.target" ];
+        Wants = [ "graphical-session-pre.target" ];
+        After = [ "graphical-session-pre.target" ];
+      };
     };
+
+    modules.theme.onReload.hyprland = "${pkgs.hyprland}/bin/hyprctl reload";
 
     systemd.sleep.extraConfig = ''
     AllowSuspend=yes

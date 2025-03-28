@@ -24,6 +24,7 @@ in {
     };
 
     home.configFile = {
+      "ghostty/config".source = "${configDir}/ghostty/config";
     };
 
     environment = {

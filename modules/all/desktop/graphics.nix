@@ -25,8 +25,6 @@ in {
 
       (if cfg.tools.enable  && isLinux then [font-manager] else []) ++
 
-      (if withWayland then [ swayimg ] else []) ++
-
       # replaces illustrator & indesign
       (if cfg.illustrator.enable then [unstable.inkscape] else []) ++
 

@@ -73,7 +73,7 @@ if (( $+commands[fasd] )); then
   }
 fi
 
-if (( $+commands[kitten] )); then
+if (( $+commands[kitten] && ! $+command[ghostty])); then
  alias ssh="kitten ssh"
 fi
 

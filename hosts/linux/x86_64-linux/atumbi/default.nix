@@ -36,8 +36,9 @@ in
         recording.enable = true;
       };
       term = {
-        default = "kitty";
-        kitty.enable = true;
+        default = "ghostty";
+        kitty.enable = false;
+        ghostty.enable = true;
       };
       vm = {
         virtualbox.enable = true;

@@ -13,7 +13,14 @@ in
 
     nixpkgs.overlays = [ inputs.hyprpanel.overlay ];
 
+    services.upower = {
+     enable = true;
+    };
+
     environment.systemPackages = with pkgs; [
+      gvfs
+      dart-sass
+      libgtop
       hyprpanel
     ];
   };
