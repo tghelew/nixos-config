@@ -14,7 +14,7 @@ in {
     user.packages = with pkgs; [
       unstable.mpv
       #unstable.mpvc  # CLI controller for mpv
-      ffmpeg
+      unstable.ffmpeg-full
       unstable.yt-dlp
     ];
 

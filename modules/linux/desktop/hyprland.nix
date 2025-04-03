@@ -8,6 +8,7 @@ let
   binDir = config.nixos-config.binDir;
   dataHome = config.modules.xdg.dataHome;
 
+
 in {
 
   options.modules.desktop.hypr = {
@@ -16,6 +17,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+
+    modules.desktop.type = "wayland";
 
     environment = {
 

@@ -3,25 +3,32 @@
 with lib;
 with lib.my;
 let cfg = config.modules.desktop;
-    withXserver = config.services.xserver.enable;
-    withWayland = cfg.hypr.enable;
     binDir = config.nixos-config.binDir;
 in {
-  config = mkIf (withXserver || withWayland) {
-    assertions = [
-      {
-        assertion = (countAttrs (n: v: n == "enable" && value) cfg) < 2;
-        message = "Can't have more than one desktop environment enabled at a time";
-      }
-      {
-        assertion = withXserver || withWayland ||
-             !(anyAttrs
-               (n: v: isAttrs v &&
-                      anyAttrs (n: v: isAttrs v && v.enable))
-               cfg);
-        message = "Can't enable a desktop app without a desktop environment";
-      }
-    ];
+  options.modules.desktop = {
+    type = with types; mkOpt (nullOr str) null;
+  };
+
+  config = mkIf (cfg.type != null)  {
+    assertions =
+      let isEnabled = _: v: v.enable or false;
+           hasDesktopEnabled = cfg:
+             (anyAttrs isEnabled cfg)
+             || !(anyAttrs (_: v: isAttrs v && anyAttrs isEnabled v) cfg);
+        in [
+          {
+            assertion = (countAttrs isEnabled cfg) < 3;
+            message = "Can't have more than one desktop environment enabled at a time";
+          }
+          {
+            assertion = hasDesktopEnabled cfg;
+            message = "Can't enable a desktop sub-module without a desktop environment";
+          }
+          {
+            assertion = cfg.type != null || !(anyAttrs isEnabled cfg);
+            message = "Downstream desktop module did not set modules.desktop.type";
+          }
+        ];
 
     user.packages = with pkgs; [
       libqalculate  # calculator cli w/ currency conversion
@@ -30,13 +37,15 @@ in {
       xdg-utils
       brightnessctl
       usbutils
-    ] ++ optionals withXserver [
+      mesa-demos
+    ] ++ optionals (cfg.type == "x11") [
       feh       # image viewer
       xclip
       xdotool
       xorg.xwininfo
+      xorg.xmodmap
     ]
-    ++ optionals withWayland [
+    ++ optionals (cfg.type == "wayland") [
         wl-clipboard
         wlr-randr
         handlr
@@ -56,6 +65,7 @@ in {
         meslo-lgs-nf
         mononoki
         nerdfonts
+        font-awesome
         fira-mono
         fira-code
       ];
@@ -63,7 +73,8 @@ in {
 
 
     ## Apps/Services
-    services.picom = mkIf config.services.xserver.enable {
+    services.picom = mkIf (cfg.type == "x11") {
+      enable = true;
       backend = "glx";
       vSync = true;
       opacityRules = [
@@ -116,7 +127,7 @@ in {
     env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
     env.QT_QPA_PLATFORMTHEME = "gnome";
 
-    services.xserver.displayManager.sessionCommands = mkIf config.services.xserver.enable ''
+    services.xserver.displayManager.sessionCommands = mkIf (cfg.type == "x11") ''
       # GTK2_RC_FILES must be available to the display manager.
       export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
     '';

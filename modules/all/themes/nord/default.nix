@@ -7,8 +7,7 @@ with lib.my;
 let cfg = config.modules.theme;
     desktop = config.modules.desktop;
     themesDir = config.nixos-config.themesDir;
-    withXserver = pkgs.stdenv.isLinux && config.services.xserver.enable;
-    withWayland = pkgs.stdenv.isLinux && config.modules.desktop.hypr.enable;
+    desktopType = config.modules.desktop.type;
 in {
   config = mkIf (cfg.active == "nord") (mkMerge [
     # Desktop-agnostic configuration
@@ -94,15 +93,16 @@ in {
       # Compositor
       (linuxXorDarwin
         {
-          services.picom = mkIf withXserver {
+          services.picom = mkIf (desktopType == "x11") {
+            enable = true;
             fade = true;
             fadeDelta = 1;
             fadeSteps = [ 0.01 0.012 ];
             shadow = true;
             shadowOffsets = [ (-10) (-10) ];
             shadowOpacity = 0.22;
-            # activeOpacity = "1.00";
-            # inactiveOpacity = "0.92";
+            activeOpacity = 0.90;
+            inactiveOpacity = 0.70;
             settings = {
               shadow-radius = 12;
               # blur-background = true;
@@ -116,7 +116,7 @@ in {
         #Darwin
          {})
 
-    (mkIf (pkgs.stdenv.isDarwin || withXserver || withWayland) {
+    (mkIf (desktopType != null) {
       myfonts.packages = with pkgs; [
         fira-code
         fira-code-symbols
@@ -126,9 +126,10 @@ in {
         font-awesome
         material-design-icons
         weather-icons
-      ];})
+      ];
+    })
 
-    (mkIf (withXserver || withWayland) {
+    (mkIf (desktopType!= null) {
       user.packages = with pkgs; [
         nordic
         paper-icon-theme # for rofi
@@ -138,14 +139,19 @@ in {
 
       # Other dotfiles
       home.configFile = with config.modules; mkMerge [
-        (mkIf withXserver {
+        (mkIf (desktopType == "x11") {
           # Sourced from sessionCommands in modules/themes/default.nix
-          "xtheme/90-theme" = mkIf withXserver {
+          "xtheme/90-theme" = {
             source = ./config/Xresources;
           };
         })
         (mkIf desktop.apps.rofi.enable {
           "rofi/theme" = { source = ./config/rofi; recursive = true; };
+        })
+
+        (mkIf (desktop.i3.enable) {
+          "dunst/dunstrc".text = import ./config/dunstrc theme;
+          "mpv/theme.conf".text = import ./config/mpv/theme.conf theme;
         })
 
         (mkIf (desktop.hypr.enable) {

@@ -6,11 +6,10 @@ with lib;
 with lib.my;
 let
   cfg = config.modules.theme;
+  desktopType = config.modules.desktop.type;
   themesDir = config.nixos-config.themesDir;
-  withXserver = pkgs.stdenv.isLinux && config.services.xserver.enable;
-  withWayland = pkgs.stdenv.isLinux &&
-                (config.programs.hyprland.enable || config.programs.sway.enable);
-in {
+in
+{
   options.modules.theme = with types; {
     active = mkOption {
       type = nullOr str;
@@ -128,7 +127,7 @@ in {
   config = mkIf (cfg.active != null) (mkMerge [
     # Read xresources files in ~/.config/xtheme/* to allow modular configuration
     # of Xresources.
-    (mkIf withXserver (
+    (mkIf (desktopType == "x11") (
       let xrdb = ''cat "$XDG_CONFIG_HOME"/xtheme/* | ${pkgs.xorg.xrdb}/bin/xrdb -load'';
       in {
         home.configFile."xtheme.init" = {
@@ -139,7 +138,7 @@ in {
       }))
 
 
-    ( mkIf withXserver {
+    ( mkIf (desktopType == "x11") {
       home.configFile."xtheme/00-init".text = with cfg.colors; ''
       #define bg   ${types.bg}
       #define fg   ${types.fg}
@@ -229,7 +228,7 @@ in {
     #Darwin
     {})
 
-    (mkIf (cfg.wallpapers )
+    (mkIf (cfg.wallpapers)
       # Set the wallpapers ourselves so we don't need .background-image and/or
       # .fehbg polluting $HOME
       # NOTE: This is not activiated with wayland
@@ -253,7 +252,7 @@ in {
              fi
            '';
        in {
-         modules.theme.onReload.wallpaper = if withXserver then commandX else commandW;
+         modules.theme.onReload.wallpaper = if (desktopType == "x11")  then commandX else commandW;
        }))
 
     # (mkIf (cfg.loginWallpaper != null) {

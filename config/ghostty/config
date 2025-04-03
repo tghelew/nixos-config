@@ -49,10 +49,12 @@
 # resize-overlay-duration = 4s 200ms
 
 font-family = "FiraCode Nerd Font"
+font-size = 10
 clipboard-read = allow
 clipboard-write = allow
 gtk-single-instance = true
 window-theme = auto
+window-decoration = none
 theme = nord
 quick-terminal-position = center
 quick-terminal-animation-duration = 1

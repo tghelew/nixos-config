@@ -5,7 +5,7 @@ with lib.my;
 let
   cfg = config.modules.desktop.apps.rofi;
   pkgRofi = if config.services.xserver.enable
-             then pgks.rofi
+             then pkgs.rofi
              else pkgs.rofi-wayland;
   configDir = config.nixos-config.configDir;
 
@@ -26,7 +26,7 @@ in {
         #!${stdenv.shell}
         exec ${pkgRofi}/bin/rofi -terminal "${config.modules.desktop.term.default}" -m -1 "$@"
        '')
-      pwgen # for rofi-pass
+      pwgen # for rofi-paso
 
     ];
     home.configFile = {

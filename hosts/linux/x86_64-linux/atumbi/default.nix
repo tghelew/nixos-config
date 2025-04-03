@@ -17,6 +17,7 @@ in
     desktop = {
       hypr.enable = true;
       hyprpanel.enable = true;
+      i3.enable = false;
       apps = {
         rofi.enable = true;
       };
