@@ -116,7 +116,10 @@ in {
       EMACSDIR = "${config.modules.xdg.configHome}/emacs/";
     };
 
-    modules.shell.zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
+    modules.shell = {
+      zsh.rcFiles = [ "${configDir}/emacs/aliases.zsh" ];
+      nushell.rcFiles = [ "${configDir}/emacs/aliases.nu" ];
+    };
 
     myfonts.packages = with pkgs;
       [

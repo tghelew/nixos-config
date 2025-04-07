@@ -26,6 +26,9 @@ in {
       "git/attributes".source = "${configDir}/git/attributes";
     };
 
-    modules.shell.zsh.rcFiles = [ "${configDir}/git/aliases.zsh" ];
+    modules.shell = {
+      zsh.rcFiles = [ "${configDir}/git/aliases.zsh" ];
+      nushell.rcFiles = [ "${configDir}/git/aliases.nu" ];
+    };
   };
 }

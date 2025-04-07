@@ -74,7 +74,8 @@ in
         useTomb = true;
       };
       tmux.enable   = true;
-      zsh.enable    = true;
+      zsh.enable    = false;
+      nushell.enable = true;
     };
     services = {
       backup = {

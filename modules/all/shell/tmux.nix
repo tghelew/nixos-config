@@ -16,8 +16,13 @@ in {
 
     modules.theme.onReload.tmux = "${pkgs.tmux}/bin/tmux source $TMUX_HOME/extraInit > /dev/null 2>&1 ";
 
-    modules.shell.zsh = {
-      rcFiles = [ "${configDir}/tmux/aliases.zsh" ];
+    modules.shell = {
+      zsh = {
+        rcFiles = [ "${configDir}/tmux/aliases.zsh" ];
+      };
+      nushell = {
+        rcFiles = [ "${configDir}/tmux/aliases.nu" ];
+      };
     };
 
     home.configFile = {

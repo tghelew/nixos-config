@@ -159,6 +159,9 @@ in {
           "mpv/theme.conf".text = import ./config/mpv/theme.conf theme;
 
         })
+        (mkIf (shell.nushell.enable) {
+          "starship.toml".source = ./config/starship.toml;
+        })
         (mkIf desktop.media.graphics.illustrator.enable {
           "inkscape/templates/default.svg".source = ./config/inkscape/default-template.svg;
         })
