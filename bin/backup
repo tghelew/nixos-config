@@ -9,7 +9,7 @@ _server2=thierry@tumba.ghelew.ch
 
 _hostname=$(hostname)
 
-typeset server=($_server1 $_server2)
+typeset server=($_server2)
 # backup projects folder and data folder
 _rcp(){
     rsync -azPJ --include=.git/ --filter=':- .gitignore' --filter=":- $XDG_CONFIG_HOME/git/ignore" "$@"
@@ -20,6 +20,6 @@ for s in ${server[@]};do
     _rcp /home/thierry/projects $s:~/backup/machine/$_hostname/
     _rcp /home/thierry/documents $s:~/backup/machine/$_hostname/
     if [[ -d /data ]];then
-        _rcp --exclude '_safe.tomb' /data $s:~/backup/machine/$_hostname/
+        _rcp /data $s:~/backup/machine/$_hostname/
     fi
 done
