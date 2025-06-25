@@ -29,8 +29,8 @@ keymap = [
 	{ on = "<PageUp>",     run = "arrow -100%", desc = "Move cursor up one page" },
 	{ on = "<PageDown>",   run = "arrow 100%",  desc = "Move cursor down one page" },
 
-	{ on = [ "g", "g" ], run = "arrow -99999999", desc = "Move cursor to the top" },
-	{ on = "G",          run = "arrow 99999999",  desc = "Move cursor to the bottom" },
+	{ on = [ "g", "g" ], run = "arrow top", desc = "Move cursor to the top" },
+	{ on = "G",          run = "arrow bot",  desc = "Move cursor to the bottom" },
 
 	# Navigation
 	{ on = "h", run = "leave", desc = "Go back to the parent directory" },
@@ -133,7 +133,8 @@ keymap = [
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
 
 	# Tabs
-	{ on = "t", run = "tab_create --current", desc = "Create a new tab with CWD" },
+	{ on = "t",           run = "tab_create --current" , desc = "Create a new tab with CWD" },
+	{ on = [ "t", "c" ],  run = "close", desc = "Close current tab" },
 
 	{ on = "1", run = "tab_switch 0", desc = "Switch to the first tab" },
 	{ on = "2", run = "tab_switch 1", desc = "Switch to the second tab" },

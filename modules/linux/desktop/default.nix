@@ -64,11 +64,10 @@ in {
         symbola
         meslo-lgs-nf
         mononoki
-        nerdfonts
         font-awesome
         fira-mono
         fira-code
-      ];
+      ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts) ;
     };
 
 

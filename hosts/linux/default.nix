@@ -4,7 +4,10 @@ with lib;
 with lib.my;
 {
   imports =
-    [ inputs.home-manager.nixosModules.home-manager ]
+    [
+      inputs.home-manager.nixosModules.home-manager
+      inputs.programs-sqlite.nixosModules.programs-sqlite
+    ]
     ++ (mapModulesRec' (toString ../../modules/all) import)
     ++ (mapModulesRec' (toString ../../modules/linux) import);
 
@@ -55,7 +58,7 @@ with lib.my;
 
   # Use the latest kernel
   boot = {
-    kernelPackages = mkDefault pkgs.linuxPackages_latest;
+    kernelPackages = mkDefault pkgs.linuxPackages;
     loader = {
       efi.canTouchEfiVariables = mkDefault true;
       systemd-boot.configurationLimit = 10;

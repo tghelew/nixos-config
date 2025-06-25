@@ -11,7 +11,6 @@ in {
 
   config = mkIf cfg.enable {
   environment.systemPackages = with pkgs; [
-    nerdfonts
     ffmpeg
     p7zip
     jq

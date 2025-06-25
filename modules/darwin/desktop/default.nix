@@ -14,10 +14,9 @@ in {
         symbola
         meslo-lgs-nf
         mononoki
-        nerdfonts
         fira-mono
         fira-code
-      ];
+      ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts) ;
 
 
     ## Apps/Services

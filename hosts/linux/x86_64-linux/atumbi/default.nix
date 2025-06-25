@@ -30,11 +30,11 @@ in
       media = {
         documents = {
           enable = true;
-          pdf.enable = true;
         };
         graphics.enable = true;
         mpv.enable = true;
         recording.enable = true;
+        discord.enable = true;
       };
       term = {
         default = "ghostty";
@@ -74,8 +74,8 @@ in
         useTomb = true;
       };
       tmux.enable   = true;
-      zsh.enable    = false;
-      nushell.enable = true;
+      zsh.enable    = true;
+      nushell.enable = false;
     };
     services = {
       backup = {

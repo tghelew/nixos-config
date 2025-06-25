@@ -121,10 +121,7 @@ in {
       nushell.rcFiles = [ "${configDir}/emacs/aliases.nu" ];
     };
 
-    myfonts.packages = with pkgs;
-      [
-        nerdfonts
-      ];
+    myfonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
     #NOTE: This is not strictly repoducable as it follow the main branch wihtout hash!
     #WARNING: ssh must be installed and properly configure to fetch this private repository

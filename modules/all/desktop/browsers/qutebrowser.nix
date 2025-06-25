@@ -32,7 +32,7 @@ in {
       })
       # For Brave adblock in qutebrowser, which is significantly better than the
       # built-in host blocking. Works on youtube and crunchyroll ads!
-      python39Packages.adblock
+      python313Packages.adblock
     ];
 
     home = {
@@ -53,7 +53,7 @@ in {
       	name="installquteBrowserDicts";
         runtimeInputs = with pkgs; [
             which
-            nixVersions.nix_2_23
+            nixVersions.latest
             gnugrep
             findutils
       ];

@@ -32,6 +32,7 @@ in {
     (mkIf cfg.zfs.enable (mkMerge [
       {
         boot.loader.grub.copyKernels = true;
+        boot.initrd.supportedFilesystems.zfs = true;
         boot.supportedFilesystems = [ "zfs" ];
         boot.zfs.devNodes = "/dev/mapper";
         boot.zfs.package = pkgs.zfs;

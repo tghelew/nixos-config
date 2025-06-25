@@ -11,11 +11,11 @@
 
   inputs =
     {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";                   # Default Stable Nix Packages
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";                   # Default Stable Nix Packages
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";       # Unstable Nix Packages
 
       home-manager = {                                                    # User Package Management
-        url = "github:nix-community/home-manager/release-24.11";
+        url = "github:nix-community/home-manager/release-25.05";
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
@@ -57,6 +57,11 @@
       hyprpanel = {
           url = "github:Jas-SinghFSU/HyprPanel";
           inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
+      programs-sqlite = {
+        url = "github:wamserma/flake-programs-sqlite";
+        inputs.nixpkgs.follows = "nixpkgs";
       };
     };
 

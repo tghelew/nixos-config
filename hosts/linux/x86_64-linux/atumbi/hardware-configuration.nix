@@ -16,7 +16,7 @@
         preLVM = true;
       };
     };
-    kernelModules = [ "kvm-intel" "i915" "nouveau"];
+    kernelModules = ["i915" "nouveau"];
     extraModulePackages = [];
     kernelParams = [
       # HACK Disables fixes for spectre, meltdown, L1TF and a number of CPU
@@ -32,7 +32,7 @@
     # Refuse ICMP echo requests on my desktop/laptop;
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
     # Kernel : zfs failed to build with latest
-    kernelPackages = pkgs.linuxPackages_6_13;
+    kernelPackages = pkgs.linuxPackages;
   };
 
   # acpi
@@ -41,10 +41,6 @@
   ];
 
   # GPU
-  environment.variables = {
-    VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (lib.mkDefault "va_gl");
-  };
-
   hardware = {
 
     nvidia = {
@@ -74,7 +70,7 @@
       nvidiaSettings = true;
 
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
-      package = config.boot.kernelPackages.nvidiaPackages.legacy_370;
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
 
       prime = {
         intelBusId = "PCI:0:2:0";

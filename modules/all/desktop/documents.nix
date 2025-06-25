@@ -8,15 +8,13 @@ let cfg = config.modules.desktop.media.documents;
 in {
   options.modules.desktop.media.documents = {
     enable = mkBoolOpt false;
-    pdf.enable = mkBoolOpt false;
-    ebook.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
     user.packages = with pkgs; [
-      (mkIf cfg.ebook.enable calibre)
-      (mkIf cfg.pdf.enable   evince)
-      (mkIf cfg.pdf.enable   zathura)
+      kdePackages.okular
+      evince
+      zathura
     ];
 
     # TODO calibre/evince/zathura config and theme
