@@ -20,6 +20,8 @@ in
       i3.enable = false;
       apps = {
         rofi.enable = true;
+        thunderbird.enable = true;
+        obsidian.enable = true;
       };
       browsers = {
         default = "qutebrowser";
@@ -42,7 +44,7 @@ in
         ghostty.enable = true;
       };
       vm = {
-        virtualbox.enable = true;
+        virtualbox.enable = false;
       };
       filemanager = {
         default = "yazi";

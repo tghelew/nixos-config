@@ -8,7 +8,7 @@
 with lib;
 with lib.my;
 let cfg = config.modules.desktop.browsers.qutebrowser;
-    pkg = pkgs.unstable.qutebrowser;
+    pkg = pkgs.qutebrowser;
     configDir = config.nixos-config.configDir;
 in {
   options.modules.desktop.browsers.qutebrowser = with types; {
