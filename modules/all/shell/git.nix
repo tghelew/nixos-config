@@ -14,10 +14,12 @@ in {
       #FIXME: failing on darwin gitAndTools.git-annex
       unstable.gitAndTools.gh
       gitAndTools.git-open
+      gitAndTools.lfs
       gitAndTools.diff-so-fancy
       (mkIf config.modules.shell.gnupg.enable
         gitAndTools.git-crypt)
       act
+      git-lfs
     ];
 
     home.configFile = {

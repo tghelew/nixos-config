@@ -29,6 +29,8 @@ in {
             icons.size = 7;
             highres.name = "Fira Code Nerd Font";
             lowres.name = "Fira Code Nerd Font";
+            highres.size = 12;
+            lowres.size = 10;
           };
           colors = {
             black         = "#3b4252";
@@ -159,6 +161,14 @@ in {
           "mpv/theme.conf".text = import ./config/mpv/theme.conf theme;
 
         })
+
+        (mkIf (desktop.niri.enable) {
+          "waybar/config".text = builtins.toJSON (import ./config/waybar/config theme);
+          "waybar/style.css".text = import ./config/waybar/style.css theme;
+          "mako/theme".text = import ./config/mako/config theme;
+          "swaylock/config".source = ./config/swaylock/config;
+        })
+
         (mkIf (shell.nushell.enable) {
           "starship.toml".source = ./config/starship.toml;
         })

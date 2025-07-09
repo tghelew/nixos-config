@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs,... }:
 
 with lib;
 with lib.my;
@@ -10,8 +10,6 @@ in
     enable = mkBoolOpt false;
   };
   config = mkIf cfg.enable {
-
-    nixpkgs.overlays = [ inputs.hyprpanel.overlay ];
 
     services.upower = {
      enable = true;

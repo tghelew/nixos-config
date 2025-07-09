@@ -25,7 +25,7 @@ bold_italic_font auto
 
 #: Font size (in pts)
 #: TODO: maybe add specific font size for terminal
-font_size ${toString fonts.highres.size}
+font_size 10
 
 
 # force_ltr no

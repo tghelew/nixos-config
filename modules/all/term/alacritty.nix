@@ -16,14 +16,14 @@ in
 
     user.packages = with pkgs; [
       alacritty
-      (optionals pkgs.stdenv.isLinux  (makeDesktopItem {
-        name = "Alacritty Single Instance";
-        desktopName = "Alacritty Single Instance";
-        genericName = "Default terminal";
-        icon = "utilities-terminal";
-        exec = "${alacritty} msg create-window || ${alacritty}";
-        categories = [ "Development" "System" "Utility" ];
-      }))
+      # (optionals pkgs.stdenv.isLinux  (makeDesktopItem {
+      #   name = "Alacritty Single Instance";
+      #   desktopName = "Alacritty Single Instance";
+      #   genericName = "Default terminal";
+      #   icon = "utilities-terminal";
+      #   exec = "${alacritty} msg create-window || ${alacritty}";
+      #   categories = [ "Development" "System" "Utility" ];
+      # }))
     ];
     home.configFile."alacritty/alacritty.yml".text =
       import "${configDir}/alacritty/alacritty.yml" { inherit config pkgs; };

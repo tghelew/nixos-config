@@ -1,6 +1,9 @@
-{pkgs, ...}:
+{pkgs, config, ...}:
+let
+  binDir = config.nixos-config.binDir;
+in
 ''
-timeout 180 '${pkgs.swaylock-effects}/bin/swaylock'
-timeout 300 '[[ $XDG_CURRENT_DESKTOP == "Hyprland" ]] && ${pkgs.unstable.hyprland}/bin/hyprctl dispatch dpms off' resume  '[[ $XDG_CURRENT_DESKTOP == "Hyprland" ]] && ${pkgs.unstable.hyprland}/bin/hyprctl dispatch dpms on'
-before-sleep '${pkgs.swaylock-effects}/bin/swaylock'
+timeout 180 '${binDir}/lock'
+timeout 1800 'doas systemctl start suspend.target'
+before-sleep '${binDir}/lock'
 ''

@@ -15,8 +15,9 @@ in
   ## Modules
   modules = with config.modules;{
     desktop = {
-      hypr.enable = true;
-      hyprpanel.enable = true;
+      niri.enable = true;
+      hypr.enable = false;
+      hyprpanel.enable = false;
       i3.enable = false;
       apps = {
         rofi.enable = true;
@@ -40,8 +41,8 @@ in
       };
       term = {
         default = "ghostty";
-        kitty.enable = false;
         ghostty.enable = true;
+        kitty.enable = false;
       };
       vm = {
         virtualbox.enable = false;
@@ -56,6 +57,7 @@ in
       zig.enable = true;
       rust.enable = true;
       python.enable = true;
+      lua.enable = true;
     };
     editors = {
       emacs.enable = true;

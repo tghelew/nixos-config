@@ -23,6 +23,7 @@ in {
         lua
         luaPackages.moonscript
         (mkIf cfg.love2D.enable love2d)
+        lua-language-server
       ];
     })
   ];

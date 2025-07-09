@@ -1,0 +1,8 @@
+{ colors, fonts, ... }:
+''
+font=${fonts.sans.name} ${toString(fonts.sans.size)}
+background-color=${colors.types.bg}
+text-color=${colors.types.fg}
+border-color=${colors.blue}
+default-timeout=5000
+''

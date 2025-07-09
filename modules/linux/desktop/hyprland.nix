@@ -42,6 +42,7 @@ in {
         hyprlock
         hyprpicker
         wtype
+        hyprlandPlugins.hyprscrolling
       ];# ++ [ mkIf cfg.hyprsome internal.hyprsome ];
     };
 

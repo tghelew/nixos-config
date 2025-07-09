@@ -63,6 +63,11 @@
         url = "github:wamserma/flake-programs-sqlite";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      niri = {
+          url = "github:tghelew/niri-flake";
+          inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
   outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable, darwin, ... }:
@@ -81,17 +86,16 @@
         config.allowBroken = true;  # forgive me machine
         overlays = extraOverlays ++ (pkgs.lib.attrValues self.overlays.${system});
       };
-
-      internal = system: pkgs: lib: if (! lib.my.isDirNixEmpty ./packages) then
-            lib.my.mapModules ./packages/all (p: pkgs.callPackage p {}) //
-            lib.mkIf pkgs.stdenv.isLinux (lib.my.mapModules ./packages/linux (p: pkgs.callPackage p {})) //
-            lib.mkIf pkgs.stdenv.isDarwin (lib.my.mapModules ./packages/darwin (p: pkgs.callPackage p {}))
+      internal = system: pkgs: lib: if !(lib.my.isDirNixEmpty ./packages) then
+          lib.my.mapModules ./packages/all (p: pkgs.callPackage p {}) //
+          (if pkgs.stdenv.isLinux then (lib.my.mapModules ./packages/linux (p: pkgs.callPackage p {}))
+           else lib.my.mapModules ./packages/darwin (p: pkgs.callPackage p {}))
           else
             {};
 
       pkgsFor  = system:  mkPkgs nixpkgs system [ self.overlays.${system}.default ];
       pkgsFor' = system:  mkPkgs nixpkgs-unstable system [];
-      pkgsFor'' = system: lib: mkPkgs nixpkgs system [(internal system nixpkgs lib)];
+      pkgsFor''= system: internal system (pkgsFor system) (libFor system);
 
       libFor = system:
         let
@@ -107,7 +111,7 @@
         default =
           final: prev: {
             unstable = pkgsFor' system;
-            internal = pkgsFor'' system (libFor system);
+            internal = pkgsFor'' system;
           };
       } // ((libFor system).my.mapModules ./overlays import);
 
@@ -150,14 +154,6 @@
             program = ./bin/tnix;
           };
         };
-
-      mypkgs = system:
-        let
-          lib = (libFor system);
-          pkgs = (pkgsFor'' system (libFor system));
-
-       in
-         pkgs;
 
     in
     {

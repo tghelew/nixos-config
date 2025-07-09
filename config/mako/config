@@ -1,0 +1,3 @@
+max-history=7
+sort=-time
+include=~/.config/mako/theme

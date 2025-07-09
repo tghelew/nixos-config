@@ -1,0 +1,53 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i zsh -p zsh swaybg coreutils procps
+
+# Change the wallpaper given the path to a wallpaper
+usage(){
+    cat <<-EOF
+wallpicker [--help] --path
+Shuffle the wallpapers in [path] and randomly symlink the current wallpaper
+which is named ... current.
+EOF
+}
+  # zparseopts -D -F -K -- \
+  #   {h,-help}=flag_help \
+  #   {v,-verbose}=flag_verbose \
+  #   {f,-filename}:=arg_filename ||
+  #   return 1
+
+  # [[ -z "$flag_help" ]] || { print -l $usage && return }
+  # if (( $#flag_verbose )); then
+  #   print "verbose mode"
+  # fi
+
+  # echo "--verbose: $flag_verbose"
+  # echo "--filename: $arg_filename[-1]"
+  # echo "positional: $@"
+
+zparseopts -D -F --    {p,-path}:=awalldir \
+                       {h,-help}=fhelp || { usage && exit 1 }
+
+
+[[ -z "$afhelp" ]] || {
+  usage
+  exit 0
+}
+
+local _walldir="$awalldir[-1]"
+
+[[ -z "$_walldir" ]] && usage && exit 1
+[[ -d "$_walldir" ]] || {
+  >&2 echo "Folder $_walldir does not exist or permission denied"
+  exit 2
+}
+
+#--- program can finally start
+
+[ -f "$_walldir/current" ] && rm -f "$_walldir/current"
+
+local img=$(find "$_walldir" -type f -o -type l | sort -R | tail -1)
+ln -sf $img "$_walldir"/current
+
+## -- Reload the wallpaper
+pkill swaybg >/dev/null 2>&1
+swaybg -i "$img" -m fill >/dev/null  &
