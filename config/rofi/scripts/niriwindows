@@ -1,0 +1,37 @@
+#!/usr/bin/env zsh
+# List actives windows in all workspaces in order to focus them using rofi
+
+_required_list=(jq niri)
+_clients=$(niri msg --json windows)
+_clients_parsed=$(niri msg --json windows | jq -cr '.[] | "\(.id)|\(.title)"')
+
+for cmd in $_required_list; do
+	if ! command -v $cmd >/dev/null; then
+		exit 2
+	fi
+done
+
+if [ $# -eq 0 ]; then
+	while IFS='|' read -r address title; do
+		if [[ "$title"  == "null" ]]; then 
+			continue
+		fi
+		echo -en "${title}\n"
+	done <<<$_clients_parsed
+fi
+
+if [ $# -eq 1 ]; then
+	selected=$1
+	# Select the first element in the output.
+	window=$(echo ${_clients} | jq ".[] | first(select(.title == \"${selected}\"))")
+	if [[ $window == "" ]]; then
+		exit 1
+	fi
+	address=$(echo ${window} | jq -j ".id")
+	
+	if [[ $address == "" ]]; then
+		exit 1
+	fi
+	coproc zsh -c "niri msg action focus-window  --id $address"
+fi
+

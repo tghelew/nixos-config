@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+rofi -show fb \
+     -modes "fb:$XDG_CONFIG_HOME/rofi/scripts/niriwindows"\
+     -show-icons \
+     -theme theme/windowmenu.rasi
