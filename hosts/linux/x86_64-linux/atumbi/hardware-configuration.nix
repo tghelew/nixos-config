@@ -32,7 +32,7 @@
     # Refuse ICMP echo requests on my desktop/laptop;
     kernel.sysctl."net.ipv4.icmp_echo_ignore_broadcasts" = 1;
     # Kernel : zfs failed to build with latest
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   # acpi

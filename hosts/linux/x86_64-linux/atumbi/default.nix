@@ -61,7 +61,8 @@ in
     };
     editors = {
       emacs.enable = true;
-      emacs.useForEmail = true;
+      emacs.useForEmail = false;
+      emacs.systemd = true;
       vim.enable = true;
       default = editors.emacs.defaultEditor;
     };

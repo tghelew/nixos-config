@@ -45,15 +45,10 @@ in {
     defaultEditor = mkOpt types.str "${cfg.package}/bin/emacsclient -ta '' ";
     package = mkOpt types.package pkgs.emacs;
     useForEmail = mkBoolOpt false;
-    autostart = mkBoolOpt pkgs.stdenv.isDarwin;
+    systemd = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [{
-
-    assertions = [ {
-      assertion = ! cfg.autostart || pkgs.stdenv.isDarwin;
-      message = "Option ${cfg}.autostart is not yet supported on ${pkgs.stdenv.hostPlatform.system}";
-    } ];
 
     nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
 
@@ -131,43 +126,22 @@ in {
     };
   }
 
-   (mkIf cfg.autostart {
-     home.services.emacs= let
-       launchScript = pkgs.writeShellApplication {
-         name = "launchEmacs";
-         text = ''
-          _notify() {
-            local message="$1"
-            if hash osascript 2>/dev/null; then
-              osascript -e "display notification \"$message\" with title \"Emacs Daemon Launch\""
-            elif hash notify-send 2>dev/null; then
-              notify-send "Emacs Daemon Launch" "$message"
-            else
-              echo "No notification program can be found" 1>&2
-            fi
-          }
+   (mkIf cfg.systemd {
+     home.services.emacs={
+      Unit = {
+        Description = "Emacs: the extensible, self documenting text editor";
+        Documentation = "man:emacs";
+      };
 
-          _notify "Attempting to start Emacs..."
-          if ${cfg.package}/bin/emacs --fg-daemon; then
-            _notify "Emacs has started."
-          else
-            _notify "Failed to start Emacs."
-          fi
-         '';
+      Service = {
+        Type = "notify";
+        ExecStart = "${pkgs.runtimeShell} -c 'source ${config.system.build.setEnvironment}; exec ${cfg.package}/bin/emacs --fg-daemon'";
+        SucessExitStatus = 15;
+        Restart = "always";
+      };
 
-       };
-     in {
-       enable = true;
-       config = {
-         enable = true;
-         EnvironmentVariables = {
-           PATH = config.env.PATH;
-           EMACSDIR = config.env.EMACSDIR;
-         };
-         KeepAlive = true;
-         ProgramArguments = ["${launchScript}/bin/launchEmacs"];
-       };
-     };
+      Install = { WantedBy = [ "default.target"  ]; };
+    };
    })
  ]);
 }
