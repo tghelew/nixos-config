@@ -54,7 +54,7 @@ with lib.my;
         inherit description;
       } // linuxXorDarwin
         ({
-          extraGroups = [ "wheel" ];
+          extraGroups = [ "wheel" "scanner" "lp" ];
           isNormalUser = true;
           home = "/home/${name}";
           group = "users";

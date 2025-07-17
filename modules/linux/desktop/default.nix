@@ -38,6 +38,8 @@ in {
       brightnessctl
       usbutils
       mesa-demos
+      system-config-printer
+      simple-scan
     ] ++ optionals (cfg.type == "x11") [
       feh       # image viewer
       xclip
@@ -122,6 +124,21 @@ in {
       };
     };
 
+    ## Printer/Scanner
+    services.printing.enable = true;
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+
+    hardware.sane = {
+      enable = true;
+      extraBackends = [ pkgs.sane-airscan pkgs.epsonscan2];
+
+    };
+    services.udev.packages = [ pkgs.sane-airscan pkgs.epsonscan2 ];
+
     # Try really hard to get QT to respect my GTK theme.
     env.GTK_DATA_PREFIX = [ "${config.system.path}" ];
     env.QT_QPA_PLATFORMTHEME = "gnome";
@@ -138,5 +155,6 @@ in {
       [ -s .xsession-errors ] || rm -f .xsession-errors*
       popd
     '';
+
   };
 }
