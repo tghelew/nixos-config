@@ -66,7 +66,7 @@ in
         output = "DP-2-1";
         primary = false;
         monitorConfig = ''
-         Option "PreferredMode" "1920x1080"
+         Option "PreferredMode" "2560x1440_60.00"
          Option "LeftOf" "DP-2-2"
          Option "Rotate" "Left"
         '';
@@ -115,7 +115,7 @@ in
         ExecStart = "${pkgs.dunst}/bin/dunst";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
+      Install = { WantedBy = [ "default.target"  ]; };
     };
 
 

@@ -135,6 +135,7 @@ in {
       user.packages = with pkgs; [
         nordic
         paper-icon-theme # for rofi
+        nordzy-cursor-theme
       ];
 
 

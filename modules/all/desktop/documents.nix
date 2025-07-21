@@ -15,8 +15,8 @@ in {
       kdePackages.okular
       evince
       zathura
+      calibre
     ];
 
-    # TODO calibre/evince/zathura config and theme
   };
 }

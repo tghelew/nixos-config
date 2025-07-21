@@ -19,6 +19,9 @@ for s in ${server[@]};do
     ssh $s mkdir -p backup/machine/$_hostname
     _rcp /home/thierry/projects $s:~/backup/machine/$_hostname/
     _rcp /home/thierry/documents $s:~/backup/machine/$_hostname/
+    if [[ -d ~/.thunderbird ]]; then
+        _rcp /home/thierry/.thunderbird $s:~/backup/machine/$_hostname/
+    fi
     if [[ -d /data ]];then
         _rcp /data $s:~/backup/machine/$_hostname/
     fi

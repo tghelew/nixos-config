@@ -44,6 +44,9 @@ in {
         xwayland-satellite
         copyq
         internal.tomatrix
+        # TODO move this elsewhere(rofi)
+        # 🤣😀
+        bemoji
       ];
     };
 

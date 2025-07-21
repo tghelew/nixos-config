@@ -101,7 +101,7 @@ in
         enable = true;
         noPass = true;
       };
-      docker.enable = true;
+      docker.enable = false;
       openssh.enable = true;
     };
     theme = {

@@ -66,6 +66,13 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
+cursor {
+    xcursor-theme "nordzy-cursor"
+    xcursor-size 16
+
+    hide-when-typing
+    hide-after-inactive-ms 1000
+}
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
 // The built-in laptop monitor is usually called "eDP-1".
@@ -82,7 +89,7 @@ output "Dell Inc. DELL S3222DGM JPP8KK3" {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "2560x1440"
+    mode "2560x1440@60"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
     scale 1.0
@@ -101,7 +108,7 @@ output "Dell Inc. DELL S3222DGM JPP8KK3" {
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
 }
-output "ASUSTek COMPUTER INC VY249HF S6LMRS017679" {
+output "PNP(AOC) Q24P2W1 1U0QBHA000656" {
     // Uncomment this line to disable this output.
     //off
 
@@ -111,7 +118,7 @@ output "ASUSTek COMPUTER INC VY249HF S6LMRS017679" {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080"
+    mode "2560x1440@75"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
 
@@ -128,6 +135,7 @@ output "ASUSTek COMPUTER INC VY249HF S6LMRS017679" {
     // so to put another output directly adjacent to it on the right, set its x to 1920.
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
+    position x=1440 y=0
 }
 output "eDP-1" {
     // Uncomment this line to disable this output.
@@ -211,10 +219,10 @@ layout {
     // You can change how the focus ring looks.
     focus-ring {
         // Uncomment this line to disable the focus ring.
-        // off
+        //off
 
         // How many logical pixels the ring extends out from the windows.
-        width 4
+        width 2
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -222,10 +230,10 @@ layout {
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
         // Color of the ring on the active monitor.
-        active-color "#81a1c1"
+        active-color "#81a1c19F"
 
         // Color of the ring on inactive monitors.
-        inactive-color "#3b4252"
+        inactive-color "#3b425200"
 
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
@@ -234,13 +242,13 @@ layout {
         // You can use any CSS linear-gradient tool on the web to set these up.
         // Changing the color space is also supported, check the wiki for more info.
         //
-        // active-gradient from="#80c8ff" to="#bbddff" angle=45
+        //active-gradient from="#80c8ff" to="#bbddff" angle=45
 
         // You can also color the gradient relative to the entire view
         // of the workspace, rather than relative to just the window itself.
         // To do that, set relative-to="workspace-view".
         //
-        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+        //inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
 
     // You can also add a border. It is similar to the focus ring, but always visible.
@@ -272,13 +280,13 @@ layout {
         // radius. It has to assume that windows have square corners, leading to
         // shadow artifacts inside the CSD rounded corners. This setting fixes
         // those artifacts.
-        // 
+        //
         // However, instead you may want to set prefer-no-csd and/or
         // geometry-corner-radius. Then, niri will know the corner radius and
         // draw the shadow correctly, without having to draw it behind the
         // window. These will also remove client-side shadows if the window
         // draws any.
-        // 
+        //
         // draw-behind-window true
 
         // You can change how shadows look. The values below are in logical
@@ -408,6 +416,7 @@ binds {
     Mod+Return   hotkey-overlay-title="Open a Terminal: Ghostty" { spawn "ghostty"; }
     Mod+Space    hotkey-overlay-title="Run an Application: Rofi" { spawn "/etc/dotfiles/bin/rofi/appmenu"; }
     Mod+Tab      hotkey-overlay-title="Focus an Application: Rofi" { spawn "/etc/dotfiles/bin/rofi/niriwindowsmenu"; }
+    Mod+E        hotkey-overlay-title="Emoji Picker: Rofi" { spawn "bemoji" "-t"; }
     Mod+Alt+L   allow-when-locked=true hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Mod+Ctrl+Alt+Shift+W hotkey-overlay-title="Change Wallpaper" {spawn "sway-wallpaper" "--path" "/home/thierry/.local/share/wallpapers";}
 

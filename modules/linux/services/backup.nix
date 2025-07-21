@@ -24,17 +24,21 @@ in {
         ExecStart = "${binDir}/backup";
       };
 
-      Install = { WantedBy = [ "xdg-desktop-portal-hyprland.service"  ]; };
+      Install = { WantedBy = [ "default.target"  ]; };
     };
 
     systemd.user.timers = {
     backup = {
-        description = "Backup schedule";
-        timerConfig = {
-          OnBootSec=60;
-          Unit = "backup";
-          OnCalendar = if (cfg.frequency == null) then "60min" else cfg.frequency;
-        };
+      enable = true;
+      unitConfig = {
+        Description = "Backup Schedule";
+      };
+      timerConfig = {
+        OnBootSec=60;
+        Unit = "backup.service";
+        OnCalendar = if (cfg.frequency == null) then "hourly" else cfg.frequency;
+      };
+      wantedBy = ["timers.target"];
       };
     };
   };
