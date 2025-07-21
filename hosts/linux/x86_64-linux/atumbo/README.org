@@ -1,0 +1,21 @@
+#+TITLE: Atumbi
+#+DATE:  Friday, 22 Nov. 202j4
+
+* Overview
+My Linux laptop (Lenovo T480) in order to do linux stuff...
+with zfs.
+* Specs
+/Lenovo T480/
+
+* Installation
+** TBD - Full Disk encryption with detached header
+#+BEGIN_SRC sh
+#+END_SRC
+
+** TBD - Partition
+#+BEGIN_SRC sh
+#+END_SRC
+
+** TBD -  Mount drives
+#+BEGIN_SRC sh
+#+END_SRC

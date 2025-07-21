@@ -63,7 +63,7 @@ in {
       packages = with pkgs; [
         ubuntu_font_family
         dejavu_fonts
-        symbola
+        #symbola
         meslo-lgs-nf
         mononoki
         font-awesome

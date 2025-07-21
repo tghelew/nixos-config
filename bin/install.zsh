@@ -9,7 +9,7 @@ zparseopts -E -F -D -- -flake:=aflake \
                        -root::=aroot || exit 1
 
 local root="${aroot[2]:-/mnt}"
-local flake="${aflake[2]:-$/etc/nixos-config}"
+local flake="${aflake[2]:-/etc/dotfiles}"
 local host="${ahost[2]}"
 local user="${auser[2]:-thierry}"
 local dest="${adest[2]:-$root/etc/dotfiles}"
