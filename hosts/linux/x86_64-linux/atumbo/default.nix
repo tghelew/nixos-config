@@ -15,7 +15,10 @@ in
   ## Modules
   modules = with config.modules;{
     desktop = {
-      niri.enable = true;
+      niri = {
+        enable = true;
+        confInternal = true;
+      };
       hypr.enable = false;
       hyprpanel.enable = false;
       i3.enable = false;

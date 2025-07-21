@@ -413,7 +413,7 @@ binds {
     Mod+I { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+Return   hotkey-overlay-title="Open a Terminal: Ghostty" { spawn "ghostty"; }
+    Mod+Return   hotkey-overlay-title="Open a Terminal: "Kitty" { spawn "kitty"; }
     Mod+Space    hotkey-overlay-title="Run an Application: Rofi" { spawn "/etc/dotfiles/bin/rofi/appmenu"; }
     Mod+Tab      hotkey-overlay-title="Focus an Application: Rofi" { spawn "/etc/dotfiles/bin/rofi/niriwindowsmenu"; }
     Mod+E        hotkey-overlay-title="Emoji Picker: Rofi" { spawn "bemoji" "-t"; }
