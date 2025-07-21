@@ -13,6 +13,7 @@ in {
 
   options.modules.desktop.niri = {
     enable = mkBoolOpt false;
+    confInternal = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable {
@@ -100,7 +101,8 @@ in {
     home.configFile = {
       "swayidle/config".text = import "${configDir}/swayidle/config" {inherit pkgs config;};
       "mako/config".source = "${configDir}/mako/config";
-      "niri/config.kdl".source = "${configDir}/niri/config.kdl";
+      "niri/config.kdl".source = if cfg.confInternal then
+        "${configDir}/niri/config-internal.kdl" else "${configDir}/niri/config-external.kdl";
     };
   };
 }
