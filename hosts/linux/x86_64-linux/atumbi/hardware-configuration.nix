@@ -169,7 +169,11 @@
         "gid=users"
       ];
     };
+<<<<<<< HEAD
   swapDevices = [ {device = "/swap/swapfile";}];
+=======
+  swapDevices = [ { device = "/swap/swapfile"; } ];
+>>>>>>> 1a99217 (host: atumbi update agenix secrets)
   #Misc
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
