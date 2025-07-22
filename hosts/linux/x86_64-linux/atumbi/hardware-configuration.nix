@@ -10,7 +10,7 @@
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
-        device = "/dev/disk/by-partuuid/f3b84b6d-e9d2-4fa7-a1bf-8c0d99c81156";
+        device = "/dev/disk/by-partuuid/a66ae27e-5aa3-4f15-81e9-84ce8e44ed60";
         header = "/dev/disk/by-partuuid/0a139090-c68e-44a8-8293-6ca6d359d089";
         allowDiscards = true;
         preLVM = true;
@@ -115,35 +115,41 @@
 
   # Storage
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = ["subvolume=root" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = ["subvolume=home" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = ["subvolume=nix" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
   fileSystems."/etc" =
-    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = ["subvolume=etc" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
-  fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+  fileSystems."/var" =
+    { device = "/dev/disk/by-label/nixos";
+      fsType = "btrfs";
+      options = ["subvolume=var" "compress=zstd" "noatime"];
+      neededForBoot = true;
+    };
+  fileSystems."/swap" =
+    { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
       options = ["subvolume=log" "compress=zstd" "noatime"];
       neededForBoot = true;
@@ -163,7 +169,7 @@
         "gid=users"
       ];
     };
-  swapDevices = [];
+  swapDevices = [ device={"/swap/swapfile";}];
   #Misc
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
