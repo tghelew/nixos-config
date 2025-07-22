@@ -117,41 +117,41 @@
   fileSystems."/" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = ["subvolume=root" "compress=zstd" "noatime"];
+      options = ["subvol=root" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
   fileSystems."/home" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = ["subvolume=home" "compress=zstd" "noatime"];
+      options = ["subvol=home" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
   fileSystems."/nix" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = ["subvolume=nix" "compress=zstd" "noatime"];
+      options = ["subvol=nix" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
   fileSystems."/etc" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = ["subvolume=etc" "compress=zstd" "noatime"];
+      options = ["subvol=etc" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
   fileSystems."/var" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = ["subvolume=var" "compress=zstd" "noatime"];
+      options = ["subvol=var" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
   fileSystems."/swap" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "btrfs";
-      options = ["subvolume=log" "compress=zstd" "noatime"];
+      options = ["subvol=swap" "compress=zstd" "noatime"];
       neededForBoot = true;
     };
 
