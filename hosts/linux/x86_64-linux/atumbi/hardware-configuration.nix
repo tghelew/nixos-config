@@ -10,7 +10,7 @@
     initrd.luks.reusePassphrases = true;
     initrd.luks.devices = {
       crypted = {
-        device = "/dev/disk/by-partuuid/09b23c8e-a1d5-46a4-b3a1-525c5776eaf5";
+        device = "/dev/disk/by-partuuid/f3b84b6d-e9d2-4fa7-a1bf-8c0d99c81156";
         header = "/dev/disk/by-partuuid/0a139090-c68e-44a8-8293-6ca6d359d089";
         allowDiscards = true;
         preLVM = true;
@@ -96,8 +96,7 @@
     fs = {
       enable = true;
       ssd.enable = true;
-      zfs.enable = true;
-      zfs.autoSnapshot = true;
+      btrfs.enable = true;
       automount.enable = true;
     };
     sensors.enable = true;
@@ -116,23 +115,38 @@
 
   # Storage
   fileSystems."/" =
-    { device = "rpool/system/root";
-      fsType = "zfs";
+    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+      fsType = "btrfs";
+      options = ["subvolume=root" "compress=zstd" "noatime"];
+      neededForBoot = true;
     };
 
   fileSystems."/home" =
-    { device = "rpool/users/home";
-      fsType = "zfs";
+    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+      fsType = "btrfs";
+      options = ["subvolume=home" "compress=zstd" "noatime"];
+      neededForBoot = true;
     };
 
   fileSystems."/nix" =
-    { device = "rpool/local/nix";
-      fsType = "zfs";
+    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+      fsType = "btrfs";
+      options = ["subvolume=nix" "compress=zstd" "noatime"];
+      neededForBoot = true;
     };
 
-  fileSystems."/var" =
-    { device = "rpool/system/var";
-      fsType = "zfs";
+  fileSystems."/etc" =
+    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+      fsType = "btrfs";
+      options = ["subvolume=etc" "compress=zstd" "noatime"];
+      neededForBoot = true;
+    };
+
+  fileSystems."/var/log" =
+    { device = "/dev/disk/by-uuid/6eb25224-cbc1-49cf-89d4-74da1cf93901";
+      fsType = "btrfs";
+      options = ["subvolume=log" "compress=zstd" "noatime"];
+      neededForBoot = true;
     };
 
   fileSystems."/boot" =

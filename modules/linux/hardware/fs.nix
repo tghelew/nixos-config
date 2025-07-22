@@ -10,6 +10,7 @@ in {
     zfs.autoSnapshot = mkBoolOpt false;
     ssd.enable = mkBoolOpt false;
     automount.enable = mkBoolOpt false;
+    btrfs.enable = mkBoolOpt false;
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -29,6 +30,19 @@ in {
       services.fstrim.enable = true;
     })
 
+    (mkIf cfg.btrfs.enable (mkMerge [
+      {
+        boot.initrd.supportedFilesystems.btrfs = true;
+        boot.supportedFilesystems = [ "btrfs" ];
+        services.btrfs.autoScrub.enable = true;
+      }
+
+      (mkIf cfg.ssd.enable {
+        # Will only TRIM SSDs; skips over HDDs
+        services.fstrim.enable = true;
+      })
+
+    ]))
     (mkIf cfg.zfs.enable (mkMerge [
       {
         boot.loader.grub.copyKernels = true;
