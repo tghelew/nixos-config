@@ -236,7 +236,6 @@ in
            commandX = ''
              if [ -d "$XDG_DATA_HOME/wallpapers" ]; then
                ${pkgs.feh}/bin/feh --bg-${wCfg.mode} --recursive --randomize \
-                 ${optionalString wCfg.combineScreens "--no-xinerama"} \
                  --no-fehbg \
                  $XDG_DATA_HOME/wallpapers
              fi

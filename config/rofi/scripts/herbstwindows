@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+# List actives windows in all workspaces in order to focus them using rofi
+
+_required_list=(herbstclient wmctrl)
+_clients=$(wmctrl -l | sed -re 's/^[ ]*//'| sed '/ 9/d' | cut -d' ' -f1,5- )
+
+hc() { ${herbstclient_command:-herbstclient} "$@" ;}
+
+for cmd in $_required_list; do
+	if ! command -v $cmd >/dev/null; then
+		exit 2
+	fi
+done
+
+if [ $# -eq 0 ]; then
+	while IFS=' ' read -r address title; do
+		if [[ "$title"  == "null" ]]; then 
+			continue
+		fi
+		echo -en "${title}\n"
+	done <<<$_clients
+fi
+
+if [ $# -eq 1 ]; then
+	selected=$1
+	# Select the first element in the output.
+	window=$(echo ${_clients} | grep "$selected" | cut -d' ' -f1)
+	if [[ $window == "" ]]; then
+		exit 1
+	fi
+
+	hc jumpto $window
+fi

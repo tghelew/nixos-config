@@ -19,10 +19,11 @@ in
       hypr.enable = false;
       hyprpanel.enable = false;
       i3.enable = false;
+      herbst.enable = false;
       apps = {
         rofi.enable = true;
         thunderbird.enable = true;
-        obsidian.enable = true;
+        obsidian.enable = false;
       };
       browsers = {
         default = "qutebrowser";
@@ -118,8 +119,5 @@ in
 
   #gnupg
   home.configFile."gnupg/gpg.conf" = {source = "${configDir}/gnupg/gpg.conf";};
-
-  ## Personal backups
-  #TODO: Backups to tomb
 
 }

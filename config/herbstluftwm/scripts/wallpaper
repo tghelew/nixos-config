@@ -1,0 +1,3 @@
+#!/bin/sh
+feh --bg-scale --recursive --randomize --no-fehbg $XDG_DATA_HOME/wallpapers
+

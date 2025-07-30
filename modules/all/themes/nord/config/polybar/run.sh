@@ -1,36 +1,17 @@
 #!/usr/bin/env bash
 
-group_a=( clock date date_day )
-group_b=( memory cpu fs-root fs-home )
+# Terminate already running bar instances
+pkill -u $UID -x polybar
 
-msg() {
-  action="module_$1"
-  shift
-  for mod in "$@"; do
-    polybar-msg action "$mod" "$action"
+# Wait until the processes have been shut down
+while pgrep -q-u $UID -x polybar >/dev/null; do sleep 1; done
+
+if type "xrandr"; then
+  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+    MONITOR=$m polybar --reload main &
   done
-}
-
-if [[ "$1" == "switch" ]]; then
-case "$2" in
-  0)
-    msg hide "${group_b[@]}"
-    msg show "${group_a[@]}"
-    ;;
-  1)
-    msg show "${group_b[@]}"
-    msg hide "${group_a[@]}"
-    ;;
-esac
 else
-  pkill -u $UID -x polybar
-  while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-
-  echo 'Launching Polybar...'
-  {
-    sleep 1
-    polybardir="$XDG_DATA_HOME/polybar"
-    mkdir -p "$polybardir"
-    polybar main >"$polybardir/main.log" 2>&1 &
-  } &
+  polybar --reload main &
 fi
+
+echo "Bars launched..."

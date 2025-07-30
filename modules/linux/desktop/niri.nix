@@ -1,9 +1,9 @@
 
-{ options, config, lib, pkgs, inputs, ... }:
+{ options, config, lib, pkgs, ... }:
 
 with lib;
 with lib.my;
-let inherit (inputs) niri;
+let
   cfg = config.modules.desktop.niri;
   configDir = config.nixos-config.configDir;
   binDir = config.nixos-config.binDir;
@@ -20,7 +20,6 @@ in {
 
     modules.desktop.type = "wayland";
 
-    nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 
     environment = {
 
@@ -66,7 +65,6 @@ in {
     };
     programs.niri = {
       enable = true;
-      package = pkgs.niri-unstable;
     };
 
 

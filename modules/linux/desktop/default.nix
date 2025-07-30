@@ -40,12 +40,14 @@ in {
       mesa-demos
       system-config-printer
       simple-scan
+      btop
     ] ++ optionals (cfg.type == "x11") [
       feh       # image viewer
       xclip
       xdotool
       xorg.xwininfo
       xorg.xmodmap
+      xorg.xev
     ]
     ++ optionals (cfg.type == "wayland") [
         wl-clipboard
@@ -53,7 +55,6 @@ in {
         handlr
         wev
         swappy
-        btop
         libsForQt5.polkit-kde-agent
     ];
 

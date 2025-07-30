@@ -3,7 +3,7 @@
 with lib;
 with lib.my;
 let
-  cfg = config.modules.desktop.i3;
+  cfg = config.modules.desktop.herbst;
   theme = config.modules.theme;
   configDir = config.nixos-config.configDir;
   binDir = config.nixos-config.binDir;
@@ -12,7 +12,7 @@ let
 in
 {
 
-  options.modules.desktop.i3 = {
+  options.modules.desktop.herbst = {
     enable = mkBoolOpt false;
   };
 
@@ -24,9 +24,10 @@ in
       mesa-demos
       dunst
       polybarFull
+      wmctrl
     ];
     services = {
-      displayManager.defaultSession = "none+i3";
+      displayManager.defaultSession = "none+herbstluftwm";
       xserver = {
         enable = true;
         displayManager = {
@@ -37,7 +38,7 @@ in
           };
         };
         windowManager = {
-          i3.enable = true;
+          herbstluftwm.enable = true;
         };
       };
     };
@@ -71,6 +72,10 @@ in
       }
     ];
 
+    services.displayManager = {
+        autoLogin.enable = true;
+        autoLogin.user = config.user.name;
+    };
     # Login screen theme
     services.xserver = {
       xautolock = {
@@ -79,8 +84,6 @@ in
         time = 15;
       };
       displayManager ={
-        autoLogin.enable = true;
-        autoLogin.user = config.user.name;
         lightdm = {
           greeters.mini.extraConfig = ''
             [greeter]
@@ -116,9 +119,14 @@ in
       Install = { WantedBy = [ "default.target"  ]; };
     };
 
+    home.configFile = {
+      "herbstluftwm" = {source = "${configDir}/herbstluftwm"; recursive = true;};
+    };
+
 
     programs.i3lock = {
       enable = true;
+      package= pkgs.i3lock-color;
     };
   };
 }

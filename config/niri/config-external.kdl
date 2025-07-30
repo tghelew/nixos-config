@@ -124,7 +124,9 @@ output "PNP(AOC) Q24P2W1 1U0QBHA000656" {
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    transform "90"
+    transform "normal"
+
+    scale 1.3
 
     // Position of the output in the global coordinate space.
     // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -418,7 +420,7 @@ binds {
     Mod+Tab      hotkey-overlay-title="Focus an Application: Rofi" { spawn "/etc/dotfiles/bin/rofi/niriwindowsmenu"; }
     Mod+E        hotkey-overlay-title="Emoji Picker: Rofi" { spawn "bemoji" "-t"; }
     Mod+Alt+L   allow-when-locked=true hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-    Mod+Ctrl+Alt+Shift+W hotkey-overlay-title="Change Wallpaper" {spawn "sway-wallpaper" "--path" "/home/thierry/.local/share/wallpapers";}
+    Mod+Shift+W hotkey-overlay-title="Change Wallpaper" {spawn "sway-wallpaper" "--path" "/home/thierry/.local/share/wallpapers";}
 
     // toggle waybar
     Mod+b     hotkey-overlay-title="Toggle Waybar" { spawn "pkill" "-SIGUSR1" "waybar"; }
@@ -442,23 +444,23 @@ binds {
     Mod+K { focus-window-or-workspace-up; }
     Mod+L { focus-column-or-monitor-right; }
 
-    Mod+Ctrl+Alt+Shift+H  hotkey-overlay-title="Move Column left"       { move-column-left; }
-    Mod+Ctrl+Alt+Shift+J  hotkey-overlay-title="Move Column down"       { move-window-down-or-to-workspace-down; }
-    Mod+Ctrl+Alt+Shift+K  hotkey-overlay-title="Move Column up"         { move-window-up-or-to-workspace-up; }
-    Mod+Ctrl+Alt+Shift+L  hotkey-overlay-title="Move Column right"      { move-column-right; }
+    Mod+Shift+H  hotkey-overlay-title="Move Column left"       { move-column-left; }
+    Mod+Shift+J  hotkey-overlay-title="Move Column down"       { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K  hotkey-overlay-title="Move Column up"         { move-window-up-or-to-workspace-up; }
+    Mod+Shift+L  hotkey-overlay-title="Move Column right"      { move-column-right; }
 
     Mod+Semicolon  hotkey-overlay-title="Focus column first"   { focus-column-first; }
     Mod+Slash      hotkey-overlay-title="Focus column last"    { focus-column-last; }
-    Mod+Shift+Semicolon hotkey-overlay-title="Move column to first" { move-column-to-first; }
-    Mod+Shift+Slash  hotkey-overlay-title="Move column to last"  { move-column-to-last; }
+    // Mod+Shift+Semicolon hotkey-overlay-title="Move column to first" { move-column-to-first; }
+    // Mod+Shift+Slash  hotkey-overlay-title="Move column to last"  { move-column-to-last; }
 
-    Ctrl+Alt+Shift+H   hotkey-overlay-title="Focus monitor left"   { focus-monitor-left; }
-    Ctrl+Alt+Shift+J   hotkey-overlay-title="Focus monitor down"   { focus-monitor-down; }
-    Ctrl+Alt+Shift+K   hotkey-overlay-title="Focus monitor up"   { focus-monitor-up; }
-    Ctrl+Alt+Shift+L   hotkey-overlay-title="Focus monitor right"   { focus-monitor-right; }
+    Mod+Ctrl+H   hotkey-overlay-title="Focus monitor left"   { focus-monitor-left; }
+    Mod+Ctrl+J   hotkey-overlay-title="Focus monitor down"   { focus-monitor-down; }
+    Mod+Ctrl+K   hotkey-overlay-title="Focus monitor up"   { focus-monitor-up; }
+    Mod+Ctrl+L   hotkey-overlay-title="Focus monitor right"   { focus-monitor-right; }
 
-    Mod+Shift+Ctrl+Alt+Semicolon hotkey-overlay-title="Move column to monitor left"    { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+Alt+Slash hotkey-overlay-title="Move column to monitor right"   { move-column-to-monitor-right; }
+    Mod+Shift+Semicolon hotkey-overlay-title="Move column to monitor left"    { move-column-to-monitor-left; }
+    Mod+Shift+Slash hotkey-overlay-title="Move column to monitor right"   { move-column-to-monitor-right; }
 
 
     // And you can also move a whole workspace to another monitor:
@@ -487,20 +489,20 @@ binds {
     // You can set a cooldown on any bind, but it is most useful for the wheel.
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+Shift+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Shift+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
     Mod+WheelScrollRight      { focus-column-right; }
     Mod+WheelScrollLeft       { focus-column-left; }
-    Mod+Ctrl+WheelScrollRight { move-column-right; }
-    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+    Mod+Shift+WheelScrollRight { move-column-right; }
+    Mod+Shift+WheelScrollLeft  { move-column-left; }
 
     // Usually scrolling up and down with Shift in applications results in
     // horizontal scrolling; these binds replicate that.
-    Mod+Shift+WheelScrollDown      { focus-column-right; }
-    Mod+Shift+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    // Mod+Shift+WheelScrollDown      { focus-column-right; }
+    // Mod+Shift+WheelScrollUp        { focus-column-left; }
+    // Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    // Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
     // Similarly, you can bind touchpad scroll "ticks".
     // Touchpad scrolling is continuous, so for these binds it is split into

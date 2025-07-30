@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+num_connected=$(xrandr --query | grep " connected" | wc -l | tr -d ' ' )
+reload=${1:-no}
+
+if [[ $num_connected == "1" ]]; then
+  xrandr --output eDP-1 --auto --primary
+else
+  xrandr --output eDP-1 --off --output DP-2-2 --primary --right-of DP-2-1 --output DP-2-1 --mode 1920x1080
+fi
+
+if [[ reload == "yes" ]]; then
+  sleep 1
+  if [[ $num_connected == "1" ]]; then
+    herbstclient set_monitors 1920x1070+0+10
+  else
+    herbstclient set_monitors 1920x1070+0+10 1920x1070+1920+10
+  fi
+fi

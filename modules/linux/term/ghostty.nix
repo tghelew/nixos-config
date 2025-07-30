@@ -4,7 +4,7 @@
 
 with lib;
 with lib.my;
-let inherit (inputs) ghostty;
+let
   cfg = config.modules.desktop.term.ghostty;
   cfgTerm = config.modules.desktop.term;
   configDir = config.nixos-config.configDir;
@@ -29,7 +29,7 @@ in {
 
     environment = {
       systemPackages = with pkgs; [
-        ghostty.packages.${system}.default
+        ghostty
       ];
     };
   };

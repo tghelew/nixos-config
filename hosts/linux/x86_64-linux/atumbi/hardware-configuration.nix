@@ -7,15 +7,6 @@
 
     initrd.availableKernelModules = [ "bluetooth" "xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" "rtsx_pci_sdmmc"];
     initrd.kernelModules = ["i915" "bluetooth" "nouveau"];
-    initrd.luks.reusePassphrases = true;
-    initrd.luks.devices = {
-      crypted = {
-        device = "/dev/disk/by-partuuid/a66ae27e-5aa3-4f15-81e9-84ce8e44ed60";
-        header = "/dev/disk/by-partuuid/0a139090-c68e-44a8-8293-6ca6d359d089";
-        allowDiscards = true;
-        preLVM = true;
-      };
-    };
     kernelModules = ["i915" "nouveau"];
     extraModulePackages = [];
     kernelParams = [
@@ -96,7 +87,6 @@
     fs = {
       enable = true;
       ssd.enable = true;
-      btrfs.enable = true;
       automount.enable = true;
     };
     sensors.enable = true;
@@ -115,44 +105,18 @@
 
   # Storage
   fileSystems."/" =
-    { device = "/dev/disk/by-label/nixos";
-      fsType = "btrfs";
-      options = ["subvol=root" "compress=zstd" "noatime"];
-      neededForBoot = true;
+    { device = "/dev/vg/root";
+      fsType = "xfs";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-label/nixos";
-      fsType = "btrfs";
-      options = ["subvol=home" "compress=zstd" "noatime"];
-      neededForBoot = true;
+    { device = "/dev/vg/home";
+      fsType = "xfs";
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-label/nixos";
-      fsType = "btrfs";
-      options = ["subvol=nix" "compress=zstd" "noatime"];
-      neededForBoot = true;
-    };
-
-  fileSystems."/etc" =
-    { device = "/dev/disk/by-label/nixos";
-      fsType = "btrfs";
-      options = ["subvol=etc" "compress=zstd" "noatime"];
-      neededForBoot = true;
-    };
-
-  fileSystems."/var" =
-    { device = "/dev/disk/by-label/nixos";
-      fsType = "btrfs";
-      options = ["subvol=var" "compress=zstd" "noatime"];
-      neededForBoot = true;
-    };
-  fileSystems."/swap" =
-    { device = "/dev/disk/by-label/nixos";
-      fsType = "btrfs";
-      options = ["subvol=swap" "compress=zstd" "noatime"];
-      neededForBoot = true;
+    { device = "/dev/vg/nix";
+      fsType = "xfs";
     };
 
   fileSystems."/boot" =
@@ -160,20 +124,8 @@
       fsType = "vfat";
     };
 
-  fileSystems."/data" =
-    { device = "/dev/disk/by-label/DATA";
-      fsType = "vfat";
-      options = [
-        "defaults"
-        "uid=${config.user.name}"
-        "gid=users"
-      ];
-    };
-<<<<<<< HEAD
-  swapDevices = [ {device = "/swap/swapfile";}];
-=======
-  swapDevices = [ { device = "/swap/swapfile"; } ];
->>>>>>> 1a99217 (host: atumbi update agenix secrets)
+  swapDevices = [ {device = "/dev/vg/swap";}];
+
   #Misc
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

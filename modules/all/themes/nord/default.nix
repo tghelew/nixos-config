@@ -23,12 +23,12 @@ in {
           fonts = {
             sans.name = "Fira Sans";
             sans.size = 7;
-            mono.name = "Fira Code";
+            mono.name = "FiraCode";
             mono.size = 7;
-            icons.name = "Fira Code Nerd Font";
+            icons.name = "FiraCode Nerd Font";
             icons.size = 7;
-            highres.name = "Fira Code Nerd Font";
-            lowres.name = "Fira Code Nerd Font";
+            highres.name = "FiraCode Nerd Font";
+            lowres.name = "FiraCode Nerd Font";
             highres.size = 12;
             lowres.size = 10;
           };
@@ -155,6 +155,13 @@ in {
         (mkIf (desktop.i3.enable) {
           "dunst/dunstrc".text = import ./config/dunstrc theme;
           "mpv/theme.conf".text = import ./config/mpv/theme.conf theme;
+          "polybar" = { source = ./config/polybar; recursive = true;};
+        })
+        
+        (mkIf (desktop.herbst.enable) {
+          "dunst/dunstrc".text = import ./config/dunstrc theme;
+          "mpv/theme.conf".text = import ./config/mpv/theme.conf theme;
+          "polybar" = { source = ./config/polybar; recursive = true;};
         })
 
         (mkIf (desktop.hypr.enable) {
