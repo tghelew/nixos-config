@@ -48,16 +48,17 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-font-family = "FiraCode Nerd Font"
+font-family = "JetBrains Mono Nerd Font"
 font-size = 10
 clipboard-read = allow
 clipboard-write = allow
 gtk-single-instance = true
 window-theme = auto
 window-decoration = none
-theme = nord
+theme = catppuccin-mocha
 quick-terminal-position = center
 quick-terminal-animation-duration = 1
+confirm-close-surface = false
 
 #Keybinds
 keybind = global:cmd+slash=toggle_quick_terminal

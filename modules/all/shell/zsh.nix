@@ -58,6 +58,7 @@ in {
         ripgrep
         du-dust
         lsof
+        fastfetch
       ];
 
       env = {

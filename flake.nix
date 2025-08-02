@@ -63,11 +63,6 @@
         url = "github:wamserma/flake-programs-sqlite";
         inputs.nixpkgs.follows = "nixpkgs";
       };
-
-      niri = {
-          url = "github:tghelew/niri-flake";
-          inputs.nixpkgs.follows = "nixpkgs";
-        };
     };
 
   outputs = inputs @ {self ,nixpkgs ,nixpkgs-unstable, darwin, ... }:
@@ -169,14 +164,6 @@
       darwinConfigurations = builtins.foldl' (a: b: a // b) {} myDarwinConfigurations;
 
       devShells = forAllSystems devShell;
-
-      templates = {
-        default = self.templates.full;
-        full = {
-          path = ./.;
-          description = "A grossly incandescent nixos config";
-        };
-      } // import ./templates;
 
       apps = forAllSystems app;
     };

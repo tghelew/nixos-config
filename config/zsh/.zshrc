@@ -63,6 +63,7 @@ if [[ $TERM != dumb ]]; then
     whence -w preexec >/dev/null && unfunction preexec
     #TODO: Setup proper prompt
     PS1='$ '
+  elif [[ -z $TMUX ]]; then
+    tmux new-session -t main \; set-option destroy-unattached
   fi
 fi
-

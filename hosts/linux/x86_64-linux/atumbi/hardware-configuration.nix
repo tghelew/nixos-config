@@ -135,5 +135,7 @@
     useDHCP = lib.mkDefault true;
     hostId = "a84f0a8f";
   };
+  # Firmware update
+  services.fwupd.enable = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

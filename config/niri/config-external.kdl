@@ -232,10 +232,10 @@ layout {
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
         // Color of the ring on the active monitor.
-        active-color "#81a1c19F"
+        active-color "#cdd6f4FF"
 
         // Color of the ring on inactive monitors.
-        inactive-color "#3b425200"
+        inactive-color "#1e1e2e00"
 
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
@@ -260,11 +260,11 @@ layout {
         off
 
         width 4
-        active-color "#81a1c1"
-        inactive-color "#3b4252"
+        active-color "#de935f"
+        inactive-color "#1e1e2e"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#bf616a"
+        urgent-color "#cc6666"
 
         // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
@@ -376,6 +376,16 @@ window-rule {
     block-out-from "screen-capture"
 }
 
+window-rule {
+    // This app-id regular expression will work for both:
+    match app-id=r#"mpv$"#
+    open-floating true
+    open-fullscreen true
+    opacity 1.0
+    
+}
+
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
@@ -436,6 +446,8 @@ binds {
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
+
+    Mod+Shift+O {toggle-window-rule-opacity;}
 
     Mod+W  { close-window; }
 

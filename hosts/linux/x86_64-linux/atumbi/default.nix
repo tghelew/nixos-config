@@ -37,7 +37,7 @@ in
         };
         graphics.enable = true;
         mpv.enable = true;
-        recording.enable = true;
+        recording.enable = false;
         discord.enable = true;
       };
       term = {
@@ -65,7 +65,7 @@ in
       emacs.useForEmail = false;
       emacs.systemd = true;
       vim.enable = true;
-      default = editors.emacs.defaultEditor;
+      default = "nvim";
     };
     hardware = {
       bluetooth = {
@@ -107,7 +107,7 @@ in
     };
     theme = {
      wallpapers = true;
-     active = "nord";
+     active = "mocha";
      lowResSize = 5;
      highResSize = 5;
     };

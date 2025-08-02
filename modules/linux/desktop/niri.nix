@@ -37,6 +37,7 @@ in {
 
       systemPackages = with pkgs; [
         mako
+        libnotify
         waybar
         swaylock-effects
         swaybg

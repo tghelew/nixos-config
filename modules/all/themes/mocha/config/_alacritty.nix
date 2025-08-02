@@ -1,0 +1,179 @@
+{ colors, fonts, ... }: ''
+# Copyright (c) 2016-present Sven Greb <development@svengreb.de>
+# This source code is licensed under the MIT license found in the license file.
+# https://github.com/nordtheme/alacritty/blob/main/src/nord.yaml
+# Font:
+#   Author: Thierry Ghelew
+
+# Font configuration
+#TODO: Add nix env variables
+font:
+  # Normal (roman) font face
+  normal:
+    # Font family
+    #
+    # Default:
+    #   - (macOS) Menlo
+    #   - (Linux/BSD) monospace
+    #   - (Windows) Consolas
+    family: ${fonts.mono.name}
+
+    # The `style` can be specified to pick a specific face.
+    style: Regular
+
+  # Bold font face
+  bold:
+    # Font family
+    #
+    # If the bold family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: ${fonts.mono.name}
+
+    # The `style` can be specified to pick a specific face.
+    style: Bold
+
+  # Italic font face
+  italic:
+    # Font family
+    #
+    # If the italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: ${fonts.mono.name}
+
+    # The `style` can be specified to pick a specific face.
+    style: Italic
+
+  # Bold italic font face
+  bold_italic:
+    # Font family
+    #
+    # If the bold italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: ${fonts.mono.name}
+
+    # The `style` can be specified to pick a specific face.
+    style: Bold Italic
+
+  # Point size
+  size: 7
+
+  # Offset is the extra space around each character. `offset.y` can be thought
+  # of as modifying the line spacing, and `offset.x` as modifying the letter
+  # spacing.
+  #offset:
+  #  x: 0
+  #  y: 0
+
+  # Glyph offset determines the locations of the glyphs within their cells with
+  # the default being at the bottom. Increasing `x` moves the glyph to the
+  # right, increasing `y` moves the glyph upward.
+  #glyph_offset:
+  #  x: 0
+  #  y: 0
+
+  # Use built-in font for box drawing characters.
+  #
+  # If `true`, Alacritty will use a custom built-in font for box drawing
+  # characters (Unicode points 2500 - 259f).
+  #
+  #builtin_box_drawing: true
+
+# If `true`, bold text is drawn using the bright color variants.
+draw_bold_text_with_bright_colors: true
+
+colors:
+  primary:
+    background     : '${colors.types.bg}'
+    foreground     : '${colors.types.fg}'
+    dim_foreground : '${colors.types.dimfg}'
+  cursor:
+    text   : '${colors.types.bg}'
+    cursor : '${colors.types.fg}'
+  vi_mode_cursor:
+    text: '${colors.types.bg}'
+    cursor: '${colors.types.fg}'
+  selection:
+    text: CellForeground
+    background: '${colors.brightblack}'
+  search:
+    matches:
+      foreground: CellBackground
+      background: '${colors.cyan}'
+    footer_bar:
+      background: '#434c5e'
+      foreground: '${colors.types.fg}'
+  hints:
+      foreground: CellBackground
+      background: '${colors.cyan}'
+  normal:
+    black   : '${colors.black}'
+    red     : '${colors.red}'
+    green   : '${colors.green}'
+    yellow  : '${colors.yellow}'
+    blue    : '${colors.blue}'
+    magenta : '${colors.magenta}'
+    cyan    : '${colors.cyan}'
+    white   : '${colors.white}'
+  bright:
+    black   : '${colors.brightblack}'
+    red     : '${colors.brightred}'
+    green   : '${colors.brightgreen}'
+    yellow  : '${colors.brightyellow}'
+    blue    : '${colors.brightblue}'
+    magenta : '${colors.brightmagenta}'
+    cyan    : '${colors.brightcyan}'
+    white   : '${colors.brightwhite}'
+  dim:
+    black   : '${colors.dimblack}'
+    red     : '${colors.dimred}'
+    green   : '${colors.dimgreen}'
+    yellow  : '${colors.dimyellow}'
+    blue    : '${colors.dimblue}'
+    magenta : '${colors.dimmagenta}'
+    cyan    : '${colors.dimcyan}'
+    white   : '${colors.dimwhite}'
+
+cursor:
+  # Cursor style
+  style:
+    # Cursor shape
+    #
+    # Values for `shape`:
+    #   - ▇ Block
+    #   - _ Underline
+    #   - | Beam
+    shape: Block
+
+    # Cursor blinking state
+    #
+    # Values for `blinking`:
+    #   - Never: Prevent the cursor from ever blinking
+    #   - Off: Disable blinking by default
+    #   - On: Enable blinking by default
+    #   - Always: Force the cursor to always blink
+    blinking: On
+
+  # Vi mode cursor style
+  #
+  # If the vi mode cursor style is `None` or not specified, it will fall back to
+  # the style of the active value of the normal cursor.
+  #
+  # See `cursor.style` for available options.
+  vi_mode_style: underline
+
+  # Cursor blinking interval in milliseconds.
+  blink_interval: 750
+
+  # Time after which cursor stops blinking, in seconds.
+  #
+  # Specifying '0' will disable timeout for blinking.
+  blink_timeout: 5
+
+  # If this is `true`, the cursor will be rendered as a hollow box when the
+  # window is not focused.
+  #unfocused_hollow: true
+
+  # Thickness of the cursor relative to the cell width as floating point number
+  # from `0.0` to `1.0`.
+  thickness: 0.22
+''
